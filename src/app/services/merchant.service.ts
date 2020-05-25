@@ -8,29 +8,42 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MerchantService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
+  apiKey = 'TestAPIKey';
+  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
 
   getMerchantList() {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');
   }
-  searchByRestaurantName(searchName , apiKey, authorization) {
+
+  getFoodList(merchantID){
+    return this.http.get(this.baseUrl + 'web_api/api/MerchantItem/GetItemFoodtList' , { params: {
+      merchantId: merchantID
+    },
+      headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
+      }
+    });
+  }
+  searchByRestaurantName(searchName) {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
       name: searchName
     },
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
-  searchByCategoryID(categoryID , apiKey, authorization) {
+  searchByCategoryID(categoryID) {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
       categoryId: categoryID
     },
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }

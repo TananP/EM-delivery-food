@@ -16,7 +16,7 @@ export class ShopListComponent implements OnInit {
 
   ngOnInit(): void {
     this.shopList = [];
-    this.merchantService.searchByCategoryID( this.categoryChoosed , 'TestApiKey', this.token).subscribe( x => {
+    this.merchantService.searchByCategoryID( this.categoryChoosed).subscribe( x => {
       this.shopList = x;
     });
   }

@@ -55,6 +55,14 @@ const routes: Routes = [
     path: 'reserve/restaurant-home/:task/:routeID/:restaurantID',
     component: RestaurantHomeComponent
   },
+  {
+    path: 'delivery/restaurant-home/:task/:routeID/:searchName/:restaurantID',
+    component: RestaurantHomeComponent
+  },
+  {
+    path: 'reserve/restaurant-home/:task/:routeID/:searchName/:restaurantID',
+    component: RestaurantHomeComponent
+  },
   { path: '**', redirectTo: '' }
 ];
 

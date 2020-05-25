@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RestaurantInfoService } from 'src/app/services/restaurant-info.service';
+import { MerchantService } from 'src/app/services/merchant.service';
 
 @Component({
   selector: 'app-restaurant-home',
@@ -8,18 +8,20 @@ import { RestaurantInfoService } from 'src/app/services/restaurant-info.service'
   styleUrls: ['./restaurant-home.component.scss']
 })
 export class RestaurantHomeComponent implements OnInit {
-  public restaurantName = this.route.snapshot.paramMap.get('restaurantID');
+  public restaurantID = this.route.snapshot.paramMap.get('restaurantID');
+  public searchName = this.route.snapshot.paramMap.get('searchName');
   public routeId = this.route.snapshot.paramMap.get('routeID');
   public taskSelect = this.route.snapshot.paramMap.get('task');
   public restaurantInfo: any;
 
-  constructor(private route: ActivatedRoute , private restaurantAPI: RestaurantInfoService) {
-    console.log(this.restaurantInfo);
-    this.restaurantAPI.getRestaurantInfo(1).subscribe(x => {
-      this.restaurantInfo = x;
-    });
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
    }
 
   ngOnInit(): void {
+    this.restaurantInfo = [];
+    this.merchantService.getFoodList(this.restaurantID).subscribe(x => {
+      this.restaurantInfo = x;
+      console.log(x);
+    });
   }
 }
