@@ -7,63 +7,81 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CustomerAddressService {
   baseUrl = environment.apiSysUrl;
+  apiKey = 'TestAPIKey';
+  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
 
-  getCustomAddress(id, authorization) {
-    return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddress', { params: {
-      id,
-      authorization
-    }
-    });
-  }
-  getCustomerAddressList(customerId, apiKey , authorization){
+  // getCustomAddress(id) {
+  //   const token = this.token;
+  //   return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddress', { params: {
+  //     id,
+  //     token
+  //   }
+  //   });
+  // }
+
+  getCustomerAddressList(customerId){
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressByCustomerId', { params: {
         id: customerId
       },
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
-  testGetAPI(id, apiKey , authorization){
+
+  getCustomerByLineId(id){
     return this.http.get(this.baseUrl + 'web_api/api/Customer/GetCustomerByLineId', { params: {
       lineId: id
       },
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
 
-  insertAddress(addNewAddress , apiKey , authorization){
+  insertAddress(addNewAddress){
     return this.http.post(this.baseUrl + 'web_api/api/CustomerAddress/InsertCustomerAddress', addNewAddress, {
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
 
-  deleteAddress(idAddress , apiKey , authorization){
+  deleteAddress(idAddress){
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/DeleteCustomerAddress', {params: {
       AddressId: idAddress
       },
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
 
-  updateAddress(editAddress , apiKey , authorization){
+  updateAddress(editAddress){
     return this.http.post(this.baseUrl + 'web_api/api/CustomerAddress/UpdateCustomerAddress', editAddress, {
       headers: {
-        'ApiKey' : apiKey,
-        'Authorization': 'Bearer ' + authorization
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
       }
     });
   }
+
+  setDefault(customerID, addressID){
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/UpdateDefaultCustomerAddress', {params: {
+      customerId: customerID,
+      AddressIdDefault: addressID
+      },
+      headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
+      }
+    });
+  }
+
 }

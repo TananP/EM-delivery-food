@@ -32,7 +32,7 @@ export class DeliveryAddressComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getPosition();
-    this.customerAddressAPI.getCustomerAddressList(this.id.id , this.apiKeyTest, this.id.token).subscribe(x => {
+    this.customerAddressAPI.getCustomerAddressList(this.id.id).subscribe(x => {
       // console.log(x);
       this.addressList = x;
     });
@@ -102,7 +102,6 @@ export class DeliveryAddressComponent implements OnInit {
   }
 
   selectAddess(index){
-    console.log('clicked address');
     this.selectedAddress.emit(index);
   }
 
@@ -110,30 +109,31 @@ export class DeliveryAddressComponent implements OnInit {
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
       const newAddressID = this.addressList.length;
       // tslint:disable-next-line: max-line-length
-      const addressInfoList = {addressId: newAddressID, customerId: this.id.id, name: nameAddress, note: comment, detail: address, default: false};
-      console.log(addressInfoList);
-      this.customerAddressAPI.insertAddress(addressInfoList , this.apiKeyTest, this.id.token).subscribe( x => {
-        console.log(x);
+      const addressInfoList = {addressId: newAddressID, customerId: this.id.id, name: nameAddress, note: comment, detail: address, default: false , telephoneNumber: phonNumber};
+      this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
         this.addAddress = false;
         this.ngOnInit();
     });
   }
   }
+  setDefaultAddress(address){
+    this.customerAddressAPI.setDefault(address.customerId , address.addressId).subscribe( x => {
+      this.ngOnInit();
+    });
+  }
 
   editAddressSelect(address){
     this.editAddressList = address;
-    console.log(this.editAddressList);
     this.editAddress = true;
   }
 
   editAddressConfirm(nameAddress, phonNumber , address , comment){
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
-      console.log('edit 2222');
       this.editAddressList.name = nameAddress;
       this.editAddressList.detail = address;
       this.editAddressList.note = comment;
-      this.customerAddressAPI.updateAddress(this.editAddressList , this.apiKeyTest, this.id.token).subscribe( x => {
-        console.log(x);
+      this.editAddressList.telephoneNumber = phonNumber;
+      this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {
         this.editAddress = false;
         this.ngOnInit();
       });
@@ -147,8 +147,7 @@ export class DeliveryAddressComponent implements OnInit {
 
   deleteConfirmation(confirm: boolean){
     if (confirm === true){
-      console.log(this.deleteAddressList.addressId);
-      this.customerAddressAPI.deleteAddress(this.deleteAddressList.addressId, this.apiKeyTest, this.id.token).subscribe( x => {
+      this.customerAddressAPI.deleteAddress(this.deleteAddressList.addressId).subscribe( x => {
         this.deleteAddressList = {};
         this.deleteConfirmPopUp = false;
         this.ngOnInit();
