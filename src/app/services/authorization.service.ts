@@ -8,6 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthorizationService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
+  token = localStorage.getItem('token');
+  checkFirstTime = localStorage.getItem('firstTime');
 
   constructor(private http: HttpClient) { }
 
@@ -16,5 +18,18 @@ export class AuthorizationService {
         code
       }
     });
+  }
+
+  checkAuthorization(){
+    if (this.checkFirstTime !== 'false' && this.token === null){
+      localStorage.setItem('firstTime' , 'false');
+      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+    }
+    if (this.token) {
+      const tokenJSON = JSON.parse(this.token);
+      if (Date.now() > tokenJSON.expires * 1000) {
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+      }
+    }
   }
 }

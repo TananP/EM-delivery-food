@@ -2,10 +2,17 @@
     <!-- SEARCH FORM --> 
     <form>
         <div class="row input-group input-group-sm">
-            <div class="col-3 text-right pr-0" [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]">
-                <button class="btn btn-navbar bg-white">
-                    <i class="fas fa-search"></i>
-                </button>
+            <div class="col-3 text-right pr-0">
+                <div *ngIf="this.searchInput !== '' ">
+                    <button [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div *ngIf="this.searchInput == '' ">
+                    <div class="btn btn-navbar bg-white">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
             </div>
             <div class="col-9 pl-0">
                 <input class="form-control form-control-navbar" #search (keyup)="onSubmit(search.value)" aria-label="Search">

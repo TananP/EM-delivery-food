@@ -29,11 +29,7 @@ export class HeaderComponent implements OnInit {
   openPopUp(popName: string , trigger: boolean){
     switch (popName){
         case 'cart':
-          if (trigger){
-            this.cartPopUp = true;
-          }else{
-            this.cartPopUp = false;
-          }
+          this.cartPopUp = true;
           break;
 
         // case 'history':
@@ -52,5 +48,8 @@ export class HeaderComponent implements OnInit {
           }
           break;
     }
+  }
+  receviveStatus(){
+    this.cartPopUp = false;
   }
 }

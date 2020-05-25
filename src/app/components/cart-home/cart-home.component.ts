@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
+// import { CustomerAddressService } from 'src/app/services/customer-address.service';
 
 @Component({
   selector: 'app-cart-home',
@@ -6,25 +7,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart-home.component.scss']
 })
 export class CartHomeComponent implements OnInit {
+  @Input() cartPopUp: boolean;
+  @Output() popUpStatus = new EventEmitter();
+  public deliveryAddress = false;
+  public pickUp = false;
+  public selectedAddress: any;
+  public showName: boolean;
 
-  constructor() { }
+  // private id =  JSON.parse(localStorage.getItem('token'));
+  // private apiKeyTest = 'APIKeyTest';
+  constructor() {}
 
   ngOnInit(): void {
+    // this.customerAddressAPI.getCustomerAddressList(this.id.id , this.apiKeyTest, this.id.token).subscribe(x => {
+    //   console.log(x);
+    //   // this.addressList = x;
+    // });
   }
 
-  getPosition(): Promise<any>
-  {
-    return new Promise((resolve, reject) => {
-      // Get location lat lng
-      navigator.geolocation.getCurrentPosition(resp => {
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-          console.log('lng === ' + resp.coords.longitude + ' lat === ' +  resp.coords.latitude);
-        },
-        err => {
-          reject(err);
-        });
-    });
-
+  openPickUpPopUp(){
+    this.pickUp = true;
+    this.showName = false;
   }
-
+  openAddressPopUp(){
+    this.deliveryAddress = true;
+  }
+  closeCartPage(){
+    this.cartPopUp = false;
+    this.popUpStatus.emit('55555');
+  }
+  closeAddress(){
+    this.cartPopUp = true;
+    this.deliveryAddress = false;
+  }
+  addressSelected(event){
+    this.selectedAddress = event;
+    this.showName = true;
+    this.pickUp = false;
+    this.closeAddress();
+  }
 }

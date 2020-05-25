@@ -5,8 +5,8 @@
     <!------ Render shop from shop list in hame page ------->
     <div class="row pt-2 pb-2 text-center">
         <div class="col-4 pointer" *ngFor="let restaurants of this.restaurantsList;" >
-            <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'restaurant-home',this.taskData,' ',restaurants.categoryName]">
-                {{restaurants.categoryName}}
+            <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurants.name]">
+                {{restaurants.name}}
             </div>
         </div>
     </div>

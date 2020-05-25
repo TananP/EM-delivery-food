@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryFoodService } from 'src/app/services/category-food.service';
+import { CategoryMerchantService } from 'src/app/services/category-merchant.service';
 
 @Component({
   selector: 'app-home-category',
@@ -13,12 +13,12 @@ export class CategoryComponent implements OnInit {
   public bottom = true;
 
   public categoryList: any;
-  constructor(private route: ActivatedRoute , private categoryAPI: CategoryFoodService) {}
+  constructor(private route: ActivatedRoute , private categoryAPI: CategoryMerchantService) {}
 
   ngOnInit(): void {
     // this.categoryList = [ 'Desserts' , 'Drink' , 'Snack' , 'Seafood' , 'Thai'];
     // Call API get category
-    this.categoryAPI.getFoodCategory().subscribe( x => {
+    this.categoryAPI.getMerchantCategory().subscribe( x => {
       this.categoryList = x;
     });
   }

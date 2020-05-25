@@ -51,13 +51,14 @@
     </div>
     <!---------------------------------------------->
     <!-------------- Cart pop up ------------------->
-    <div class="pop-up-cart" *ngIf="this.cartPopUp">
+    <!-- <div class="pop-up-cart" *ngIf="this.cartPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('cart',false)">&times;</div>
             <div class="col-8 text-center"><h5>Cart</h5></div>
         </div>
         <app-cart-home></app-cart-home>
-    </div>
+    </div> -->
+    <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus()"></app-cart-home>
     
     <!-------------- History pop up ----------------->
     <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">

@@ -15,13 +15,13 @@ export class CheckLoginComponent implements OnInit {
   ngOnInit(): void {
     this.authorizationAPI.getToken(this.login).subscribe(x => {
       this.tokenObj = x;
+      console.log(this.tokenObj);
     }, error => {
       window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
     }, () => {
       // No errors and on completed
-      localStorage.setItem('token', this.tokenObj.token);
+      localStorage.setItem('token', JSON.stringify(this.tokenObj));
       this.router.navigate(['']);
-      console.log(this.tokenObj);
     });
   }
 

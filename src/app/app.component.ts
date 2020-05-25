@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -16,11 +13,8 @@ export class AppComponent {
   public searchPage = false;
   public routerPath = ' ';
   title = 'Delivery-Web';
-  baseUrl = environment.apiSysUrl;
-  checkToken = localStorage.getItem('token');
-  checkFirstTime = localStorage.getItem('firstTime');
 
-  constructor(private router: Router , private http: HttpClient) {
+  constructor(private router: Router , private http: HttpClient , private authorizationService: AuthorizationService) {
     // Check Url
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -38,10 +32,6 @@ export class AppComponent {
         }
       }
     });
-    if (this.checkFirstTime !== 'false' && this.checkToken === null){
-      console.log('33334444555');
-      localStorage.setItem('firstTime' , 'false');
-      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
-    }
+    this.authorizationService.checkAuthorization();
   }
 }

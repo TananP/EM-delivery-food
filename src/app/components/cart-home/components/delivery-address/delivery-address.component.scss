@@ -1,0 +1,27 @@
+.address-box{
+    border: 2px solid black;
+    padding: 0.5rem;
+}
+.address-pop-up{
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 20vh;
+    width: 100%;
+    height: 100%;
+}
+.address-pop-up-container{
+    padding: 5vh 5vw 5vw 5vw;
+    margin: auto;
+    width: 95%;
+    background-color: white;
+    border: 2px solid black;
+}
+.address-pop-up-button{
+    background-color: #B39462;
+    color: white;
+    border: 2px solid black;
+}
+.verlify-invalid{
+    color: red;
+}

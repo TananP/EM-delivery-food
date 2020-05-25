@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(search: string) {
-    this.searchInput = search;
+  onSubmit(search) {
+      this.searchInput = search;
   }
 }

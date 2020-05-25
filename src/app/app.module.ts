@@ -24,7 +24,9 @@ import { OrderComponent } from './layouts/header/components/order/order.componen
 import { OrderInformationComponent } from './layouts/header/components/order/components/order-information.component';
 import { ErrorNotFoundPageComponent } from './components/error-not-found-page/error-not-found-page.component';
 import { CheckLoginComponent } from './components/check-login/check-login.component';
+import { DeliveryAddressComponent } from './components/cart-home/components/delivery-address/delivery-address.component';
 
+import { GoogleMapsModule } from '@angular/google-maps';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,11 +50,13 @@ import { CheckLoginComponent } from './components/check-login/check-login.compon
     OrderInformationComponent,
     ErrorNotFoundPageComponent,
     CheckLoginComponent,
+    DeliveryAddressComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleMapsModule
   ],
   providers: [AppComponent],
   bootstrap: [AppComponent]

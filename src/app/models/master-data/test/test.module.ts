@@ -1,6 +1,12 @@
 export interface Test {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  addressId: number;
+  customerId: number;
+  name: string;
+  detail: string;
+  note: string;
+  default: boolean;
+  active: boolean;
+  mapLatitude: any;
+  mapLongitude: any;
+  mapZoom: number;
 }

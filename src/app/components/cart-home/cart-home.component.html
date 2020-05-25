@@ -1,44 +1,72 @@
-<div class="pop-up-content">
-<!--------------- Address area -------------------->
-    <div>
-        <p>Addrees</p>
-        <div class="form-group">
-            <input class="form-control" placeholder="Name">
-        </div>
-        <div class="form-group">
-            <input class="form-control" placeholder="Phone number">
-        </div>
-        <hr>
+<div class="pop-up-cart" *ngIf="this.cartPopUp">
+    <div class="row bg-dark">
+        <div class="col-2 close-button pl-4" (click)="closeCartPage()">&times;</div>
+        <div class="col-8 text-center"><h5>Cart</h5></div>
     </div>
+    <div class="pop-up-content">
+        <!--------------- Address area -------------------->
+            <div *ngIf="this.showName">
+                <p>Addrees</p>
+                <div class="form-group">
+                    <p>Name</p>
+                    <p>{{this.selectedAddress.name}}</p>
+                    <!-- <input class="form-control" placeholder="Name"> -->
+                </div>
+                <div class="form-group">
+                    <!-- <input class="form-control" placeholder="Phone number"> -->
+                </div>
+                <hr>
+            </div>
 
-    <div class="row text-center pb-3">
-        <div class="col-6">
-            <div class="gold-button" (click)="getPosition()">
-                <p>Delivery</p>
+            <div *ngIf="this.pickUp">
+                <div class="form-group">
+                    <p>Name</p>
+                    <input class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Phone number">
+                </div>
+                <hr>
             </div>
-        </div>
-        <div class="col-6">
-            <div class="gold-button">
-                <p>Pick up</p>
+        
+            <div class="row text-center pb-3">
+                <div class="col-6">
+                    <div class="gold-button" (click)="openAddressPopUp()">
+                        <p>Delivery</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="gold-button" (click)="openPickUpPopUp()">
+                        <p>Pick up</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        <!---------------------------------------------------->
+        <!--------------- Comment area ----------------------->
+            <!-- <div>
+                <p>Comment</p>
+                <textarea class="form-control" rows="2" id="comment"></textarea>
+            </div> -->
+        <!------------------------------------------------------>
+        <!---------------- Summary button -------------------->
+            <div class="row cart-button text-center">
+                <div class="col-2">
+                    <p>0</p>
+                </div>
+                <div class="col-8">
+                    <p>Summary</p>
+                </div>
+                <div class="col-2">
+                    <p>0</p>
+                </div>
+            </div>
+        <!---------------------------------------------------->
     </div>
-<!---------------------------------------------------->
-<!--------------- Comment area -------------------->
-    <div>
-        <p>Comment</p>
-        <textarea class="form-control" rows="2" id="comment"></textarea>
+</div>
+<div class="pop-up-cart" *ngIf="this.deliveryAddress">
+    <div class="row bg-dark">
+        <div class="col-2 close-button pl-4" (click)="closeAddress()"><p> < </p></div>
+        <div class="col-8 text-center"><h5>Address delivery</h5></div>
     </div>
-    <div class="row cart-button text-center">
-        <div class="col-2">
-            <p>0</p>
-        </div>
-        <div class="col-8">
-            <p>Summary</p>
-        </div>
-        <div class="col-2">
-            <p>0</p>
-        </div>
-    </div>
-<!---------------------------------------------------->
+    <app-delivery-address (selectedAddress)="addressSelected($event)"></app-delivery-address>
 </div>

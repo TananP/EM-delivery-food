@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MerchantService } from 'src/app/services/merchant.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -9,15 +10,14 @@ import { ActivatedRoute } from '@angular/router';
 export class ShopListComponent implements OnInit {
   public taskChoosed  = this.route.snapshot.paramMap.get('task');
   public categoryChoosed = this.route.snapshot.paramMap.get('category');
-  public shopList: Array<number>;
-  public alphabetENList: Array<string>;
-  public alphabetTHList: Array<string>;
-  constructor(private route: ActivatedRoute) {}
+  private token = localStorage.getItem('token');
+  public shopList: any;
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService) {}
 
   ngOnInit(): void {
-    this.alphabetENList = ['a' , 'b' , 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-    this.alphabetTHList = ['0', '1', '3', 'ก', 'ข', 'ค'];
-    this.shopList = [1, 2, 3, 4, 5, 6, 7];
+    this.merchantService.searchByCategoryID( this.categoryChoosed , 'TestApiKey', this.token).subscribe( x => {
+      this.shopList = x.data;
+    });
   }
 
 }

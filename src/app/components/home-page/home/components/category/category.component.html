@@ -6,7 +6,7 @@
     <div>
         <div id="categoryArea" class="row category-list pt-3 pb-3">
             <div class="col-4 pointer" *ngFor="let category of categoryList;">
-                <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryName]">
+                <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryId]">
                     {{category.categoryName}}
                 </div>
             </div>
