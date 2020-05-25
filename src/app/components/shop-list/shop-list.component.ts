@@ -15,8 +15,9 @@ export class ShopListComponent implements OnInit {
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {}
 
   ngOnInit(): void {
+    this.shopList = [];
     this.merchantService.searchByCategoryID( this.categoryChoosed , 'TestApiKey', this.token).subscribe( x => {
-      this.shopList = x.data;
+      this.shopList = x;
     });
   }
 

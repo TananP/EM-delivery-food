@@ -12,12 +12,14 @@ export class SearchResultPageComponent implements OnInit {
   public searchName = this.route.snapshot.paramMap.get('searchInput');
   public shopList: any;
   private token = localStorage.getItem('token');
-  constructor(private route: ActivatedRoute , private merchantService: MerchantService) { }
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
+  }
 
   ngOnInit(): void {
+    this.shopList = [];
     this.merchantService.searchByRestaurantName( this.searchName , 'TestApiKey', this.token).subscribe( x => {
-      this.shopList = x.data;
-    });
+    this.shopList = x;
+  });
   }
 
 }

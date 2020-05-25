@@ -49,8 +49,8 @@
          </div> -->
 
         <!------------------ Render shop from search -------------------->
-        <div class="col-12 pointer" *ngFor="let shop of shopList;">
-            <div class="col-12 pointer" *ngFor="let shopInfo of shop.childMstMerchantTranslation;">
+        <div class="col-12 pointer" *ngFor="let shop of shopList.data">
+            <div class="col-12 pointer" *ngFor="let shopInfo of shop.childMstMerchantTranslation">
                 <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed,this.categoryChoosed, shopInfo.name]">
                     Restaurnts {{shopInfo.name}}
                     <hr>

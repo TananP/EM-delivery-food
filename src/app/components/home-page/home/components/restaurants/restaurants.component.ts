@@ -14,9 +14,9 @@ export class RestaurantsComponent implements OnInit {
   constructor(private restaurantsAPI: MerchantService) { }
 
   ngOnInit(): void {
-
+    this.restaurantsList = [];
     this.restaurantsAPI.getMerchantList().subscribe(x => {
-      this.restaurantsList = x.data[0].childMstMerchantTranslation;
+      this.restaurantsList = x;
     });
   }
 
