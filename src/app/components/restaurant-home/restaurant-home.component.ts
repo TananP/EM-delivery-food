@@ -8,20 +8,23 @@ import { MerchantService } from 'src/app/services/merchant.service';
   styleUrls: ['./restaurant-home.component.scss']
 })
 export class RestaurantHomeComponent implements OnInit {
-  public restaurantID = this.route.snapshot.paramMap.get('restaurantID');
+  public merchantId = this.route.snapshot.paramMap.get('merchantId');
   public searchName = this.route.snapshot.paramMap.get('searchName');
   public routeId = this.route.snapshot.paramMap.get('routeID');
   public taskSelect = this.route.snapshot.paramMap.get('task');
   public restaurantInfo: any;
+  public menuList: any;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
    }
 
   ngOnInit(): void {
     this.restaurantInfo = [];
-    this.merchantService.getFoodList(this.restaurantID).subscribe(x => {
+    this.menuList = [];
+    this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.restaurantInfo = x;
-      console.log(x);
+      console.log(this.restaurantInfo);
+      this.menuList = this.restaurantInfo.data;
     });
   }
 }

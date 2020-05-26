@@ -21,15 +21,15 @@
             <!------------------------------------------->
             <div class="col-10">
                 <!-- <h1>{{this.restaurantName}}</h1>
-                <p class="desiption-text">Some description</p> -->
-                <!-- <h1>{{restaurantInfo.data[0].mstMerchantTranslation[0].name}}</h1>
+                <p class="desiption-text">Some description</p>
+                <h1>{{restaurantInfo.data[0].mstMerchantTranslation[0].name}}</h1>
                 <p class="desiption-text">{{restaurantInfo.data[0].mstMerchantTranslation[0].detail}}</p>
                 <p class="desiption-text">{{restaurantInfo.data[0].openTime}}</p>
                 <p class="desiption-text">{{restaurantInfo.data[0].closeTime}}</p> -->
             </div>
         </div>
         <!---------------------------------------------->
-        <app-delivery *ngIf="this.taskSelect === 'delivery'"></app-delivery>
+        <app-delivery *ngIf="this.taskSelect === 'delivery'" [allMenuList]="this.menuList"></app-delivery>
         <app-reserve *ngIf="this.taskSelect === 'reserve'"></app-reserve>
     </div>
 </div>

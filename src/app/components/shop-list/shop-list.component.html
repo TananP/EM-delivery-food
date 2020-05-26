@@ -1,61 +1,21 @@
 <div class="container">
     <div class="row mt-2 mb-2">
         <!-------------------- Back button ------------------->
-        <div class="col-2">
+        <div class="col-2 mb-4">
             <div class="back-button">
                 <a [routerLink]="['/' + this.taskChoosed]">&lt;</a>
             </div>
         </div>
         <!--------------------------------------------------->
-        
-        <!-- <div class="col-10"> -->
-            <!-- <div *ngIf="this.categoryChoosed == 'LOCATION'">
-            <h5> LOCATION</h5>
-            </div>
-            <div *ngIf="this.categoryChoosed == 'TYPE'">
-                <h5>TYPE</h5>
-            </div>
-        </div> 
-        <div *ngIf="this.categoryChoosed == 'ALPHABET'">
-            <div>
-                <ul class="nav nav-pills mb-3 text-center" id="pills-tab" role="tablist">
-                    <li class="col-6 nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#A-Z" role="tab" aria-controls="pills-home" aria-selected="true">
-                        Recommend</a>
-                    </li>
-                    <li class="col-6 nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#ก-ฮ" role="tab" aria-controls="pills-profile" aria-selected="false">
-                            All Menu</a>
-                        </li>
-                    </ul>
-                
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="A-Z" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="row">
-                           <div class="col-2" *ngFor="let alphabetEN of this.alphabetENList">
-                                <p>{{alphabetEN}}</p>
-                            </div>
-                        </div>
-                    </div>
-                 <div class="tab-pane fade" id="ก-ฮ" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        <div class="row">
-                            <div class="col-2" *ngFor="let alphabetTH of this.alphabetTHList">
-                               <p>{{alphabetTH}}</p>
-                            </div>
-                        </div>
-                     </div>
-                </div>
-            </div>
-         </div> -->
-
-        <!------------------ Render shop from search -------------------->
-        <div class="col-12 pointer" *ngFor="let shop of shopList.data">
+        <!--------------- Render shop from search ---------->
+        <div class="col-12 pl-0 pointer" *ngFor="let shop of shopList.data">
             <div class="col-12 pointer" *ngFor="let shopInfo of shop.childMstMerchantTranslation">
                 <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed,this.categoryChoosed, shopInfo.merchantId]">
                     Restaurnts {{shopInfo.name}}
                     <hr>
                 </div>
+            </div>
         </div>
-        <!--------------------------------------------------------------->
+        <!----------------------------------------------------->
     </div>
 </div>

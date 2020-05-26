@@ -48,19 +48,19 @@ const routes: Routes = [
     component: ShopListComponent
   },
   {
-    path: 'delivery/restaurant-home/:task/:routeID/:restaurantID',
+    path: 'delivery/restaurant-home/:task/:routeID/:merchantId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'reserve/restaurant-home/:task/:routeID/:restaurantID',
+    path: 'reserve/restaurant-home/:task/:routeID/:merchantId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'delivery/restaurant-home/:task/:routeID/:searchName/:restaurantID',
+    path: 'delivery/restaurant-home/:task/:routeID/:searchName/:merchantId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'reserve/restaurant-home/:task/:routeID/:searchName/:restaurantID',
+    path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId',
     component: RestaurantHomeComponent
   },
   { path: '**', redirectTo: '' }
