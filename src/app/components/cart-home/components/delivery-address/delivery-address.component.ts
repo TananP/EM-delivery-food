@@ -8,10 +8,10 @@ import { CustomerAddressService } from 'src/app/services/customer-address.servic
 })
 export class DeliveryAddressComponent implements OnInit {
   @Output() selectedAddress = new EventEmitter();
-  // public latCenter: number;
-  // public lngCenter: number;
-  // public lat: number;
-  // public lng: number;
+  public latCenter: number;
+  public lngCenter: number;
+  public lat: number;
+  public lng: number;
   public addAddress = false;
   public deleteConfirmPopUp = false;
   public editAddress = false;
@@ -38,26 +38,26 @@ export class DeliveryAddressComponent implements OnInit {
     });
   }
 
-  // getPosition(): Promise<any>
-  // {
-  //   return new Promise((resolve, reject) => {
-  //     // Get location lat lng
-  //     navigator.geolocation.getCurrentPosition(resp => {
-  //         resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-  //         this.latCenter = resp.coords.latitude;
-  //         this.lngCenter = resp.coords.longitude;
-  //         this.lat = this.latCenter;
-  //         this.lng = this.lngCenter;
-  //       },
-  //       err => {
-  //         reject(err);
-  //       });
-  //   });
-  // }
-  // setMarker(event){
-  //   this.lat = event.latLng.lat();
-  //   this.lng = event.latLng.lng();
-  // }
+  getPosition(): Promise<any>
+  {
+    return new Promise((resolve, reject) => {
+      // Get location lat lng
+      navigator.geolocation.getCurrentPosition(resp => {
+          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+          this.latCenter = resp.coords.latitude;
+          this.lngCenter = resp.coords.longitude;
+          this.lat = this.latCenter;
+          this.lng = this.lngCenter;
+        },
+        err => {
+          reject(err);
+        });
+    });
+  }
+  setMarker(event){
+    this.lat = event.latLng.lat();
+    this.lng = event.latLng.lng();
+  }
   verify(name, phonNumber , address , comment , task: string){
       if (name !== ''){
         this.verifyName = true;
@@ -104,12 +104,17 @@ export class DeliveryAddressComponent implements OnInit {
   selectAddess(index){
     this.selectedAddress.emit(index);
   }
-
+  addAddressPopUp(){
+    this.addAddress = true;
+    this.getPosition();
+  }
   insertNewAddress(nameAddress, phonNumber , address , comment){
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
       const newAddressID = this.addressList.length;
       // tslint:disable-next-line: max-line-length
-      const addressInfoList = {addressId: newAddressID, customerId: this.id.id, name: nameAddress, note: comment, detail: address, default: false , telephoneNumber: phonNumber};
+      const addressInfoList = {customerId: this.id.id
+        , name: nameAddress, note: comment, detail: address, default: false , telephoneNumber: phonNumber
+        , mapLatitude: this.lat , mapLongitude: this.lng};
       this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
         this.addAddress = false;
         this.ngOnInit();
@@ -125,6 +130,8 @@ export class DeliveryAddressComponent implements OnInit {
   editAddressSelect(address){
     this.editAddressList = address;
     this.editAddress = true;
+    this.lat = address.mapLatitude;
+    this.lng = address.mapLongitude;
   }
 
   editAddressConfirm(nameAddress, phonNumber , address , comment){
@@ -133,6 +140,8 @@ export class DeliveryAddressComponent implements OnInit {
       this.editAddressList.detail = address;
       this.editAddressList.note = comment;
       this.editAddressList.telephoneNumber = phonNumber;
+      this.editAddressList.mapLatitude = this.lat;
+      this.editAddressList.mapLongitude = this.lng;
       this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {
         this.editAddress = false;
         this.ngOnInit();
