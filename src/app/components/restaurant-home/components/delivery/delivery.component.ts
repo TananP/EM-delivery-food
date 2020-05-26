@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MerchantService } from 'src/app/services/merchant.service';
 
 @Component({
   selector: 'app-delivery',
@@ -7,41 +8,49 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./delivery.component.scss']
 })
 export class DeliveryComponent implements OnInit {
-  @Input() allMenuList;
-  public recommendList: Array<number>;
-  public menuList: Array<number>;
+  public merchantId = this.route.snapshot.paramMap.get('merchantId');
+  public menuSelected = {name: '', description: '', price: 0};
+  public totalPrice = 0;
+
+  public menuList: any;
   public openPopUp: boolean;
-  public menuName: string;
   public numberEachDish: number;
   public openCartPopUp: boolean;
 
-  constructor( private route: ActivatedRoute) { }
+  constructor( private route: ActivatedRoute , private merchantService: MerchantService) { }
 
   ngOnInit(): void {
     this.openPopUp = false;
     this.openCartPopUp = false;
     this.numberEachDish = 1;
-    this.recommendList = [1, 2, 3, 4, 5];
-    this.menuList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    this.menuList = [];
+    this.merchantService.getFoodList(this.merchantId).subscribe(x => {
+      this.menuList = x;
+      console.log(this.menuList.data);
+    });
   }
-  popUp(menu: string){
+  popUp(menuName: string , menuDescription: string , menuPrice: number){
     this.openPopUp = true;
-    this.menuName = menu;
+    this.menuSelected = {name: '', description: '', price: 0};
+    this.menuSelected = {name: menuName, description: menuDescription, price: menuPrice};
+    this.totalPrice = this.menuSelected.price;
+    console.log(this.menuSelected);
   }
   closePopUp(){
     this.openPopUp = false;
-    this.menuName = '';
     this.numberEachDish = 1;
   }
   changeDishNumber(order: string){
     if (order === 'add'){
       this.numberEachDish += 1;
+      this.totalPrice = this.menuSelected.price * this.numberEachDish;
     }
     if (order === 'minus') {
       if (this.numberEachDish === 1){
         this.numberEachDish = 1 ;
       }else{
         this.numberEachDish -= 1;
+        this.totalPrice = this.menuSelected.price * this.numberEachDish;
       }
     }
   }

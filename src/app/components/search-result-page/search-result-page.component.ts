@@ -18,7 +18,7 @@ export class SearchResultPageComponent implements OnInit {
     this.shopList = [];
     this.merchantService.searchByRestaurantName(this.searchName).subscribe( x => {
     this.shopList = x;
-    // console.log('merchantId == ' + this.shopList.data[0].merchantId);
+    console.log(this.shopList);
   });
   }
 

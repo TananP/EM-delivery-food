@@ -17,6 +17,20 @@ export class MerchantService {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');
   }
 
+  getMerchantInfo(merchantName , locationID , floorID , departmentID){
+    return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
+      name: merchantName,
+      locationId: locationID,
+      floorId: floorID,
+      departmentId: departmentID
+    },
+      headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
+      }
+    });
+  }
+
   getFoodList(merchantID){
     return this.http.get(this.baseUrl + 'web_api/api/MerchantItem/GetItemFoodtList' , { params: {
       merchantId: merchantID
