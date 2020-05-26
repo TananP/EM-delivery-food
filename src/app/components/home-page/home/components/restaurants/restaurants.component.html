@@ -7,7 +7,7 @@
         <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
             <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
                 <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]">
-                    {{restaurantsInfo.name}}
+                    Name: {{restaurantsInfo.name}}
                 </div>
             </div>    
         </div>
