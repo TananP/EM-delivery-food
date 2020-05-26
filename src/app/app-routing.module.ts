@@ -8,7 +8,6 @@ import { RestaurantHomeComponent  } from './components/restaurant-home/restauran
 import { SearchResultPageComponent } from './components/search-result-page/search-result-page.component';
 import { ErrorNotFoundPageComponent } from './components/error-not-found-page/error-not-found-page.component';
 import { CheckLoginComponent } from './components/check-login/check-login.component';
-import { from } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -48,19 +47,19 @@ const routes: Routes = [
     component: ShopListComponent
   },
   {
-    path: 'delivery/restaurant-home/:task/:routeID/:merchantId',
+    path: 'delivery/restaurant-home/:task/:routeID/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'reserve/restaurant-home/:task/:routeID/:merchantId',
+    path: 'reserve/restaurant-home/:task/:routeID/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'delivery/restaurant-home/:task/:routeID/:searchName/:merchantId',
+    path: 'delivery/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   {
-    path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId',
+    path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   { path: '**', redirectTo: '' }
