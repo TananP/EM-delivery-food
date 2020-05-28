@@ -15,7 +15,6 @@ export class CheckLoginComponent implements OnInit {
   ngOnInit(): void {
     this.authorizationAPI.getToken(this.login).subscribe(x => {
       this.tokenObj = x;
-      console.log(this.tokenObj);
     }, error => {
       window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
     }, () => {

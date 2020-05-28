@@ -26,7 +26,10 @@ a{
 .pointer{
     cursor : pointer;
 }
-.bg-black{
+.gold{
+    color: #B39462;
+}
+.bg-solid-black{
     background-color: black;
 }
 .back-button{
@@ -60,6 +63,7 @@ a{
     width: 100%;
     height: 100%;
     overflow: auto; 
+    color: #B39462;
     background-color: white; /* Fallback color */
 }
 .pop-up {

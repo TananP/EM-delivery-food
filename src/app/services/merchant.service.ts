@@ -11,7 +11,11 @@ export class MerchantService {
   apiKey = 'TestAPIKey';
   token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (this.token === null) {
+      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+    }
+  }
 
   getMerchantList() {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');

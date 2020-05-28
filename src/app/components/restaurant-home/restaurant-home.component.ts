@@ -11,10 +11,11 @@ export class RestaurantHomeComponent implements OnInit {
   public locationId = this.route.snapshot.paramMap.get('locationId');
   public floorId = this.route.snapshot.paramMap.get('floorId');
   public departmentId = this.route.snapshot.paramMap.get('departmentId');
-
+  public searchInput = this.route.snapshot.paramMap.get('searchInput');
   public searchName = this.route.snapshot.paramMap.get('searchName');
   public routeId = this.route.snapshot.paramMap.get('routeID');
   public taskSelect = this.route.snapshot.paramMap.get('task');
+
   public restaurantInfo: any;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {

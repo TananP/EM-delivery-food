@@ -1,6 +1,19 @@
-.address-box{
-    border: 2px solid black;
+.active{
+    background-color: yellow;
+}
+.address-box-default{
+    border: 2px solid #B39462;
     padding: 0.25rem;
+    font-size: 0.75rem;
+}
+.address-box{
+    border-bottom: 2px solid #B39462;
+    padding: 0.25rem;
+    font-size: 0.75rem;
+}
+.add-address-button{
+    border: 1px solid #B39462;
+    border-radius: 1rem;
     font-size: 0.75rem;
 }
 .address-pop-up{
@@ -26,6 +39,14 @@
     background-color: #B39462;
     color: white;
     border: 2px solid black;
+}
+.deliver-buttton{
+    position: absolute;
+    bottom: 5vh;
+    width: 90%;
+    padding: 1vh 0;
+    color: white;
+    background-color: #B39462;
 }
 .verlify-invalid{
     color: red;

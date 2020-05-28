@@ -15,10 +15,13 @@ export class DeliveryAddressComponent implements OnInit {
   public addAddress = false;
   public deleteConfirmPopUp = false;
   public editAddress = false;
-
+  // Test
+  public activeIndex = null;
+  //
   public verifyName: boolean;
   public verifyPhoneNumber: boolean;
   public verifyAddress: boolean;
+  public setAddressDefault: boolean;
   private phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
 
   public addressList: any;
@@ -102,7 +105,13 @@ export class DeliveryAddressComponent implements OnInit {
   }
 
   selectAddess(index){
-    this.selectedAddress.emit(index);
+    this.activeIndex = index;
+    // this.selectedAddress.emit(index);
+  }
+  confirmSelectAddess(){
+    if (this.activeIndex !== null) {
+      this.selectedAddress.emit(this.activeIndex);
+    }
   }
   addAddressPopUp(){
     this.addAddress = true;
@@ -110,11 +119,16 @@ export class DeliveryAddressComponent implements OnInit {
   }
   insertNewAddress(nameAddress, phonNumber , address , comment){
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
-      const newAddressID = this.addressList.length;
+      if (this.addressList.length === 0){
+        this.setAddressDefault = true;
+      }else{
+        this.setAddressDefault = false;
+      }
       // tslint:disable-next-line: max-line-length
       const addressInfoList = {customerId: this.id.id
-        , name: nameAddress, note: comment, detail: address, default: false , telephoneNumber: phonNumber
+        , name: nameAddress, note: comment, detail: address, default: this.setAddressDefault , telephoneNumber: phonNumber
         , mapLatitude: this.lat , mapLongitude: this.lng};
+
       this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
         this.addAddress = false;
         this.ngOnInit();

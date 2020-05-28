@@ -1,15 +1,11 @@
 <div class="pop-up-content text-center">
-    <div>
+    <div class="gold">
         <h3>Address</h3>
-    </div>
-    <!-- Add address -->
-    <div (click)="addAddressPopUp()">
-        <p> Add </p>    
     </div>
     <!------------------->
     <!------ Default address ------>
     <div *ngFor="let index of this.addressList">
-        <div *ngIf="index.default == true" class="row address-box mt-3 mb-3">
+        <div *ngIf="index.default == true" [class.active]="index === activeIndex" class="row address-box-default mt-3 mb-3">
             <div (click)="selectAddess(index)" class="col-10 text-left">
                 <div>
                     <p>Name : {{index.name}}</p>
@@ -17,23 +13,30 @@
                     <p>Address : <br>{{index.detail}}</p>
                 </div>
             </div>
-            <div class="col-2 pl-0">
+            <div class="col-2 pl-0 gold">
                 <div class="mb-4 pt-2" (click)="editAddressSelect(index)">
                     <p> Edit </p>
                 </div>
-                <div (click)="deleteAddress(index)">
+                <!-- <div (click)="deleteAddress(index)">
                     <p> Delete </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
     <!------------------------>
     <!-------- All Adress ---------->
-    <div class="text-left">
-        <h5> Other </h5>
+    <div class="row gold">
+        <div class="col-6 text-left">
+            <h5> Other </h5>
+        </div>
+        <div class="col-6" (click)="addAddressPopUp()">
+            <div class="mt-2 add-address-button">
+                <p>+ Add address </p>
+            </div>
+        </div>
     </div>
     <div *ngFor="let index of this.addressList">
-        <div *ngIf="index.default == false" class="row address-box mt-3 mb-3">
+        <div *ngIf="index.default == false" [class.active]="index === activeIndex" class="row address-box mt-3 mb-3">
             <div (click)="selectAddess(index)" class="col-9 text-left">
                 <div>
                     <p>Name : {{index.name}}</p>
@@ -41,16 +44,16 @@
                     <p>Address : <br>{{index.detail}}</p>
                 </div>
             </div>
-            <div class="col-3 pl-0 pr-o">
+            <div class="col-3 pl-0 pr-0 gold">
                 <div class="mb-3 mt-2" (click)="setDefaultAddress(index)">
                     <p>Set default</p>
                 </div>
                 <div class="mb-3 mt-3" (click)="editAddressSelect(index)">
                     <p> Edit </p>
                 </div>
-                <div class="mb-2 mt-3" (click)="deleteAddress(index)">
-                    <p> Delete </p>
-                </div>
+            </div>
+            <div class="mb-2 gold text-left" (click)="deleteAddress(index)">
+                <p> Delete </p>
             </div>
         </div>
     </div>
@@ -159,4 +162,8 @@
             </div>    
         </div>
         <!----------------------->
+        <!-- Deliver here button -->
+        <div class="text-center deliver-buttton" (click)="confirmSelectAddess()">
+            <p>Deliver here</p>
+        </div>
 </div>

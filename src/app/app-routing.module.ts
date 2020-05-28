@@ -47,19 +47,19 @@ const routes: Routes = [
     component: ShopListComponent
   },
   {
-    path: 'delivery/restaurant-home/:task/:routeID/:merchantId/:locationId/:floorId/:departmentId',
-    component: RestaurantHomeComponent
-  },
-  {
-    path: 'reserve/restaurant-home/:task/:routeID/:merchantId/:locationId/:floorId/:departmentId',
-    component: RestaurantHomeComponent
-  },
-  {
     path: 'delivery/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   {
     path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',
+    component: RestaurantHomeComponent
+  },
+  {
+    path: 'delivery/restaurant-home/:task/:routeID/:searchInput/:searchName/:merchantId/:locationId/:floorId/:departmentId',
+    component: RestaurantHomeComponent
+  },
+  {
+    path: 'reserve/restaurant-home/:task/:routeID/:searchInput/:searchName/:merchantId/:locationId/:floorId/:departmentId',
     component: RestaurantHomeComponent
   },
   { path: '**', redirectTo: '' }

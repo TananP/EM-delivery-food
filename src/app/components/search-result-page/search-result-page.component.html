@@ -12,7 +12,7 @@
     <!-- Render shop search list -->
     <div class="col-12" *ngFor="let shop of shopList.data">
         <div *ngFor="let shopInfo of shop.childMstMerchantTranslation">
-            <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed,'search', shopInfo.name , shopInfo.merchantId , shop.locationId , shop.floorId , shop.departmentId]">
+            <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed , 'search' , this.searchName , shopInfo.name , shopInfo.merchantId , shop.locationId , shop.floorId , shop.departmentId]">
                 Restaurnts {{shopInfo.name}}
                 <hr>
             </div>

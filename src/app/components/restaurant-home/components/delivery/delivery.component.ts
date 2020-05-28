@@ -26,7 +26,7 @@ export class DeliveryComponent implements OnInit {
     this.menuList = [];
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.menuList = x;
-      console.log(this.menuList.data);
+      // console.log(this.menuList.data);
     });
   }
   popUp(menuName: string , menuDescription: string , menuPrice: number){
