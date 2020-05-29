@@ -1,6 +1,13 @@
 <div>
     <div>
-        <img class="max-width" src="./assets/dist/img/food-ex.jpg"/>
+        <div *ngFor="let item of this.restaurantInfo.data">
+            <div class="text-center p-5 m-1" style="border: 2px solid black;" *ngIf="item.bannerPath == '' ">
+                <p>No Image</p>
+            </div>
+            <div *ngIf="item.bannerPath !== '' ">
+                <img src="{{this.restaurantInfo.bannerPath}}">
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="row pb-3">
@@ -33,7 +40,7 @@
             </div>
         </div>
         <!---------------------------------------------->
-        <app-delivery *ngIf="this.taskSelect === 'delivery'"></app-delivery>
-        <app-reserve *ngIf="this.taskSelect === 'reserve'"></app-reserve>
+        <app-delivery *ngIf="this.taskSelect === 'delivery' "></app-delivery>
+        <app-reserve *ngIf="this.taskSelect === 'reserve' "></app-reserve>
     </div>
 </div>

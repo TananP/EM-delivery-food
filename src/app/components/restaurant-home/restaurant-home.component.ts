@@ -17,12 +17,14 @@ export class RestaurantHomeComponent implements OnInit {
   public taskSelect = this.route.snapshot.paramMap.get('task');
 
   public restaurantInfo: any;
+  public merchantInfo: any;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
    }
 
   ngOnInit(): void {
     this.restaurantInfo = [];
+    this.merchantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName , this.locationId , this.floorId , this.departmentId ).subscribe( x => {
       this.restaurantInfo = x;
     });

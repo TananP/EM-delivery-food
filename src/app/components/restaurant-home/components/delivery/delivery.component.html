@@ -22,8 +22,17 @@
             <!-- <div class="col-12 row menu-button" (click)="popUp(recommend)" *ngFor="let recommend of menuList.data;"> -->
             <div *ngFor="let recommend of this.menuList.data;">  
                 <div *ngIf="recommend.itemType == 'R' && recommend.active == true">
-                    <div class="col-12 row menu-button" (click)="popUp(menuInfo.itemName, menuInfo.description ,recommend.price )"  *ngFor="let menuInfo of recommend.childMstItemTranslation;">
-                        <div class="col-3">
+                    <div class="col-12 row menu-button" (click)="popUp(recommend)"
+                    *ngFor="let menuInfo of recommend.childMstItemTranslation;">
+                        <div class="col-3 text-center">
+                            <div *ngIf="recommend.photoPath !== '' ">
+                                <img src="{{recommend.photoPath}}">
+                            </div>
+                            <div *ngIf="recommend.photoPath == '' ">
+                                <div style="border: 2px solid black;">
+                                    <p>No Image</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-7">
                             <p>{{menuInfo.itemName}}</p>
@@ -47,16 +56,25 @@
         <!--------------- All menu ---------->
         <div class="tab-pane fade" id="all-menu" role="tabpanel" aria-labelledby="pills-profile-tab">
             <h5>All menu</h5>
-            <div *ngFor="let recommend of this.menuList.data;">  
-                <div *ngIf="recommend.active == true">
-                    <div class="col-12 row menu-button" (click)="popUp(menuInfo.itemName, menuInfo.description ,recommend.price )" *ngFor="let menuInfo of recommend.childMstItemTranslation;">
-                        <div class="col-3">
+            <div *ngFor="let allMenu of this.menuList.data;">  
+                <div *ngIf="allMenu.active == true">
+                    <div class="col-12 row menu-button" (click)="popUp(allMenu)" 
+                    *ngFor="let menuInfo of allMenu.childMstItemTranslation;">
+                        <div class="col-3 text-center">
+                            <div *ngIf="allMenu.photoPath !== '' ">
+                                <img src="{{allMenu.photoPath}}">
+                            </div>
+                            <div *ngIf="allMenu.photoPath == '' ">
+                                <div style="border: 2px solid black;">
+                                    <p>No Image</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-7">
                             <p>{{menuInfo.itemName}}</p>
                             <p class="desiption-text">{{menuInfo.description}}</p>
                                 <div class="price">
-                                <p class="pt-4">{{recommend.price}} bath</p>    
+                                <p class="pt-4">{{allMenu.price}} bath</p>    
                                 </div>
                         </div>
                         <div class="col-2 align-self-center text-center">
@@ -79,14 +97,14 @@
             <!-- <img src="../../../../../assets/dist/img/Close.png"/> -->
             <p>&#10005;</p>
         </div>
-        <div class="pb-1">
-            <p>Menu: {{this.menuSelected.name}}</p>
-            <p class="desiption-text">{{this.menuSelected.description}}</p>
+        <div class="pb-1" *ngFor="let item of this.menuSelected.childMstItemTranslation">
+            <p>Menu: {{item.itemName}}</p>
+            <p class="desiption-text">{{item.description}}</p>
         </div>
         <hr>
         <div class="pb-2">
             <p>Comment</p>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+            <textarea class="form-control" rows="5" #comment></textarea>
         </div>
         <div class="row pb-3">
             <div class="col-4 text-right" (click)="changeDishNumber('minus')">
@@ -105,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="row gold-button">
+        <div class="row gold-button" (click)="addToCart(comment.value)">
             <div class="col-6">
                 <p>Add to cart</p>
             </div>

@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CustomerAddressService {
   baseUrl = environment.apiSysUrl;
+  headers = new HttpHeaders().set('content-type', 'application/json');
   apiKey = 'TestAPIKey';
   token = localStorage.getItem('token');
 

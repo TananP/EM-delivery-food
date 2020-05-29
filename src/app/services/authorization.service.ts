@@ -21,10 +21,6 @@ export class AuthorizationService {
   }
 
   checkAuthorization(){
-    // if (this.checkFirstTime !== 'false' && this.token === null){
-    //   localStorage.setItem('firstTime' , 'false');
-    //   window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
-    // }
     if (this.token) {
       const tokenJSON = JSON.parse(this.token);
       if (Date.now() > tokenJSON.expires * 1000) {

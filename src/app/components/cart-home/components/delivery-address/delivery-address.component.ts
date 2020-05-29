@@ -28,14 +28,13 @@ export class DeliveryAddressComponent implements OnInit {
   public editAddressList: any;
   public deleteAddressList: any;
 
-  private id =  JSON.parse(localStorage.getItem('token'));
-  private apiKeyTest = 'APIKeyTest';
+  private token =  JSON.parse(localStorage.getItem('token'));
 
   constructor(private customerAddressAPI: CustomerAddressService) {}
 
   ngOnInit(): void {
     // this.getPosition();
-    this.customerAddressAPI.getCustomerAddressList(this.id.id).subscribe(x => {
+    this.customerAddressAPI.getCustomerAddressList(this.token.id).subscribe(x => {
       // console.log(x);
       this.addressList = x;
     });
@@ -125,7 +124,7 @@ export class DeliveryAddressComponent implements OnInit {
         this.setAddressDefault = false;
       }
       // tslint:disable-next-line: max-line-length
-      const addressInfoList = {customerId: this.id.id
+      const addressInfoList = {customerId: this.token.id
         , name: nameAddress, note: comment, detail: address, default: this.setAddressDefault , telephoneNumber: phonNumber
         , mapLatitude: this.lat , mapLongitude: this.lng};
 

@@ -41,6 +41,7 @@
                     </div>
                 </div>
             </div>
+            <hr class="underline">
         <!---------------------------------------------------->
         <!--------------- Comment area ----------------------->
             <!-- <div>
@@ -48,6 +49,9 @@
                 <textarea class="form-control" rows="2" id="comment"></textarea>
             </div> -->
         <!------------------------------------------------------>
+            <div>
+                <app-order-list></app-order-list>
+            </div>
         <!---------------- Summary button -------------------->
             <div class="row cart-button text-center">
                 <div class="col-2">
@@ -63,6 +67,9 @@
         <!---------------------------------------------------->
     </div>
 </div>
+
+
+<!-- Pop Up -->
 <div class="pop-up-cart" *ngIf="this.deliveryAddress">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress()"><p class="pt-2"> < </p></div>
