@@ -1,5 +1,5 @@
 <div>
-    <div>
+    <div class="gold">
         <h5>Summary</h5>
     </div>
     <!-- <div *ngFor="let item of this.orderList">
@@ -37,31 +37,33 @@
     </div> -->
     <div *ngFor="let item of this.groupOrderList | keyvalue">
         <div class="order-list-item">
-            <div>
+            <div class="gold pb-3 order-item-title">
                 {{item.key}}
             </div>
-            <div class="row" *ngFor="let itemInfo of item.value">
+            <div class="row mb-2" *ngFor="let itemInfo of item.value">
                 <div class="col-2 text-center">
-                    {{itemInfo.amount}}
+                    <div class="item-amount">
+                        {{itemInfo.itemAmount}}x
+                    </div>
                 </div>
                 <div class="col-8">
                     <div class="mb-3">
-                        <div>
+                        <div class="order-item-title">
                             {{itemInfo.itemName}}
                         </div>
                         <div>
-                            {{itemInfo.note}}
+                            {{itemInfo.itemNote}}
                         </div>
                     </div>
-                    <div (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount)">
+                    <div class="gold" (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount)">
                         <p>Delete</p>
                     </div>
                 </div>
                 <div class="col-2 text-center">
-                    <div class="mb-3">
+                    <div class="mb-3 order-item-title">
                         <p>{{itemInfo.itemAmount * itemInfo.price}}</p>
                     </div>
-                    <div class="mb-3" (click)="editPopUp(itemInfo.itemName, itemInfo.customerID,
+                    <div class="mb-3 gold" (click)="editPopUp(itemInfo.itemName, itemInfo.customerID,
                     itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount, itemInfo.itemNote)">
                         <p>Edit</p>
                     </div>

@@ -15,7 +15,6 @@ export class OrderListComponent implements OnInit {
   public deleteConfirmPopUp: boolean;
   // test
   public groupOrderList: any;
-
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {

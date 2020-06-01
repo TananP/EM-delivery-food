@@ -1,8 +1,18 @@
 .order-list-item{
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     padding: 0.25rem;
     margin: 2.5vh 0;
+    font-size: 0.75rem;
 }
 .pop-up-content{
     width: 95%;
+}
+.order-item-title{
+    font-size: 1rem;
+}
+.item-amount{
+    background: #B39462;
+    padding: 0.5rem 0;
+    color: white;
+    border-radius: 2rem;
 }
