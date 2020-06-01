@@ -23,22 +23,29 @@ export class DeliveryComponent implements OnInit {
 
   public menuList: any;
   public openPopUp: boolean;
-  public numberEachDish: number;
   public openCartPopUp: boolean;
+  public openErrorPopUp: boolean;
+  public numberEachDish: number;
+  public errorMessage: string;
 
   // tslint:disable-next-line: max-line-length
   constructor( private route: ActivatedRoute , private merchantService: MerchantService, private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
-    this.openPopUp = false;
-    this.openCartPopUp = false;
-    this.numberEachDish = 1;
-    this.menuList = [];
-    this.restaurantInfo = [];
+    this.initValue();
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.menuList = x;
       // console.log(x);
     });
+  }
+  initValue(){
+    this.openPopUp = false;
+    this.openCartPopUp = false;
+    this.openErrorPopUp = false;
+    this.errorMessage = '';
+    this.numberEachDish = 1;
+    this.menuList = [];
+    this.restaurantInfo = [];
   }
   // popUp(itemId: number , menuName: string , menuDescription: string , menuPrice: number){
     // this.menuSelected = {itemID: null , name: '', description: '', price: 0};
@@ -80,9 +87,29 @@ export class DeliveryComponent implements OnInit {
   addToCart(comment){
     const customerOrder = {customerId: this.token.id, merchantId: this.merchantId,
       itemId: this.menuSelected.itemId, amount: this.numberEachDish , note: comment};
-    console.log(customerOrder);
+    // console.log(customerOrder);
     this.customerOrderService.addOrder(customerOrder).subscribe( x => {
-      console.log(x);
+      // console.log(x);
+      if (x === 'ITEM_001') {
+        this.openErrorPopUp = true;
+        this.errorMessage = 'Could not find this menu.';
+      }
+      if (x === 'ITEM_002') {
+        this.openErrorPopUp = true;
+        this.errorMessage = 'This menu is out of order.';
+      }
+      if (x === 'MERCHANT_001') {
+        this.openErrorPopUp = true;
+        this.errorMessage = 'Could not find this resterant.';
+      }
+      if (x === 'MERCHANT_002') {
+        this.openErrorPopUp = true;
+        this.errorMessage = 'This resterant is not active.';
+      }
+      if (x === 'MERCHANT_003') {
+        this.openErrorPopUp = true;
+        this.errorMessage = 'This resterant is close';
+      }
       this.closePopUp();
     });
   }

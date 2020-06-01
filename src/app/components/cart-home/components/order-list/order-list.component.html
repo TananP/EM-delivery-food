@@ -37,22 +37,22 @@
     </div> -->
     <div *ngFor="let item of this.groupOrderList | keyvalue">
         <div class="order-list-item">
-            <div class="gold pb-3 order-item-title">
-                {{item.key}}
+            <div class="gold order-item-title">
+                <p>{{item.key}}</p>
             </div>
-            <div class="row mb-2" *ngFor="let itemInfo of item.value">
+            <div class="row mb-2 mt-4" *ngFor="let itemInfo of item.value">
                 <div class="col-2 text-center">
                     <div class="item-amount">
-                        {{itemInfo.itemAmount}}x
+                        <p>{{itemInfo.itemAmount}}x</p>
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="mb-3">
                         <div class="order-item-title">
-                            {{itemInfo.itemName}}
+                            <p>{{itemInfo.itemName}}</p>
                         </div>
                         <div>
-                            {{itemInfo.itemNote}}
+                           <p>{{itemInfo.itemNote}}</p>
                         </div>
                     </div>
                     <div class="gold" (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount)">
@@ -133,4 +133,19 @@
             </div>
         </div>
     </div>
+<!-------------------------------------------->
+<!------ Error pop up  ----------->
+<div class="pop-up" *ngIf="this.openErrorPopUp">
+    <div class="pop-up-content text-center">
+        <div (click)="this.openErrorPopUp = false" class="text-right">
+            <p>&#10005;</p>
+        </div>
+        <div class="pt-3 pb-3"><p>{{this.errorMessage}}</p></div>
+        <div (click)="this.openErrorPopUp = false">
+            <div class="gold-button ml-3 mr-3">
+                <p>Close</p>
+            </div>
+        </div>
+    </div>
+</div>
 <!-------------------------------------------->

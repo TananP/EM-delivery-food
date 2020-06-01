@@ -3,7 +3,7 @@
         <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeCartPage()">&times;</div>
         <div class="col-8 mb-0 text-center"><h5 class="p-2">Cart</h5></div>
     </div>
-    <div class="pop-up-content">
+    <div class="container pop-up-content">
         <!--------------- Address area -------------------->
             <div *ngIf="this.showName">
                 <p>Addrees</p>
@@ -75,5 +75,7 @@
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress()"><p class="pt-2"> < </p></div>
         <div class="col-8 text-center"><h5 class="p-2">Address delivery</h5></div>
     </div>
-    <app-delivery-address (selectedAddress)="addressSelected($event)"></app-delivery-address>
+    <div class="container">
+        <app-delivery-address (selectedAddress)="addressSelected($event)"></app-delivery-address>
+    </div>
 </div>

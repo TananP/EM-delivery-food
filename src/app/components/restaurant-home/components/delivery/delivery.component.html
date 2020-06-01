@@ -158,3 +158,19 @@
     <app-cart-home></app-cart-home>
 </div>
 <!--------------------------------------------->
+
+<!------ Error pop up  ----------->
+<div class="pop-up" *ngIf="this.openErrorPopUp">
+    <div class="pop-up-content text-center">
+        <div (click)="this.openErrorPopUp = false" class="text-right">
+            <p>&#10005;</p>
+        </div>
+        <div class="pt-3 pb-3"><p>{{this.errorMessage}}</p></div>
+        <div (click)="this.openErrorPopUp = false">
+            <div class="gold-button ml-3 mr-3">
+                <p>Close</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------------------------->

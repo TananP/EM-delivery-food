@@ -20,6 +20,9 @@ p{
 a{
     color: #1a1a1a;
 }
+.container{
+    word-break: break-word;
+}
 .desiption-text{
     color: #b3b3b3;
 }
@@ -83,7 +86,7 @@ a{
     margin: auto;
     padding: 1rem;
     color: black;
-    width: 100%;
+    width: 95%;
 }
 .gold-button{
     background-color: #B39462;

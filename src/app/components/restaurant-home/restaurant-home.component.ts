@@ -25,7 +25,7 @@ export class RestaurantHomeComponent implements OnInit {
     this.restaurantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName , this.locationId , this.floorId , this.departmentId ).subscribe( x => {
       this.restaurantInfo = x;
-      console.log(x);
+      // console.log(x);
     });
   }
 }
