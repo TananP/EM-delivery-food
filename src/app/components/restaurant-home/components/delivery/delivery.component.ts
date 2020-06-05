@@ -76,12 +76,8 @@ export class DeliveryComponent implements OnInit {
     }
   }
 
-  openCart(trigger: boolean){
-    if (trigger){
-      this.openCartPopUp = true;
-    }else{
-      this.openCartPopUp = false;
-    }
+  openCart(){
+    this.openCartPopUp = true;
   }
 
   addToCart(comment){
@@ -89,28 +85,17 @@ export class DeliveryComponent implements OnInit {
       itemId: this.menuSelected.itemId, amount: this.numberEachDish , note: comment};
     // console.log(customerOrder);
     this.customerOrderService.addOrder(customerOrder).subscribe( x => {
-      // console.log(x);
-      if (x === 'ITEM_001') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'Could not find this menu.';
-      }
-      if (x === 'ITEM_002') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This menu is out of order.';
-      }
-      if (x === 'MERCHANT_001') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'Could not find this resterant.';
-      }
-      if (x === 'MERCHANT_002') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This resterant is not active.';
-      }
-      if (x === 'MERCHANT_003') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This resterant is close';
-      }
+      this.closePopUp();
+    }, error => {
+      const result = this.customerOrderService.checkErrorCode(error.error.code);
+      console.log(result);
+      this.openErrorPopUp = true;
+      this.errorMessage = result;
       this.closePopUp();
     });
+  }
+
+  receviveStatusev(){
+    this.openCartPopUp = false;
   }
 }

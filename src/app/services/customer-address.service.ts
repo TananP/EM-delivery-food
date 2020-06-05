@@ -11,11 +11,7 @@ export class CustomerAddressService {
   apiKey = 'TestAPIKey';
   token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {
-    if (this.token === null) {
-      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   // getCustomAddress(id) {
   //   const token = this.token;
@@ -28,7 +24,9 @@ export class CustomerAddressService {
 
   getCustomerAddressList(customerId){
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressByCustomerId', { params: {
-        id: customerId
+        id: customerId,
+        checkDistance: 'true',
+        checkPrice: 'true'
       },
       headers: {
         'ApiKey' : this.apiKey,

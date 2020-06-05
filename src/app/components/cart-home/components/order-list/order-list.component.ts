@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
 @Component({
   selector: 'app-order-list',
@@ -6,6 +6,7 @@ import {CustomerOrderService} from 'src/app/services/customer-order.service';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit {
+  @Output() getSummary = new EventEmitter();
 
   private token =  JSON.parse(localStorage.getItem('token'));
 
@@ -14,17 +15,23 @@ export class OrderListComponent implements OnInit {
   public menuDelete: any;
   public groupOrderList: any;
 
+  public totalSum: number;
+  public totalOrder: number;
+
   public openPopUp: boolean;
   public deleteConfirmPopUp: boolean;
   public openErrorPopUp: boolean;
 
   public errorMessage: string;
 
-  constructor(private customerOrderService: CustomerOrderService) { }
+  constructor(private customerOrderService: CustomerOrderService) {
+  }
 
   ngOnInit(): void {
     this.openErrorPopUp = false;
     this.errorMessage = '';
+    this.totalSum = 0;
+    this.totalOrder = 0;
     this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
       this.orderList = x;
       this.groupOrdering();
@@ -37,20 +44,20 @@ export class OrderListComponent implements OnInit {
       groupByName [a.merchant.childMstMerchantTranslation[0].name].push(
         { customerID: a.customerId, merchantID: a.merchantId, itemID: a.itemId ,
           itemName: a.item.childMstItemTranslation[0].itemName , itemAmount: a.amount,
-          price: a.item.price , itemNote: a.note}
+          price: a.item.price , itemNote: a.note , sum: a.amount * a.item.price}
         );
       // console.log(a);
+      this.totalSum = this.totalSum + (a.amount * a.item.price);
+      this.totalOrder = this.totalOrder + a.amount;
     });
     this.groupOrderList = groupByName;
-    // console.log(this.groupOrderList);
+    this.getSummary.emit([this.totalOrder, this.totalSum]);
   }
 
   editPopUp(name, customerID, merchantID, itemID, itemAmount , itemNote){
     this.openPopUp = true;
     this.menuSelected = {itemName: name, customerId: customerID, merchantId: merchantID,
       itemId: itemID, amount: itemAmount , note: itemNote};
-    console.log(this.menuSelected);
-    // this.menuSelected = menu;
   }
 
   closePopUp(){
@@ -76,31 +83,14 @@ export class OrderListComponent implements OnInit {
   updateMenu(itemNote){
     this.menuSelected.note = itemNote;
     this.customerOrderService.updateOrder(this.menuSelected).subscribe( x => {
-      // console.log(x);
       this.closePopUp();
-      // x = 'MERCHANT_003';
-      if (x === 'ITEM_001') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'Could not find this menu.';
-      }
-      if (x === 'ITEM_002') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This menu is out of order.';
-      }
-      if (x === 'MERCHANT_001') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'Could not find this resterant.';
-      }
-      if (x === 'MERCHANT_002') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This resterant is not active.';
-      }
-      if (x === 'MERCHANT_003') {
-        this.openErrorPopUp = true;
-        this.errorMessage = 'This resterant is close';
-      }else{
-        this.ngOnInit();
-      }
+      this.ngOnInit();
+    } , error => {
+      const result = this.customerOrderService.checkErrorCode(error.error.code);
+      // console.log(result);
+      this.openErrorPopUp = true;
+      this.errorMessage = result;
+      this.closePopUp();
     });
   }
 
@@ -108,16 +98,10 @@ export class OrderListComponent implements OnInit {
     this.menuDelete = {customerId: customerID, merchantId: merchantID,
       itemId: itemID, amount: itemAmount};
     this.deleteConfirmPopUp = true;
-    // console.log(customerOrder);
-    // this.customerOrderService.deleteOrder(this.menuDelete ).subscribe( x => {
-    //   // console.log(x);
-    //   this.ngOnInit();
-    // });
   }
   deleteConfirmation(vlaue){
     if (vlaue === true){
       this.customerOrderService.deleteOrder(this.menuDelete).subscribe( x => {
-        // console.log(x);
         if (x === 'SUCCESS'){
           this.deleteConfirmPopUp = false;
           this.menuDelete = {};

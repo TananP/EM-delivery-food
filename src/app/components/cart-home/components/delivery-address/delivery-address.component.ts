@@ -30,32 +30,57 @@ export class DeliveryAddressComponent implements OnInit {
 
   private token =  JSON.parse(localStorage.getItem('token'));
 
-  constructor(private customerAddressAPI: CustomerAddressService) {}
+  constructor(private customerAddressAPI: CustomerAddressService) {
+    this.getPosition();
+  }
 
   ngOnInit(): void {
     // this.getPosition();
     this.customerAddressAPI.getCustomerAddressList(this.token.id).subscribe(x => {
-      // console.log(x);
       this.addressList = x;
     });
   }
 
   getPosition(): Promise<any>
   {
-    return new Promise((resolve, reject) => {
+    // return new Promise((resolve, reject) => {
+    return new Promise((reject) => {
       // Get location lat lng
       navigator.geolocation.getCurrentPosition(resp => {
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+          // resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+          // console.log(resp.coords.longitude);
           this.latCenter = resp.coords.latitude;
           this.lngCenter = resp.coords.longitude;
+          // console.log('lng === ' + this.lngCenter + 'lat ===' + this.latCenter);
           this.lat = this.latCenter;
           this.lng = this.lngCenter;
         },
         err => {
-          reject(err);
+          this.latCenter = 13.7319703;
+          this.lngCenter = 100.5696853;
+          this.lat = this.latCenter;
+          this.lng = this.lngCenter;
+          // reject(err);
         });
     });
   }
+
+  // getPosition(): void {
+  //   if (navigator.geolocation) {
+  //     console.log('Support for geolocation');
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       const longitude = position.coords.longitude;
+  //       const latitude = position.coords.latitude;
+  //       this.latCenter = longitude;
+  //       this.lngCenter = latitude;
+  //       this.lat = this.latCenter;
+  //       this.lng = this.lngCenter;
+  //       });
+  //   } else {
+  //     console.log('No support for geolocation');
+  //   }
+  // }
+
   setMarker(event){
     this.lat = event.latLng.lat();
     this.lng = event.latLng.lng();
@@ -105,16 +130,34 @@ export class DeliveryAddressComponent implements OnInit {
 
   selectAddess(index){
     this.activeIndex = index;
+    // console.log(this.activeIndex);
     // this.selectedAddress.emit(index);
   }
   confirmSelectAddess(){
     if (this.activeIndex !== null) {
-      this.selectedAddress.emit(this.activeIndex);
+      const address = [];
+      address.push({addressId: this.activeIndex.addressId , customerId: this.activeIndex.customerId ,
+        telephoneNumber: this.activeIndex.telephoneNumber, name: this.activeIndex.name,
+        detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
+
+      this.selectedAddress.emit(address);
     }
   }
   addAddressPopUp(){
     this.addAddress = true;
     this.getPosition();
+    // navigator.permissions.query({name: 'geolocation'}).then(result => {
+    //   if (result.state === 'granted') {
+    //     console.log('granted');
+    //     this.addAddress = true;
+    //   } else if (result.state === 'prompt') {
+    //     console.log('prompt');
+    //     // this.addAddress = true;
+    //   } else if (result.state === 'denied') {
+    //     console.log('denied');
+    //     // this.addAddress = true;
+    //   }
+    // });
   }
   insertNewAddress(nameAddress, phonNumber , address , comment){
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {

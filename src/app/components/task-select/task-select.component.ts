@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task-select.component.scss']
 })
 export class TaskSelectComponent implements OnInit {
-
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   saveData(task: string){
     localStorage.setItem('task', task);
   }

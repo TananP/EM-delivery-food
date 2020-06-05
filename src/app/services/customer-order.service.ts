@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,11 +12,7 @@ export class CustomerOrderService {
   apiKey = 'TestAPIKey';
   token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {
-    if (this.token === null) {
-      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   addOrder(order){
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/InsertOrderItem', order , {
@@ -52,5 +49,22 @@ export class CustomerOrderService {
         'Authorization': 'Bearer ' + this.token
       }
     });
+  }
+  checkErrorCode(code){
+    if (code === 'ITEM_001') {
+      return 'Could not find this menu.';
+    }
+    if (code === 'ITEM_002') {
+      return 'This menu is out of order.';
+    }
+    if (code === 'MERCHANT_001') {
+      return 'Could not find this resterant.';
+    }
+    if (code === 'MERCHANT_002') {
+      return 'This resterant is not active.';
+    }
+    if (code === 'MERCHANT_003') {
+      return 'This resterant is close';
+    }
   }
 }

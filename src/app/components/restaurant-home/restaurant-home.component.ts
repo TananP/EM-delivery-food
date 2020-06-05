@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantService } from 'src/app/services/merchant.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-restaurant-home',
@@ -18,10 +19,11 @@ export class RestaurantHomeComponent implements OnInit {
 
   public restaurantInfo: any;
 
-  constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService , private authorizationAPI: AuthorizationService) {
    }
 
   ngOnInit(): void {
+    this.authorizationAPI.checkAuthorization();
     this.restaurantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName , this.locationId , this.floorId , this.departmentId ).subscribe( x => {
       this.restaurantInfo = x;

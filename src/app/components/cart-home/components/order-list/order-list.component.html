@@ -1,71 +1,40 @@
-<div>
+<div class="order-list-box">
     <div class="gold">
         <h5>Summary</h5>
     </div>
-    <!-- <div *ngFor="let item of this.orderList">
-        <div class="order-list-item">
-            <div>
-                {{item.merchant.childMstMerchantTranslation[0].name}}
-            </div>
-            <div class="row" *ngFor="let itemInfo of item.item.childMstItemTranslation">
-                <div class="col-2 text-center">
-                    {{item.amount}}
+    <div class="order-area">
+        <div *ngFor="let item of this.groupOrderList | keyvalue">
+            <div class="order-list-item">
+                <div class="gold order-item-title">
+                    <p>{{item.key}}</p>
                 </div>
-                <div class="col-8">
-                    <div class="mb-3">
-                        <div>
-                            {{itemInfo.itemName}}
-                        </div>
-                        <div>
-                            {{item.note}}
+                <div class="row mb-2 mt-4" *ngFor="let itemInfo of item.value">
+                    <div class="col-2 text-center">
+                        <div class="item-amount">
+                            <p>{{itemInfo.itemAmount}}x</p>
                         </div>
                     </div>
-                    <div (click)="deleteOrder(item.customerId, item.merchantId, item.itemId, item.amount)">
-                        <p>Delete</p>
-                    </div>
-                </div>
-                <div class="col-2 text-center">
-                    <div class="mb-3">
-                        <p>{{item.amount * item.item.price}}</p>
-                    </div>
-                    <div class="mb-3" (click)="popUp(itemInfo.itemName, item.customerId, item.merchantId, item.itemId, item.amount, item.note)">
-                        <p>Edit</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div *ngFor="let item of this.groupOrderList | keyvalue">
-        <div class="order-list-item">
-            <div class="gold order-item-title">
-                <p>{{item.key}}</p>
-            </div>
-            <div class="row mb-2 mt-4" *ngFor="let itemInfo of item.value">
-                <div class="col-2 text-center">
-                    <div class="item-amount">
-                        <p>{{itemInfo.itemAmount}}x</p>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="mb-3">
-                        <div class="order-item-title">
-                            <p>{{itemInfo.itemName}}</p>
+                    <div class="col-8">
+                        <div class="mb-3">
+                            <div class="order-item-title">
+                                <p>{{itemInfo.itemName}}</p>
+                            </div>
+                            <div>
+                            <p>{{itemInfo.itemNote}}</p>
+                            </div>
                         </div>
-                        <div>
-                           <p>{{itemInfo.itemNote}}</p>
+                        <div class="gold" (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount)">
+                            <p>Delete</p>
                         </div>
                     </div>
-                    <div class="gold" (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount)">
-                        <p>Delete</p>
-                    </div>
-                </div>
-                <div class="col-2 text-center">
-                    <div class="mb-3 order-item-title">
-                        <p>{{itemInfo.itemAmount * itemInfo.price}}</p>
-                    </div>
-                    <div class="mb-3 gold" (click)="editPopUp(itemInfo.itemName, itemInfo.customerID,
-                    itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount, itemInfo.itemNote)">
-                        <p>Edit</p>
+                    <div class="col-2 text-center">
+                        <div class="mb-3 order-item-title">
+                            <p>{{itemInfo.itemAmount * itemInfo.price}}</p>
+                        </div>
+                        <div class="mb-3 gold" (click)="editPopUp(itemInfo.itemName, itemInfo.customerID,
+                        itemInfo.merchantID, itemInfo.itemID, itemInfo.itemAmount, itemInfo.itemNote)">
+                            <p>Edit</p>
+                        </div>
                     </div>
                 </div>
             </div>

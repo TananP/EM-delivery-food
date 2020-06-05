@@ -1,4 +1,4 @@
-<div class="bg-black">
+<div class="bg-black pb-1">
     <!-------------- Silde menu --------------------->
     <div id="sideMenu" class="sidenav text-center pt-2">
         <div class="col-12 text-left mb-2 pl-2 pr-0 row close-button">
@@ -24,11 +24,13 @@
     <!--------------------------------------------------->
 
     <!--------------- All header part --------------------->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-2">
-            <a class="nav-link pointer" (click)="openMenu(true)">
-                <img class="width-50" src="./assets/dist/img/Menu.png"/>
-            </a>
+            <div class="nav-link pointer" (click)="openMenu(true)">
+                <div class="nav-item">
+                    <img class="width-50" src="./assets/dist/img/Menu.png"/>
+                </div>
+            </div>
         </div>
         <div class="col-8 text-center pt-1 pb-1">
             <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;">
@@ -41,13 +43,38 @@
         <div class="col-2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-right pr-2 pointer" (click)="openPopUp('cart',true)">
+                    <div class="nav-link text-right pr-2 pointer" (click)="openPopUp('cart',true)">
                         <img class="width-50" src="./assets/dist/img/Cart.png"/>
                         <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
+                    </div>
                 </li>
             </ul>
         </div>
+    </div> -->
+    <div class="row">
+        <div class="col-2 text-center">
+            <div class="p-2" (click)="openMenu(true)">
+                <img class="width-side-menu-img" src="./assets/dist/img/Menu.png"/>
+            </div>
+        </div>
+        <div class="col-8 text-center pt-1 pb-1">
+            <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;">
+                <img class="width-title-img" src="./assets/dist/img/Logo_Em_dinning.png"/>
+            </h5>
+        </div>
+        <div class="col-2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <div class="nav-link text-right pr-2 pointer" (click)="openPopUp('cart',true)">
+                        <img class="width-cart-img" src="./assets/dist/img/Cart.png"/>
+                        <span class="badge badge-danger navbar-badge">{{this.orderAmount}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center">
+        <app-search [taskData]="this.taskData"></app-search>
     </div>
     <!---------------------------------------------->
     <!-------------- Cart pop up ------------------->
@@ -58,7 +85,7 @@
         </div>
         <app-cart-home></app-cart-home>
     </div> -->
-    <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus()"></app-cart-home>
+    <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home>
     
     <!-------------- History pop up ----------------->
     <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">

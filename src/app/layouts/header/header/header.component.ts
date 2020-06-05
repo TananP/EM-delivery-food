@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {CustomerOrderService} from 'src/app/services/customer-order.service';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +9,30 @@ import { Component, OnInit, Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() taskData: string;
   @Input() searchPage: boolean;
+
+  public orderList: any;
+  public token = JSON.parse(localStorage.getItem('token'));
+
+  public orderAmount = 0;
   public cartPopUp: boolean;
   public historyPopUp: boolean;
   public orderPopUp: boolean;
 
-  constructor() {}
+  constructor(private customerOrderService: CustomerOrderService) {}
 
   ngOnInit(): void {
     this.cartPopUp = false;
     this.historyPopUp = false;
     this.orderPopUp = false;
+    this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
+      this.orderList = x;
+      this.getSumNumberOrder();
+    });
+  }
+  getSumNumberOrder(){
+    this.orderList.forEach( a => {
+      this.orderAmount = this.orderAmount + a.amount;
+    });
   }
   openMenu(trigger: boolean){
     if (trigger) {
@@ -49,7 +64,8 @@ export class HeaderComponent implements OnInit {
           break;
     }
   }
-  receviveStatus(){
+  receviveStatus(event){
+    this.orderAmount = event;
     this.cartPopUp = false;
   }
 }

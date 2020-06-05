@@ -5,9 +5,9 @@
     <!------ Render shop from shop list in hame page ------->
     <div class="row pt-2 pb-2 text-center">
         <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
-            <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
-                <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]">
-                    {{restaurantsInfo.name}}
+            <div class="restaurants-button" *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
+                <div [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]">
+                    <p>{{restaurantsInfo.name}}</p>
                 </div>
             </div>    
         </div>

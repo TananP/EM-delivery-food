@@ -1,10 +1,5 @@
 .active{
-    background-color: yellow;
-}
-.address-box-default{
-    border: 2px solid #B39462;
-    padding: 0.25rem;
-    font-size: 0.75rem;
+    background-color: #b3946273;
 }
 .address-box{
     border-bottom: 2px solid #B39462;
@@ -39,14 +34,6 @@
     background-color: #B39462;
     color: white;
     border: 2px solid black;
-}
-.deliver-buttton{
-    position: absolute;
-    bottom: 5vh;
-    width: 90%;
-    padding: 1vh 0;
-    color: white;
-    background-color: #B39462;
 }
 .verlify-invalid{
     color: red;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-delivery-home',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeliveryHomeComponent implements OnInit {
 
-  constructor() {}
+  constructor(private authorizationAPI: AuthorizationService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authorizationAPI.checkAuthorization();
+  }
 
 }

@@ -1,0 +1,16 @@
+<div class="pop-up-content text-center">
+    <div class="gold">
+        <h3>Pick up address</h3>
+    </div>
+    <!-------- All pick up location ---------->
+    <div *ngFor="let item of this.pickUpLoList">
+        <div (click)="selectAddess(item)"  class="address-box-default" [class.active]="item === activeItem">
+            <p>{{item.categoryName}}</p>
+        </div>
+    </div>
+    <!--------------------------->
+    <!-- Pick up here button -->
+    <div (click)="confirmSelectAddess()" class="text-center deliver-buttton">
+        <p>Deliver here</p>
+    </div>
+</div>

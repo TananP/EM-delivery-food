@@ -8,20 +8,26 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./check-login.component.scss']
 })
 export class CheckLoginComponent implements OnInit {
-  public login = this.route.snapshot.paramMap.get('loginID');
+  public loginCode = this.route.snapshot.paramMap.get('loginID');
   public tokenObj: any;
-  constructor(private route: ActivatedRoute, private authorizationAPI: AuthorizationService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.authorizationAPI.getToken(this.login).subscribe(x => {
+  constructor(private route: ActivatedRoute, private authorizationAPI: AuthorizationService, private router: Router) {
+    // console.log(this.loginCode);
+    this.authorizationAPI.getToken(this.loginCode).subscribe(x => {
+      // console.log(x);
       this.tokenObj = x;
     }, error => {
-      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+      // redirect local hosty
+      // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+      // redirect to production
+      // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
     }, () => {
       // No errors and on completed
       localStorage.setItem('token', JSON.stringify(this.tokenObj));
       this.router.navigate(['']);
     });
+  }
+
+  ngOnInit(): void {
   }
 
 }

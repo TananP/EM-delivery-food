@@ -11,11 +11,7 @@ export class MerchantService {
   apiKey = 'TestAPIKey';
   token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {
-    if (this.token === null) {
-      window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   getMerchantList() {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');
@@ -64,5 +60,51 @@ export class MerchantService {
         'Authorization': 'Bearer ' + this.token
       }
     });
+  }
+  pickUp(){
+    return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup' , { headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
+      }
+    });
+  }
+  getCoupon(customerID){
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetCouponByCustomerId' , { params: {
+      customerId: customerID
+    } , headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token
+    }
+    });
+  }
+  updateUsedCoupon(customerID , couponID){
+    return this.http.get(this.baseUrl + 'web_api/api/MerchantCoupon/UpdateCouponUsed' , { params: {
+      customerId: customerID,
+      couponCode: couponID
+    } , headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token
+    }
+    });
+  }
+  checkErrorCoupon(code){
+    if (code === 'COUPON_001') {
+      return 'Coupon not found.';
+    }
+    if (code === 'COUPON_002') {
+      return 'Coupon is out of order.';
+    }
+    if (code === 'COUPON_003') {
+      return 'Coupon expired.';
+    }
+    if (code === 'COUPON_004') {
+      return 'Coupon Code was used.';
+    }
+    if (code === 'COUPON_005') {
+      return 'Invalid Customer Id.';
+    }
+    if (code === 'COUPON_006') {
+      return 'Invalid Coupon Code.';
+    }
   }
 }

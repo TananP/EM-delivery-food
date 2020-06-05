@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
-// import { CustomerAddressService } from 'src/app/services/customer-address.service';
-
+import { MerchantService } from 'src/app/services/merchant.service';
 @Component({
   selector: 'app-cart-home',
   templateUrl: './cart-home.component.html',
@@ -11,18 +10,22 @@ export class CartHomeComponent implements OnInit {
   @Output() popUpStatus = new EventEmitter();
   public deliveryAddress = false;
   public pickUp = false;
+  public totalOrder = 0;
+  public totalPrice = 0;
+  public errorPopUp = false;
+  public errorCodeText = '';
   public selectedAddress: any;
   public showName: boolean;
 
-  // private id =  JSON.parse(localStorage.getItem('token'));
+  private token =  JSON.parse(localStorage.getItem('token'));
   // private apiKeyTest = 'APIKeyTest';
-  constructor() {}
+  constructor(private merchantService: MerchantService) {}
 
   ngOnInit(): void {
-    // this.customerAddressAPI.getCustomerAddressList(this.id.id , this.apiKeyTest, this.id.token).subscribe(x => {
-    //   console.log(x);
-    //   // this.addressList = x;
-    // });
+    this.merchantService.getCoupon(this.token.id).subscribe(x => {
+      // console.log('666 customer coupon 666');
+      // console.log(x);
+    });
   }
 
   openPickUpPopUp(){
@@ -34,16 +37,44 @@ export class CartHomeComponent implements OnInit {
   }
   closeCartPage(){
     this.cartPopUp = false;
-    this.popUpStatus.emit('55555');
+    this.popUpStatus.emit(this.totalOrder);
   }
-  closeAddress(){
+  closeAddress(name){
     this.cartPopUp = true;
-    this.deliveryAddress = false;
+    switch (name){
+      case 'delivery': {
+        this.deliveryAddress = false;
+        break;
+      }
+      case 'pickUp': {
+        this.pickUp = false;
+      }
+    }
+  }
+  renderSummary(event){
+    this.totalOrder = event[0];
+    this.totalPrice = event[1];
   }
   addressSelected(event){
     this.selectedAddress = event;
     this.showName = true;
-    this.pickUp = false;
-    this.closeAddress();
+    // console.log(this.selectedAddress);
+    // this.pickUp = false;
+    this.closeAddress(this.selectedAddress[0].type);
+  }
+  checkCouponCode(code){
+    if (code !== '') {
+      this.merchantService.updateUsedCoupon(this.token.id , code).subscribe(x => {
+        // console.log(x);
+      }, error => {
+        const result = this.merchantService.checkErrorCoupon(error.error.code);
+        // console.log(result);
+        this.errorCodeText = result;
+        this.errorPopUp = true;
+      });
+    }else {
+      this.errorPopUp = true;
+      this.errorCodeText = 'Emptry input.';
+    }
   }
 }

@@ -14,7 +14,7 @@ export class AppComponent {
   public routerPath = ' ';
   title = 'Delivery-Web';
 
-  constructor(private router: Router , private http: HttpClient , private authorizationService: AuthorizationService) {
+  constructor(private router: Router , private http: HttpClient ) {
     // Check Url
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -32,6 +32,6 @@ export class AppComponent {
         }
       }
     });
-    this.authorizationService.checkAuthorization();
+    // this.authorizationService.checkAuthorization();
   }
 }
