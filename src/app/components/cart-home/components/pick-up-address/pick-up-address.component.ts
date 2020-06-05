@@ -26,7 +26,7 @@ export class PickUpAddressComponent implements OnInit {
   confirmSelectAddess() {
     if (this.activeItem !== null) {
       const address = [];
-      address.push({name: this.activeItem.categoryName , type: 'pickUp'});
+      address.push({deliveryPrice: 0 , name: this.activeItem.categoryName , type: 'pickUp'});
       this.selectedAddress.emit(address);
     }
   }

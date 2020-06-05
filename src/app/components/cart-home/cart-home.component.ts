@@ -12,6 +12,7 @@ export class CartHomeComponent implements OnInit {
   public pickUp = false;
   public totalOrder = 0;
   public totalPrice = 0;
+  public originalTotalPrice: number;
   public errorPopUp = false;
   public errorCodeText = '';
   public selectedAddress: any;
@@ -32,13 +33,16 @@ export class CartHomeComponent implements OnInit {
     this.pickUp = true;
     this.showName = false;
   }
+
   openAddressPopUp(){
     this.deliveryAddress = true;
   }
+
   closeCartPage(){
     this.cartPopUp = false;
     this.popUpStatus.emit(this.totalOrder);
   }
+
   closeAddress(name){
     this.cartPopUp = true;
     switch (name){
@@ -51,17 +55,21 @@ export class CartHomeComponent implements OnInit {
       }
     }
   }
+
   renderSummary(event){
     this.totalOrder = event[0];
     this.totalPrice = event[1];
+    this.originalTotalPrice = this.totalPrice;
   }
+
   addressSelected(event){
     this.selectedAddress = event;
     this.showName = true;
-    // console.log(this.selectedAddress);
-    // this.pickUp = false;
+    this.totalPrice = this.originalTotalPrice;
+    this.totalPrice = this.totalPrice + this.selectedAddress[0].deliveryPrice;
     this.closeAddress(this.selectedAddress[0].type);
   }
+
   checkCouponCode(code){
     if (code !== '') {
       this.merchantService.updateUsedCoupon(this.token.id , code).subscribe(x => {

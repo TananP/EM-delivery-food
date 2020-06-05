@@ -91,20 +91,23 @@ export class MerchantService {
     if (code === 'COUPON_001') {
       return 'Coupon not found.';
     }
-    if (code === 'COUPON_002') {
+    else if (code === 'COUPON_002') {
       return 'Coupon is out of order.';
     }
-    if (code === 'COUPON_003') {
+    else if (code === 'COUPON_003') {
       return 'Coupon expired.';
     }
-    if (code === 'COUPON_004') {
+    else if (code === 'COUPON_004') {
       return 'Coupon Code was used.';
     }
-    if (code === 'COUPON_005') {
+    else if (code === 'COUPON_005') {
       return 'Invalid Customer Id.';
     }
-    if (code === 'COUPON_006') {
+    else if (code === 'COUPON_006') {
       return 'Invalid Coupon Code.';
     }
+    else {
+      return 'Unknown error.';
+     }
   }
 }

@@ -22,11 +22,22 @@ export class CustomerAddressService {
   //   });
   // }
 
-  getCustomerAddressList(customerId){
-    return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressByCustomerId', { params: {
-        id: customerId,
+  customerAddressCheck(addressId){
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressById', { params: {
+        id: addressId,
         checkDistance: 'true',
         checkPrice: 'true'
+      },
+      headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token
+      }
+    });
+  }
+
+  getCustomerAddressList(customerId){
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressByCustomerId', { params: {
+        id: customerId
       },
       headers: {
         'ApiKey' : this.apiKey,
@@ -87,4 +98,18 @@ export class CustomerAddressService {
     });
   }
 
+  checkErrorCode(code){
+    if (code === 'ADDRESS_001') {
+      return 'Invalid Latitude.';
+    }
+    else if (code === 'ADDRESS_002') {
+      return 'Invalid Longitude.';
+    }
+    else if (code === 'ADDRESS_003') {
+      return 'Location is out of area.';
+    }
+    else {
+      return 'Unknown error.';
+    }
+  }
 }

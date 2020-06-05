@@ -15,6 +15,8 @@ export class DeliveryAddressComponent implements OnInit {
   public addAddress = false;
   public deleteConfirmPopUp = false;
   public editAddress = false;
+  public openErrorPopUp = false;
+  public errorMessage = '';
   // Test
   public activeIndex = null;
   //
@@ -38,6 +40,7 @@ export class DeliveryAddressComponent implements OnInit {
     // this.getPosition();
     this.customerAddressAPI.getCustomerAddressList(this.token.id).subscribe(x => {
       this.addressList = x;
+      console.log(this.addressList);
     });
   }
 
@@ -64,22 +67,6 @@ export class DeliveryAddressComponent implements OnInit {
         });
     });
   }
-
-  // getPosition(): void {
-  //   if (navigator.geolocation) {
-  //     console.log('Support for geolocation');
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       const longitude = position.coords.longitude;
-  //       const latitude = position.coords.latitude;
-  //       this.latCenter = longitude;
-  //       this.lngCenter = latitude;
-  //       this.lat = this.latCenter;
-  //       this.lng = this.lngCenter;
-  //       });
-  //   } else {
-  //     console.log('No support for geolocation');
-  //   }
-  // }
 
   setMarker(event){
     this.lat = event.latLng.lat();
@@ -136,29 +123,25 @@ export class DeliveryAddressComponent implements OnInit {
   confirmSelectAddess(){
     if (this.activeIndex !== null) {
       const address = [];
-      address.push({addressId: this.activeIndex.addressId , customerId: this.activeIndex.customerId ,
-        telephoneNumber: this.activeIndex.telephoneNumber, name: this.activeIndex.name,
-        detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
-
-      this.selectedAddress.emit(address);
+      this.customerAddressAPI.customerAddressCheck(this.activeIndex.addressId).subscribe( x => {
+        this.activeIndex = x;
+        address.push({addressId: this.activeIndex.addressId , deliveryPrice: this.activeIndex.deliveryPrice ,
+          customerId: this.activeIndex.customerId , telephoneNumber: this.activeIndex.telephoneNumber,
+          name: this.activeIndex.name,
+          detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
+        this.selectedAddress.emit(address);
+      }, error => {
+        const result = this.customerAddressAPI.checkErrorCode(error.error.code);
+        this.errorMessage = result;
+        this.openErrorPopUp = true;
+      });
     }
   }
   addAddressPopUp(){
     this.addAddress = true;
     this.getPosition();
-    // navigator.permissions.query({name: 'geolocation'}).then(result => {
-    //   if (result.state === 'granted') {
-    //     console.log('granted');
-    //     this.addAddress = true;
-    //   } else if (result.state === 'prompt') {
-    //     console.log('prompt');
-    //     // this.addAddress = true;
-    //   } else if (result.state === 'denied') {
-    //     console.log('denied');
-    //     // this.addAddress = true;
-    //   }
-    // });
   }
+
   insertNewAddress(nameAddress, phonNumber , address , comment){
     if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
       if (this.addressList.length === 0){
@@ -166,7 +149,6 @@ export class DeliveryAddressComponent implements OnInit {
       }else{
         this.setAddressDefault = false;
       }
-      // tslint:disable-next-line: max-line-length
       const addressInfoList = {customerId: this.token.id
         , name: nameAddress, note: comment, detail: address, default: this.setAddressDefault , telephoneNumber: phonNumber
         , mapLatitude: this.lat , mapLongitude: this.lng};
@@ -174,8 +156,13 @@ export class DeliveryAddressComponent implements OnInit {
       this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
         this.addAddress = false;
         this.ngOnInit();
-    });
-  }
+      }, error => {
+        const result = this.customerAddressAPI.checkErrorCode(error.error.code);
+        // console.log(result);
+        this.errorMessage = result;
+        this.openErrorPopUp = true;
+      });
+    }
   }
   setDefaultAddress(address){
     this.customerAddressAPI.setDefault(address.customerId , address.addressId).subscribe( x => {
@@ -201,6 +188,11 @@ export class DeliveryAddressComponent implements OnInit {
       this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {
         this.editAddress = false;
         this.ngOnInit();
+      }, error => {
+        const result = this.customerAddressAPI.checkErrorCode(error.error.code);
+        // console.log(result);
+        this.errorMessage = result;
+        this.openErrorPopUp = true;
       });
     }
   }
@@ -216,6 +208,11 @@ export class DeliveryAddressComponent implements OnInit {
         this.deleteAddressList = {};
         this.deleteConfirmPopUp = false;
         this.ngOnInit();
+      }, error => {
+        const result = this.customerAddressAPI.checkErrorCode(error.error.code);
+        // console.log(result);
+        this.errorMessage = result;
+        this.openErrorPopUp = true;
       });
     }else{
       this.deleteAddressList = {};

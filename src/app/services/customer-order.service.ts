@@ -54,17 +54,20 @@ export class CustomerOrderService {
     if (code === 'ITEM_001') {
       return 'Could not find this menu.';
     }
-    if (code === 'ITEM_002') {
+    else if (code === 'ITEM_002') {
       return 'This menu is out of order.';
     }
-    if (code === 'MERCHANT_001') {
+    else if (code === 'MERCHANT_001') {
       return 'Could not find this resterant.';
     }
-    if (code === 'MERCHANT_002') {
+    else if (code === 'MERCHANT_002') {
       return 'This resterant is not active.';
     }
-    if (code === 'MERCHANT_003') {
+    else if (code === 'MERCHANT_003') {
       return 'This resterant is close';
+    }
+    else {
+      return 'Unknown error.';
     }
   }
 }
