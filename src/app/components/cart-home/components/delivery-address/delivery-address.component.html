@@ -63,7 +63,7 @@
         <div class="address-pop-up-container">
             <div>
                 <h5>Name</h5>
-                <input #customerName class="form-control" placeholder="Name">
+                <input #customerName class="form-control" placeholder="Enter your name">
                 <p class="verlify-invalid" *ngIf="this.verifyName === false">Invalid name</p>
             </div>
             <div>
@@ -125,7 +125,7 @@
         <div class="address-pop-up" *ngIf="this.editAddress">
             <div class="address-pop-up-container">
                 <div>
-                    <h5>Type location</h5>
+                    <h5>Name</h5>
                     <input #editCustomerName class="form-control" value="{{this.editAddressList.name}}">
                     <p class="verlify-invalid" *ngIf="this.verifyName === false">Invalid name</p>
                 </div>
