@@ -8,10 +8,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class CategoryFoodService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
-
+  // apiKey = 'TestAPIKey';
+  // token = localStorage.getItem('token');
   constructor(private http: HttpClient) { }
 
   getFoodCategory() {
-    return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryFood');
+  //   return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryFood', { headers: {
+  //     'ApiKey' : this.apiKey,
+  //     'Authorization': 'Bearer ' + this.token
+  //   }
+  // });
+  return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryFood');
   }
 }

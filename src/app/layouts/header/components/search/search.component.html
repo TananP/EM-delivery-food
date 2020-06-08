@@ -4,7 +4,8 @@
         <div class="row input-group input-group-sm">
             <div class="col-3 text-right pr-0">
                 <div *ngIf="this.searchInput !== '' ">
-                    <button [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white">
+                    <!-- <div [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white"> -->
+                    <button (click)="openToNewLink()" class="btn btn-navbar bg-white">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -15,8 +16,18 @@
                 </div>
             </div>
             <div class="col-7 pl-0">
-                <input class="form-control form-control-navbar" #search (keyup)="onSubmit(search.value)" aria-label="Search">
+                <input class="form-control form-control-navbar" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
+                (focusout)="hideAutoCorrect($event)" value="{{this.searchInput}}">
+
+                <div class="auto-correct" *ngIf="this.autoCorrect">
+                    <div *ngFor="let item of this.searchList.data" style="border-bottom: 1px solid black;">
+                        <div *ngFor="let itemInfo of item.childMstMerchantTranslation" (click)="clickAutoCorrect(itemInfo.name)">
+                            <p>{{itemInfo.name}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>

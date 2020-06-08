@@ -71,6 +71,8 @@ export class DeliveryAddressComponent implements OnInit {
   setMarker(event){
     this.lat = event.latLng.lat();
     this.lng = event.latLng.lng();
+    // console.log('lat === ' + this.lat);
+    // console.log('lng === ' + this.lng);
   }
   verify(name, phonNumber , address , comment , task: string){
       if (name !== ''){

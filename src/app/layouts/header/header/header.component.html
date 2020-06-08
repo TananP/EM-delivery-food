@@ -67,7 +67,10 @@
                 <li class="nav-item dropdown">
                     <div class="nav-link text-right pr-2 pointer" (click)="openPopUp('cart',true)">
                         <img class="width-cart-img" src="./assets/dist/img/Cart.png"/>
-                        <span class="badge badge-danger navbar-badge">{{this.orderAmount}}</span>
+                        <div>
+                            <!-- <span class="badge badge-danger navbar-badge" #orderTotal>{{this.orderAmount}}</span> -->
+                            <span class="badge badge-danger navbar-badge" id="orderTotal"></span>
+                        </div>
                     </div>
                 </li>
             </ul>

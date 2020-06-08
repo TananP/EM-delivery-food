@@ -12,12 +12,19 @@ export class ShopListComponent implements OnInit {
   public categoryChoosed = this.route.snapshot.paramMap.get('category');
   private token = localStorage.getItem('token');
   public shopList: any;
+
+  public loading = true;
+  public loadingError = false;
+
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {}
 
   ngOnInit(): void {
     this.shopList = [];
-    this.merchantService.searchByCategoryID( this.categoryChoosed).subscribe( x => {
+    this.merchantService.searchByCategoryID(this.categoryChoosed).subscribe( x => {
       this.shopList = x;
+      this.loading = false;
+    }, error => {
+      this.loadingError = true;
     });
   }
 

@@ -11,15 +11,21 @@ export class SearchResultPageComponent implements OnInit {
   public taskChoosed = this.route.snapshot.paramMap.get('task');
   public searchName = this.route.snapshot.paramMap.get('searchInput');
   public shopList: any;
+
+  public loading = true;
+  public loadingError = false;
+
   constructor(private route: ActivatedRoute , private merchantService: MerchantService) {
   }
 
   ngOnInit(): void {
     this.shopList = [];
     this.merchantService.searchByRestaurantName(this.searchName).subscribe( x => {
-    this.shopList = x;
-    // console.log(this.shopList);
-  });
+      this.shopList = x;
+      this.loading = false;
+    }, error => {
+      this.loadingError = true;
+    });
   }
 
 }

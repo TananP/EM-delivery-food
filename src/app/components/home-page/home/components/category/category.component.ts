@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryMerchantService } from 'src/app/services/category-merchant.service';
 
@@ -9,8 +9,13 @@ import { CategoryMerchantService } from 'src/app/services/category-merchant.serv
 })
 export class CategoryComponent implements OnInit {
   @Input() taskData: string;
-  public top = false;
-  public bottom = true;
+  @Output() selectedCategory = new EventEmitter();
+
+  // public top = false;
+  // public bottom = true;
+  public activeCategory = null;
+  public loading = true;
+  public loadingError = false;
 
   public categoryList: any;
   constructor(private route: ActivatedRoute , private categoryAPI: CategoryMerchantService) {}
@@ -20,6 +25,14 @@ export class CategoryComponent implements OnInit {
     // Call API get category
     this.categoryAPI.getMerchantCategory().subscribe( x => {
       this.categoryList = x;
+      this.loading = false;
+    }, error => {
+      this.loading = false;
+      this.loadingError = true;
     });
+  }
+  categorySelect(category){
+    this.activeCategory = category;
+    this.selectedCategory.emit(category.categoryId);
   }
 }

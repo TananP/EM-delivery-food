@@ -23,10 +23,10 @@ export class CartHomeComponent implements OnInit {
   constructor(private merchantService: MerchantService) {}
 
   ngOnInit(): void {
-    this.merchantService.getCoupon(this.token.id).subscribe(x => {
-      // console.log('666 customer coupon 666');
-      // console.log(x);
-    });
+    // this.merchantService.getCoupon(this.token.id).subscribe(x => {
+    //   // console.log('666 customer coupon 666');
+    //   // console.log(x);
+    // });
   }
 
   openPickUpPopUp(){

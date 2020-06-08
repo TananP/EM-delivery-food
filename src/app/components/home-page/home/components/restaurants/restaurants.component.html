@@ -3,13 +3,21 @@
         <h5 class="pl-3 title-home pr-3">Restaurants</h5>
     </div>
     <!------ Render shop from shop list in hame page ------->
-    <div class="row pt-2 pb-2 text-center">
-        <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
-            <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
-                <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]">
-                    <p>{{restaurantsInfo.name}}</p>
-                </div>
-            </div>    
+    <div>
+        <div *ngIf="this.loading">
+            <h5>Now loading...</h5>
+        </div>
+        <div *ngIf="!this.loading" class="row pt-2 pb-2 text-center">
+            <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
+                <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
+                    <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]">
+                        <p>{{restaurantsInfo.name}}</p>
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <div *ngIf="this.loadingError">
+            <h5>Could not load restaurants</h5>
         </div>
     </div>
     <!------------------------------------------------------>

@@ -29,6 +29,7 @@ import { DeliveryAddressComponent } from './components/cart-home/components/deli
 import { GoogleMapsModule } from '@angular/google-maps';
 import { OrderListComponent } from './components/cart-home/components/order-list/order-list.component';
 import { PickUpAddressComponent } from './components/cart-home/components/pick-up-address/pick-up-address.component';
+import { LoadingPopUpComponent } from './components/pop-up/loading-pop-up/loading-pop-up.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { PickUpAddressComponent } from './components/cart-home/components/pick-u
     DeliveryAddressComponent,
     OrderListComponent,
     PickUpAddressComponent,
+    LoadingPopUpComponent,
   ],
   imports: [
     BrowserModule,

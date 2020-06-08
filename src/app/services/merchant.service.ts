@@ -8,8 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MerchantService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  apiKey = 'TestAPIKey';
-  token = localStorage.getItem('token');
+  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  token = JSON.parse(localStorage.getItem('token'));
 
   constructor(private http: HttpClient) {}
 
@@ -17,16 +17,16 @@ export class MerchantService {
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');
   }
 
-  getMerchantInfo(merchantName , locationID , floorID , departmentID){
+  getMerchantInfo(merchantName){
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
       name: merchantName,
-      locationId: locationID,
-      floorId: floorID,
-      departmentId: departmentID
+      // locationId: locationID,
+      // floorId: floorID,
+      // departmentId: departmentID
     },
       headers: {
         'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
@@ -37,7 +37,7 @@ export class MerchantService {
     },
       headers: {
         'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
@@ -47,7 +47,7 @@ export class MerchantService {
     },
       headers: {
         'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
@@ -57,14 +57,14 @@ export class MerchantService {
     },
       headers: {
         'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
   pickUp(){
     return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup' , { headers: {
         'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token
+        'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
@@ -73,7 +73,7 @@ export class MerchantService {
       customerId: customerID
     } , headers: {
       'ApiKey' : this.apiKey,
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + this.token.token
     }
     });
   }
@@ -83,7 +83,7 @@ export class MerchantService {
       couponCode: couponID
     } , headers: {
       'ApiKey' : this.apiKey,
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + this.token.token
     }
     });
   }

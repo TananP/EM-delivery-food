@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantService } from 'src/app/services/merchant.service';
 import { CustomerOrderService } from 'src/app/services/customer-order.service';
+import {HeaderComponent} from 'src/app/layouts/header/header/header.component';
 
 @Component({
   selector: 'app-delivery',
@@ -14,13 +15,15 @@ export class DeliveryComponent implements OnInit {
   // public departmentId = this.route.snapshot.paramMap.get('departmentId');
   // public locationId = this.route.snapshot.paramMap.get('locationId');
   // public searchName = this.route.snapshot.paramMap.get('searchName');
+  @Input() merchantId: number;
   public restaurantInfo: any;
   // =====
-  public merchantId = this.route.snapshot.paramMap.get('merchantId');
-  public menuSelected: any;
-  public totalPrice = 0;
+  // public merchantId = this.route.snapshot.paramMap.get('merchantId');
   public token = JSON.parse(localStorage.getItem('token'));
+  public totalPrice = 0;
+  public openLoadingPopUp = false;
 
+  public menuSelected: any;
   public menuList: any;
   public openPopUp: boolean;
   public openCartPopUp: boolean;
@@ -29,7 +32,9 @@ export class DeliveryComponent implements OnInit {
   public errorMessage: string;
 
   // tslint:disable-next-line: max-line-length
-  constructor( private route: ActivatedRoute , private merchantService: MerchantService, private customerOrderService: CustomerOrderService) { }
+  constructor(
+    private route: ActivatedRoute , private merchantService: MerchantService,
+    private customerOrderService: CustomerOrderService, private headerComponent: HeaderComponent) {}
 
   ngOnInit(): void {
     this.initValue();
@@ -84,9 +89,13 @@ export class DeliveryComponent implements OnInit {
     const customerOrder = {customerId: this.token.id, merchantId: this.merchantId,
       itemId: this.menuSelected.itemId, amount: this.numberEachDish , note: comment};
     // console.log(customerOrder);
+    this.openLoadingPopUp = true;
     this.customerOrderService.addOrder(customerOrder).subscribe( x => {
       this.closePopUp();
+      this.headerComponent.updateCarts();
+      this.openLoadingPopUp = false;
     }, error => {
+      this.openLoadingPopUp = false;
       const result = this.customerOrderService.checkErrorCode(error.error.code);
       console.log(result);
       this.openErrorPopUp = true;

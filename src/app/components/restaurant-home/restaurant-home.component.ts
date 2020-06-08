@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MerchantService } from 'src/app/services/merchant.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
@@ -9,25 +9,34 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./restaurant-home.component.scss']
 })
 export class RestaurantHomeComponent implements OnInit {
-  public locationId = this.route.snapshot.paramMap.get('locationId');
-  public floorId = this.route.snapshot.paramMap.get('floorId');
-  public departmentId = this.route.snapshot.paramMap.get('departmentId');
-  public searchInput = this.route.snapshot.paramMap.get('searchInput');
+  // public locationId = this.route.snapshot.paramMap.get('locationId');
+  // public floorId = this.route.snapshot.paramMap.get('floorId');
+  // public departmentId = this.route.snapshot.paramMap.get('departmentId');
+  // public searchInput = this.route.snapshot.paramMap.get('searchInput');
+  // public routeId = this.route.snapshot.paramMap.get('routeID');
   public searchName = this.route.snapshot.paramMap.get('searchName');
-  public routeId = this.route.snapshot.paramMap.get('routeID');
   public taskSelect = this.route.snapshot.paramMap.get('task');
+  public finnishLoad = false;
+  public merchantID: number;
 
   public restaurantInfo: any;
 
-  constructor(private route: ActivatedRoute , private merchantService: MerchantService , private authorizationAPI: AuthorizationService) {
-   }
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService ,
+              private authorizationAPI: AuthorizationService , private router: Router) {}
 
   ngOnInit(): void {
+    this.merchantID = 0.1;
     this.authorizationAPI.checkAuthorization();
     this.restaurantInfo = [];
-    this.merchantService.getMerchantInfo(this.searchName , this.locationId , this.floorId , this.departmentId ).subscribe( x => {
+    this.merchantService.getMerchantInfo(this.searchName).subscribe( x => {
       this.restaurantInfo = x;
-      // console.log(x);
+      if (this.restaurantInfo.data.length > 1) {
+        this.router.navigate(['/' + this.taskSelect , 'search', this.taskSelect , this.searchName]);
+      } else {
+        this.merchantID = this.restaurantInfo.data[0].merchantId;
+        this.finnishLoad = true;
+      }
+      // console.log(this.merchantID);
     });
   }
 }

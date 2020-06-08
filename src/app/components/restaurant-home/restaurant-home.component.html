@@ -1,11 +1,19 @@
-<div class="container">
+<div *ngIf="!this.finnishLoad">
+    <div>
+        <a class="back-button text-left" [routerLink]="['/' + this.taskSelect]">&lt;</a>
+    </div>
+    <div class="text-center">
+        <p>Now loading ...</p>
+    </div>
+</div>
+<div class="container" *ngIf="this.finnishLoad">
     <div>
         <div *ngFor="let item of this.restaurantInfo.data">
             <div class="text-center p-5 m-1" style="border: 2px solid black;" *ngIf="item.bannerPath == '' ">
                 <p>No Image</p>
             </div>
             <div *ngIf="item.bannerPath !== '' ">
-                <img src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>
+                <img class="img-width-max-100" src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>
             </div>
         </div>
     </div>
@@ -14,15 +22,16 @@
             <!--------------- back button ---------------->
             <div class="col-2 mt-2 mb-2">
                 <!-- Back to home page -->
-                <div *ngIf="this.routeId === 'search' ">
-                    <a class="back-button text-left" [routerLink]="['/' + this.taskSelect,'search',this.taskSelect, this.searchInput]">&lt;</a>
+                <div>
+                    <!-- <a class="back-button text-left" [routerLink]="['/' + this.taskSelect,'search',this.taskSelect, this.searchInput]">&lt;</a> -->
+                    <a class="back-button text-left" [routerLink]="['/' + this.taskSelect]">&lt;</a>
                 </div>
                 <!----------------------->
 
                 <!-- Back to category page -->
-                <div *ngIf="this.routeId !== 'search' ">
+                <!-- <div *ngIf="this.routeId !== 'search' ">
                     <a class="back-button text-left" [routerLink]="['/' + this.taskSelect,'shop-list',this.taskSelect, this.routeId]">&lt;</a>
-                </div>
+                </div> -->
                 <!----------------------->
             </div>
             <!------------------------------------------->
@@ -39,8 +48,11 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="this.merchantID !== 0.1 ">
+            <app-delivery [merchantId]="this.merchantID" *ngIf="this.taskSelect === 'delivery' "></app-delivery>
+        </div>
         <!---------------------------------------------->
-        <app-delivery *ngIf="this.taskSelect === 'delivery' "></app-delivery>
-        <app-reserve *ngIf="this.taskSelect === 'reserve' "></app-reserve>
+        <!-- <app-delivery [merchantId]='' *ngIf="this.taskSelect === 'delivery' "></app-delivery> -->
+        <!-- <app-reserve *ngIf="this.taskSelect === 'reserve' "></app-reserve> -->
     </div>
 </div>

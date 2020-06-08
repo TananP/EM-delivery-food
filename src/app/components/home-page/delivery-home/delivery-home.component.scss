@@ -1,0 +1,13 @@
+.restaurants-button{
+    border: 1px solid #B39462;
+    padding: 0.5rem 0.1rem;
+    // height: 100px;
+    height: 10vh;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+}
+@media only screen and (max-width: 340px) {
+    .restaurants-button{
+        font-size: 0.5rem;
+    }
+}

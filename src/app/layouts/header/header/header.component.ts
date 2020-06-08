@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
 
+import { Injectable } from '@angular/core';
+@Injectable({providedIn: 'root'})
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -24,10 +27,7 @@ export class HeaderComponent implements OnInit {
     this.cartPopUp = false;
     this.historyPopUp = false;
     this.orderPopUp = false;
-    this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
-      this.orderList = x;
-      this.getSumNumberOrder();
-    });
+    this.updateCarts();
   }
   getSumNumberOrder(){
     this.orderList.forEach( a => {
@@ -66,6 +66,20 @@ export class HeaderComponent implements OnInit {
   }
   receviveStatus(event){
     this.orderAmount = event;
+    document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
     this.cartPopUp = false;
+  }
+  updateCarts(){
+    if (this.token !== null) {
+      this.orderAmount = 0;
+      this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
+        this.orderList = x;
+        this.getSumNumberOrder();
+        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+      }, error => {
+        this.orderAmount = 0;
+        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+      });
+    }
   }
 }

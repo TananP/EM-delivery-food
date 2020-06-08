@@ -5,7 +5,7 @@
     <!------------------->
     <!------ Default address ------>
     <div *ngFor="let index of this.addressList">
-        <div *ngIf="index.default == true" [class.active]="index === activeIndex" class="row address-box-default mt-3 mb-3">
+        <div *ngIf="index.default == true" [class.selected-active]="index === activeIndex" class="row address-box-default mt-3 mb-3">
             <div (click)="selectAddess(index)" class="col-10 text-left">
                 <div>
                     <p>Name : {{index.name}}</p>
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div *ngFor="let index of this.addressList">
-        <div *ngIf="index.default == false" [class.active]="index === activeIndex" class="row address-box mt-3 mb-3">
+        <div *ngIf="index.default == false" [class.selected-active]="index === activeIndex" class="row address-box mt-3 mb-3">
             <div (click)="selectAddess(index)" class="col-9 text-left">
                 <div>
                     <p>Name : {{index.name}}</p>

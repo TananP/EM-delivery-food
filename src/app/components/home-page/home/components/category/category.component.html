@@ -1,13 +1,22 @@
-<div class="container pt-5">
+<div class="container pt-2">
     <div class="title-home-box">
         <h5 class="pl-3 title-home pr-3">Category</h5>
     </div>
     <!-------------- Render category from list in home page --------------->
-    <div>
-        <div id="categoryArea" class="row category-list pt-3 pb-3">
-            <div class="col-4 pointer" *ngFor="let category of categoryList;">
-                <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryId]">
-                    <p>{{category.categoryName}}</p>
+    <div class="text-center">
+        <div *ngIf="this.loading">
+            <h5>Now loading...</h5>
+        </div>
+        <div *ngIf="!this.loading">
+            <div id="categoryArea" class="row category-list pt-3 pb-3">
+                <div class="col-3 pointer" *ngFor="let category of categoryList;">
+                    <!-- <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryId]"> -->
+                    <div class="category-button text-center" (click)="categorySelect(category)" [class.selected-active]="category === activeCategory" >    
+                        <p>{{category.categoryName}}</p>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="this.loadingError">
+                    <h5>Could not load category</h5>
                 </div>
             </div>
         </div>
