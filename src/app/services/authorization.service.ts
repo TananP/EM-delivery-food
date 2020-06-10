@@ -13,21 +13,18 @@ export class AuthorizationService {
   constructor(private http: HttpClient) {}
 
   getToken(code: string){
-    // production
-    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
-    //     code
-    //   }
-    // });
-    // Develop
-    // console.log('getToken ==== ' + code);
-    // UserLogin
-    // console.log(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {code , callback: 'Y'}});
-
-    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
-      code,
-      callback: 'Y',
-    }
+    // Production
+    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
+        code
+      }
     });
+
+    // Develop
+    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
+    //   code,
+    //   callback: 'Y',
+    // }
+    // });
   }
 
   checkAuthorization(){
@@ -35,16 +32,19 @@ export class AuthorizationService {
     if (token) {
       const tokenJSON = JSON.parse(token);
       if (Date.now() > tokenJSON.expires) {
-        // redirect local hosty
-        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+        // redirect localhost
+        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+
         // redirect to production
-        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
       }
     }
     if (token === null) {
-        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+        // redirect localhost
+        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+
         // redirect to production
-        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
     }
   }
 }

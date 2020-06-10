@@ -14,13 +14,16 @@ export class OrderListComponent implements OnInit {
   public menuSelected: any;
   public menuDelete: any;
   public groupOrderList: any;
+  public couponUsedList: any;
 
   public totalSum: number;
   public totalOrder: number;
+  public totalDiscount: number;
 
   public openPopUp: boolean;
   public deleteConfirmPopUp: boolean;
   public openErrorPopUp: boolean;
+  public haveItemOrder = false;
 
   public errorMessage: string;
 
@@ -32,27 +35,55 @@ export class OrderListComponent implements OnInit {
     this.errorMessage = '';
     this.totalSum = 0;
     this.totalOrder = 0;
+    this.totalDiscount = 0;
     this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
       this.orderList = x;
+      this.haveItemOrder = true;
       this.groupOrdering();
+      // this.sumDiscount();
+    }, err => {
+      // console.log(err);
+      if (err.status === 404) {
+        this.couponUsedList = [];
+        this.groupOrderList = [];
+        this.haveItemOrder = false;
+        this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.groupOrderList]);
+      }
     });
   }
   groupOrdering(){
-    const groupByName = {};
-    this.orderList.forEach( a => {
+    const groupByName = [];
+    this.couponUsedList = [];
+    // Order list
+    this.orderList.cusCartOrder.forEach( a => {
       groupByName [a.merchant.childMstMerchantTranslation[0].name] = groupByName [a.merchant.childMstMerchantTranslation[0].name] || [];
       groupByName [a.merchant.childMstMerchantTranslation[0].name].push(
         { customerID: a.customerId, merchantID: a.merchantId, itemID: a.itemId ,
           itemName: a.item.childMstItemTranslation[0].itemName , itemAmount: a.amount,
-          price: a.item.price , itemNote: a.note , sum: a.amount * a.item.price}
+          price: a.item.price , itemNote: a.note , sum: a.amount * a.item.price , active: a.active}
         );
       // console.log(a);
       this.totalSum = this.totalSum + (a.amount * a.item.price);
       this.totalOrder = this.totalOrder + a.amount;
     });
+    // Coupon list
+    this.orderList.couponUsed.forEach( a => {
+      this.couponUsedList.push({couponCode: a.coupon.couponCode, discountAmount: a.coupon.discountAmount});
+      this.totalDiscount = this.totalDiscount + a.coupon.discountAmount;
+    });
     this.groupOrderList = groupByName;
-    this.getSummary.emit([this.totalOrder, this.totalSum]);
+    // console.log(this.groupOrderList);
+    this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.groupOrderList]);
   }
+
+  // sumDiscount(){
+  //   this.couponUsedList = [];
+  //   this.orderList.couponUsed.forEach( a => {
+  //     this.couponUsedList.push({couponCode: a.coupon.couponCode, discountAmount: a.coupon.discountAmount});
+  //     this.totalDiscount = this.totalDiscount + a.coupon.discountAmount;
+  //   });
+  //   console.log(this.couponUsedList);
+  // }
 
   editPopUp(name, customerID, merchantID, itemID, itemAmount , itemNote){
     this.openPopUp = true;
@@ -105,8 +136,9 @@ export class OrderListComponent implements OnInit {
         if (x === 'SUCCESS'){
           this.deleteConfirmPopUp = false;
           this.menuDelete = {};
-          this.ngOnInit();
+          // this.ngOnInit();
         }
+        this.ngOnInit();
       });
     }else {
       this.deleteConfirmPopUp = false;

@@ -43,6 +43,9 @@
                     <p>Phone number : {{index.telephoneNumber}}</p>
                     <p>Address : <br>{{index.detail}}</p>
                 </div>
+                <div class="mb-2 gold text-left" (click)="deleteAddress(index)">
+                    <p> Delete </p>
+                </div>
             </div>
             <div class="col-3 pl-0 pr-0 gold">
                 <div class="mb-3 mt-2" (click)="setDefaultAddress(index)">
@@ -51,9 +54,6 @@
                 <div class="mb-3 mt-3" (click)="editAddressSelect(index)">
                     <p> Edit </p>
                 </div>
-            </div>
-            <div class="mb-2 gold text-left" (click)="deleteAddress(index)">
-                <p> Delete </p>
             </div>
         </div>
     </div>
@@ -83,7 +83,8 @@
             <!-- Test Google map -->
             <div>
                 <h5>Please mark your location</h5>
-                <google-map width="100%" height="400px" [center]="{ lat:this.latCenter , lng:this.lngCenter}" (mapClick)="setMarker($event)">
+                <google-map width="100%" height="400px" [center]="{ lat:this.latCenter , lng:this.lngCenter}" 
+                (mapClick)="setMarker($event)" [options]="{zoom:17 , gestureHandling: 'greedy'}">
                     <map-marker [position]="{ lat:this.lat , lng:this.lng}"></map-marker>
                 </google-map>
             </div>
@@ -146,7 +147,8 @@
                  <!-- Test Google map -->
                 <div>
                     <h5>Please mark your location</h5>
-                    <google-map width="100%" height="400px" [center]="{ lat:this.lat , lng:this.lng}" (mapClick)="setMarker($event)">
+                    <google-map width="100%" height="400px" [center]="{ lat:this.lat , lng:this.lng}" 
+                    (mapClick)="setMarker($event)" [options]="{zoom:17 , gestureHandling: 'greedy'}" >
                         <map-marker [position]="{ lat:this.lat , lng:this.lng}"></map-marker>
                     </google-map>
                 </div>

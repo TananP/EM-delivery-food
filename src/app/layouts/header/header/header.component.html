@@ -65,7 +65,7 @@
         <div class="col-2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <div class="nav-link text-right pr-2 pointer" (click)="openPopUp('cart',true)">
+                    <div class="nav-link text-center pointer" (click)="openPopUp('cart',true)">
                         <img class="width-cart-img" src="./assets/dist/img/Cart.png"/>
                         <div>
                             <!-- <span class="badge badge-danger navbar-badge" #orderTotal>{{this.orderAmount}}</span> -->
@@ -81,13 +81,6 @@
     </div>
     <!---------------------------------------------->
     <!-------------- Cart pop up ------------------->
-    <!-- <div class="pop-up-cart" *ngIf="this.cartPopUp">
-        <div class="row bg-dark">
-            <div class="col-2 close-button pl-4" (click)="openPopUp('cart',false)">&times;</div>
-            <div class="col-8 text-center"><h5>Cart</h5></div>
-        </div>
-        <app-cart-home></app-cart-home>
-    </div> -->
     <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home>
     
     <!-------------- History pop up ----------------->

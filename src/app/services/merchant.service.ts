@@ -14,7 +14,11 @@ export class MerchantService {
   constructor(private http: HttpClient) {}
 
   getMerchantList() {
-    return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList');
+    return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList', { headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token.token
+      }
+    });
   }
 
   getMerchantInfo(merchantName){

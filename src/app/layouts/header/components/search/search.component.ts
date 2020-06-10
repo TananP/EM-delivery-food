@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit {
   public searchList: any;
   public autoCorrect = false;
   public openLoadingPopUp = false;
+  public searchInputEmpty = true;
 
   constructor(private merchantService: MerchantService , private router: Router) {}
 
@@ -23,8 +24,10 @@ export class SearchComponent implements OnInit {
   onSubmit(search) {
     if (search === '') {
       this.autoCorrect = false;
+      this.searchInputEmpty = true;
     }else {
       this.searchInput = search;
+      this.searchInputEmpty = false;
       this.autoCorrect = true;
       this.merchantService.searchByRestaurantName(this.searchInput).subscribe( x => {
         this.searchList = x;
@@ -43,6 +46,7 @@ export class SearchComponent implements OnInit {
     this.autoCorrect = false;
   }
   openToNewLink(){
+    this.autoCorrect = false;
     this.openLoadingPopUp = true;
     // console.log('8888');
     this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);

@@ -1,3 +1,6 @@
+.close-button{
+    font-size: 1.5rem; 
+}
 .sidenav {
     height: 100%;
     width: 0;
@@ -14,8 +17,8 @@
     font-size: 1rem;
     border-bottom: 2px solid black;
 }
-.close-button{
-    font-size: 1.5rem; 
+.navbar-badge{
+    right: 15%;
 }
 .width-side-menu-img{
     width: 25%;
@@ -26,11 +29,20 @@
 .width-title-img{
     width: 70%;
 }
-// @media screen and (max-width: 600px) {
-//     .width-side-menu-img{
-//         width: 25%;
-//     }
-//     .width-title-img{
-//         width: 70%;
-//     }
-//   }
+@media screen and (min-width: 600px) {
+    .navbar-badge{
+        right: 17%;
+        font-size: 1rem;
+        padding: 5px 8px;
+    }
+    .width-side-menu-img{
+        width: 15%;
+        padding-top: 0.75rem;
+    }
+    .width-cart-img{
+        width: 55%;
+    }
+    .width-title-img{
+        width: 70%;
+    }
+}

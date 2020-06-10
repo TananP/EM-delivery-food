@@ -12,6 +12,8 @@ export class CartHomeComponent implements OnInit {
   public pickUp = false;
   public totalOrder = 0;
   public totalPrice = 0;
+  public totalDiscount = 0;
+  public couponUsedList: any;
   public originalTotalPrice: number;
   public errorPopUp = false;
   public errorCodeText = '';
@@ -57,8 +59,12 @@ export class CartHomeComponent implements OnInit {
   }
 
   renderSummary(event){
+    // console.log(event);
     this.totalOrder = event[0];
     this.totalPrice = event[1];
+    this.totalDiscount = event[2];
+    this.couponUsedList = event[3];
+    this.totalPrice = this.totalPrice - this.totalDiscount;
     this.originalTotalPrice = this.totalPrice;
   }
 

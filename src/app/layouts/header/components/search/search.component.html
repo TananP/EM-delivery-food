@@ -1,28 +1,32 @@
-<div class="block">
+<div class="block normal-text">
     <!-- SEARCH FORM --> 
     <form>
         <div class="row input-group input-group-sm">
-            <div class="col-3 text-right pr-0">
-                <div *ngIf="this.searchInput !== '' ">
-                    <!-- <div [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white"> -->
-                    <button (click)="openToNewLink()" class="btn btn-navbar bg-white">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                <div *ngIf="this.searchInput == '' ">
-                    <div class="btn btn-navbar bg-white">
-                        <i class="fas fa-search"></i>
+            <div class="col-2 text-right pr-0">
+            </div>
+            <div class="row col-8 pl-0 bg-white search-box">
+                <div class="col-3 pr-0 text-center align-middle">
+                    <div *ngIf="!this.searchInputEmpty">
+                        <!-- <div [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white"> -->
+                        <button (click)="openToNewLink()" class="">
+                            <i class="fas fa-search gold"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="this.searchInputEmpty">
+                        <button disabled>
+                            <i class="fas fa-search gold"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="col-7 pl-0">
-                <input class="form-control form-control-navbar" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
-                (focusout)="hideAutoCorrect($event)" value="{{this.searchInput}}">
+                <div class="col-8 pl-0 pr-0">
+                    <input class="search-input-box" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
+                    value="{{this.searchInput}}" placeholder="Restaurants name">
 
-                <div class="auto-correct" *ngIf="this.autoCorrect">
-                    <div *ngFor="let item of this.searchList.data" style="border-bottom: 1px solid black;">
-                        <div *ngFor="let itemInfo of item.childMstMerchantTranslation" (click)="clickAutoCorrect(itemInfo.name)">
-                            <p>{{itemInfo.name}}</p>
+                    <div class="auto-correct" *ngIf="this.autoCorrect">
+                        <div *ngFor="let item of this.searchList.data" style="border-bottom: 1px solid black;">
+                            <div *ngFor="let itemInfo of item.childMstMerchantTranslation" (click)="clickAutoCorrect(itemInfo.name)">
+                                <p>{{itemInfo.name}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

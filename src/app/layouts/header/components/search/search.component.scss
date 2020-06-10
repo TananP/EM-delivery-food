@@ -1,3 +1,15 @@
+button{
+        /* margin: 0; */
+    /* font-family: inherit; */
+    /* font-size: inherit; */
+    background-color: white;
+    border: none;
+    font-size: small; 
+    line-height: normal;
+}
+input{
+    font-size: 0.8rem;
+}
 .auto-correct{
     position: absolute;
     background: white;
@@ -7,6 +19,14 @@
 .btn-navbar{
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+.search-box{
+    padding: 0.25rem 0;
+    border-radius: 1rem;
+}
+.search-input-box{
+    width: 100%;
+    border: none;
 }
 .form-control-navbar{
     border-top-left-radius: 0;

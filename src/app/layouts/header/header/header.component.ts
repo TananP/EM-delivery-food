@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     this.updateCarts();
   }
   getSumNumberOrder(){
-    this.orderList.forEach( a => {
+    this.orderList.cusCartOrder.forEach( a => {
       this.orderAmount = this.orderAmount + a.amount;
     });
   }
@@ -74,9 +74,11 @@ export class HeaderComponent implements OnInit {
       this.orderAmount = 0;
       this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
         this.orderList = x;
+        // console.log(x);
         this.getSumNumberOrder();
         document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
       }, error => {
+        console.log(error);
         this.orderAmount = 0;
         document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
       });

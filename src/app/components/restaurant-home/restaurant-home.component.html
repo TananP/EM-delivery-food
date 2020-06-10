@@ -2,22 +2,22 @@
     <div>
         <a class="back-button text-left" [routerLink]="['/' + this.taskSelect]">&lt;</a>
     </div>
-    <div class="text-center">
+    <div class="text-center title-text">
         <p>Now loading ...</p>
     </div>
 </div>
-<div class="container" *ngIf="this.finnishLoad">
+<div class="normal-text" *ngIf="this.finnishLoad">
     <div>
         <div *ngFor="let item of this.restaurantInfo.data">
-            <div class="text-center p-5 m-1" style="border: 2px solid black;" *ngIf="item.bannerPath == '' ">
+            <div class="title-text text-center p-5 m-1" style="border: 2px solid black;" *ngIf="item.bannerPath == '' ">
                 <p>No Image</p>
             </div>
-            <div *ngIf="item.bannerPath !== '' ">
-                <img class="img-width-max-100" src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>
+            <div class="text-center" *ngIf="item.bannerPath !== '' ">
+                <img class="restaurant-page-banner" src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>
             </div>
         </div>
     </div>
-    <div>
+    <div class="container pt-2">
         <div class="row pb-3">
             <!--------------- back button ---------------->
             <div class="col-2 mt-2 mb-2">
@@ -38,7 +38,7 @@
             <div class="col-10">
                 <div *ngFor="let item of restaurantInfo.data">
                     <div *ngFor="let info of item.childMstMerchantTranslation">
-                        <h4>{{info.name}}</h4>
+                        <h4 class="title-text">{{info.name}}</h4>
                         <p class="desiption-text">{{info.detail}}</p>
                     </div>
                     <div>
@@ -48,8 +48,8 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="this.merchantID !== 0.1 ">
-            <app-delivery [merchantId]="this.merchantID" *ngIf="this.taskSelect === 'delivery' "></app-delivery>
+        <div class="normal-text" *ngIf="this.merchantID !== 0.1 ">
+            <app-delivery [shopOpen]="this.shopOpen" [merchantId]="this.merchantID" *ngIf="this.taskSelect === 'delivery' "></app-delivery>
         </div>
         <!---------------------------------------------->
         <!-- <app-delivery [merchantId]='' *ngIf="this.taskSelect === 'delivery' "></app-delivery> -->

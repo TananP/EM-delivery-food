@@ -1,6 +1,6 @@
 <div>
     <div>
-        <img class="max-width" src="./assets/dist/img/home_banner.png"/>
+        <img class="home-page-banner" src="./assets/dist/img/home_banner.png"/>
     </div>
     <app-home-category (selectedCategory)="selectedCategory($event)" [taskData]="'delivery'"></app-home-category>
     <!-- <app-home-restaurants [categorySelectedID]="this.categorySelectedID" [taskData]="'delivery'"></app-home-restaurants> -->
@@ -10,7 +10,7 @@
         </div>
         <!------ Render shop from shop list in hame page ------->
         <div>
-            <div *ngIf="this.loading">
+            <div class="text-center" *ngIf="this.loading">
                 <h5>Now loading...</h5>
             </div>
             <div *ngIf="!this.loading" class="row pt-2 pb-2 text-center">

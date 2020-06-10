@@ -83,6 +83,7 @@ a{
     position: fixed;
     z-index: 1;
     padding-top: 28vh;
+    padding-bottom: 5vh;
     left: 0;
     top: 0;
     width: 100%;
@@ -98,7 +99,19 @@ a{
     color: black;
     width: 95%;
 }
-.img-width-max-100{
+.logo-img{
+    width: 100%;
+    max-width: 200px;
+}
+.food-img{
+    width: 100%;
+    max-width: 820px;
+}
+.restaurant-page-banner{
+    width: 100%;
+    max-width: 1280px;
+}
+.home-page-banner{
     width: 100%;
     max-width: 1280px;
 }
@@ -140,6 +153,9 @@ a{
 .nav-link.active{
     color: #805B32 !important;
     border-bottom: 2px solid #805B32 !important;
+}
+.normal-text{
+    font-size: 0.75rem;
 }
 .max-width{
     width: 100%;

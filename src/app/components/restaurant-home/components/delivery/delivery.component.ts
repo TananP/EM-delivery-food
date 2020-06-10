@@ -16,6 +16,8 @@ export class DeliveryComponent implements OnInit {
   // public locationId = this.route.snapshot.paramMap.get('locationId');
   // public searchName = this.route.snapshot.paramMap.get('searchName');
   @Input() merchantId: number;
+  @Input() shopOpen: boolean;
+
   public restaurantInfo: any;
   // =====
   // public merchantId = this.route.snapshot.paramMap.get('merchantId');
@@ -37,6 +39,8 @@ export class DeliveryComponent implements OnInit {
     private customerOrderService: CustomerOrderService, private headerComponent: HeaderComponent) {}
 
   ngOnInit(): void {
+    console.log('shop open === ' + this.shopOpen);
+    // this.shopOpen = false;
     this.initValue();
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.menuList = x;
@@ -52,13 +56,10 @@ export class DeliveryComponent implements OnInit {
     this.menuList = [];
     this.restaurantInfo = [];
   }
-  // popUp(itemId: number , menuName: string , menuDescription: string , menuPrice: number){
-    // this.menuSelected = {itemID: null , name: '', description: '', price: 0};
-    // this.menuSelected = {itemID: itemId, name: menuName, description: menuDescription, price: menuPrice};
+
   popUp(menu){
     this.openPopUp = true;
     this.menuSelected = menu;
-    // console.log(this.menuSelected);
     this.totalPrice = this.menuSelected.price;
   }
   closePopUp(){

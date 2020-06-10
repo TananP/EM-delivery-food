@@ -17,9 +17,10 @@ export class RestaurantHomeComponent implements OnInit {
   public searchName = this.route.snapshot.paramMap.get('searchName');
   public taskSelect = this.route.snapshot.paramMap.get('task');
   public finnishLoad = false;
-  public merchantID: number;
 
   public restaurantInfo: any;
+  public merchantID: number;
+  public shopOpen: boolean;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService ,
               private authorizationAPI: AuthorizationService , private router: Router) {}
@@ -30,9 +31,19 @@ export class RestaurantHomeComponent implements OnInit {
     this.restaurantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName).subscribe( x => {
       this.restaurantInfo = x;
+      // console.log(x);
       if (this.restaurantInfo.data.length > 1) {
         this.router.navigate(['/' + this.taskSelect , 'search', this.taskSelect , this.searchName]);
       } else {
+        // const currentTime = Date().toString().split(' ')[4];
+        const currentTime = Date().split(' ')[4];
+        if (this.restaurantInfo.data[0].openTime <= currentTime && currentTime <= this.restaurantInfo.data[0].closeTime) {
+          // console.log('Shop open !!!!');
+          this.shopOpen = true;
+        } else {
+          // console.log('Shop close !!!!');
+          this.shopOpen = false;
+        }
         this.merchantID = this.restaurantInfo.data[0].merchantId;
         this.finnishLoad = true;
       }

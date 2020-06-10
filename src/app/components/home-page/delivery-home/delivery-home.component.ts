@@ -34,7 +34,8 @@ export class DeliveryHomeComponent implements OnInit {
     this.loading = true;
     this.merchantService.searchByCategoryID(this.categorySelectedID).subscribe( x => {
       this.restaurantsList = x;
-      this.loading = false;
+      setTimeout( () => { this.loading = false; } , 100);
+      // this.loading = false;
     }, error => {
       this.loadingError = true;
     });

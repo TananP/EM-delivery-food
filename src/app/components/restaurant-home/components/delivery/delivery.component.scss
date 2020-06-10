@@ -1,3 +1,17 @@
+.not-active{
+    color: gray;
+}
+
+.close-button-pos{
+    position: absolute;
+    right: 5%;
+}
+.pop-up{
+    padding-top: 12vh;
+}
+.pop-up-content{
+    padding: 0;
+}
 .nav-pills .nav-link.active {
     color: black;
     background-color: white;
@@ -8,6 +22,9 @@
     border-bottom: 1px solid #1a1a1a;
     margin-bottom: 1rem;
     cursor: pointer;
+}
+.tab-text{
+    font-size: 0.9rem;
 }
 .tab-pane{
     padding-bottom: 10vh;

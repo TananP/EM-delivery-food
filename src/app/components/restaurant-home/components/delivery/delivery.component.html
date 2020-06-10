@@ -2,11 +2,11 @@
     <!------------------ Tab menu ---------------->
     <ul class="nav nav-pills mb-3 text-center" id="pills-tab" role="tablist">
         <li class="col-6 nav-item">
-        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#recommend-menu" role="tab" aria-controls="pills-home" aria-selected="true">
+        <a class="nav-link active tab-text" id="pills-home-tab" data-toggle="pill" href="#recommend-menu" role="tab" aria-controls="pills-home" aria-selected="true">
             Recommend</a>
         </li>
         <li class="col-6 nav-item">
-        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#all-menu" role="tab" aria-controls="pills-profile" aria-selected="false">
+        <a class="nav-link tab-text" id="pills-profile-tab" data-toggle="pill" href="#all-menu" role="tab" aria-controls="pills-profile" aria-selected="false">
             All Menu</a>
         </li>
     </ul>
@@ -16,20 +16,21 @@
     <div class="tab-content" id="pills-tabContent">
         <!--------------- Recommend menu ---------->
         <div class="tab-pane fade show active" id="recommend-menu" role="tabpanel" aria-labelledby="pills-home-tab">
-            <h5>Recommend menu</h5>
+            <h5 class="tab-text">Recommend menu</h5>
             <!-- Render menu from list -->
             <!-- <div class="col-12 row menu-button" (click)="popUp(recommend)" *ngFor="let recommend of menuList.data;"> -->
             <div *ngFor="let recommend of this.menuList.data;">  
-                <div *ngIf="recommend.itemType == 'R' && recommend.active == true">
+                <!----- Active ----->
+                <div *ngIf="recommend.itemType == 'R' && recommend.active == true && this.shopOpen == true">
                     <div class="col-12 row menu-button" (click)="popUp(recommend)"
                     *ngFor="let menuInfo of recommend.childMstItemTranslation;">
                         <div class="col-3 text-center">
                             <div *ngIf="recommend.photoPath !== '' ">
-                                <img class="img-width-max-100" src="http://emfood.yipintsoi.com/web_api{{recommend.photoPath}}">
+                                <img class="logo-img" src="http://emfood.yipintsoi.com/web_api{{recommend.photoPath}}">
                             </div>
                             <div *ngIf="recommend.photoPath == '' ">
                                 <div style="border: 2px solid black;">
-                                    <p>No Image</p>
+                                    <p class="tab-text">No Image</p>
                                 </div>
                             </div>
                         </div>
@@ -45,8 +46,40 @@
                                 <p>+</p>
                             </div>
                         </div>
-                    </div>    
+                    </div>
                 </div>
+                <!------------------->
+                <!----- Not active ---->
+                <div *ngIf="recommend.active == false || this.shopOpen == false">
+                    <div *ngIf="recommend.itemType == 'R'">
+                        <div class="col-12 row menu-button not-active" (click)="popUp(recommend)"
+                        *ngFor="let menuInfo of recommend.childMstItemTranslation;">
+                            <div class="col-3 text-center">
+                                <div *ngIf="recommend.photoPath !== '' ">
+                                    <img class="logo-img" src="http://emfood.yipintsoi.com/web_api{{recommend.photoPath}}">
+                                </div>
+                                <div *ngIf="recommend.photoPath == '' ">
+                                    <div style="border: 2px solid gray;">
+                                        <p class="tab-text">No Image</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <p>{{menuInfo.itemName}}</p>
+                                <p class="desiption-text">{{menuInfo.description}}</p>
+                                    <div class="price">
+                                    <p class="pt-4 not-active">{{recommend.price}} bath</p>    
+                                    </div>
+                            </div>
+                            <!-- <div class="col-2 align-self-center text-center">
+                                <div class="add-button">
+                                    <p>+</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <!------------------->
             </div>
             <!--------------------------->
         </div>
@@ -54,17 +87,18 @@
 
         <!--------------- All menu ---------->
         <div class="tab-pane fade" id="all-menu" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <h5>All menu</h5>
-            <div *ngFor="let allMenu of this.menuList.data;">  
-                <div *ngIf="allMenu.active == true">
+            <h5 class="tab-text">All menu</h5>
+            <div *ngFor="let allMenu of this.menuList.data;">
+                <!-- Active -->
+                <div *ngIf="allMenu.active == true && this.shopOpen == true">
                     <div class="col-12 row menu-button" (click)="popUp(allMenu)" 
                     *ngFor="let menuInfo of allMenu.childMstItemTranslation;">
                         <div class="col-3 text-center">
                             <div *ngIf="allMenu.photoPath !== '' ">
-                                <img class="img-width-max-100" src="http://emfood.yipintsoi.com/web_api{{allMenu.photoPath}}">
+                                <img class="logo-img" src="http://emfood.yipintsoi.com/web_api{{allMenu.photoPath}}">
                             </div>
                             <div *ngIf="allMenu.photoPath == '' ">
-                                <div style="border: 2px solid black;">
+                                <div style="border: 2px solid gray;">
                                     <p>No Image</p>
                                 </div>
                             </div>
@@ -83,6 +117,36 @@
                         </div>
                     </div>
                 </div>
+                <!------------->
+                <!--Not active-->
+                <div *ngIf="allMenu.active == false || this.shopOpen == false">
+                    <div class="col-12 row menu-button not-active" 
+                    *ngFor="let menuInfo of allMenu.childMstItemTranslation;">
+                        <div class="col-3 text-center">
+                            <div *ngIf="allMenu.photoPath !== '' ">
+                                <img class="logo-img" src="http://emfood.yipintsoi.com/web_api{{allMenu.photoPath}}">
+                            </div>
+                            <div *ngIf="allMenu.photoPath == '' ">
+                                <div style="border: 2px solid black;">
+                                    <p>No Image</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <p>{{menuInfo.itemName}}</p>
+                            <p class="desiption-text">{{menuInfo.description}}</p>
+                                <div class="price">
+                                <p class="pt-4 not-active">{{allMenu.price}} bath</p>    
+                                </div>
+                        </div>
+                        <!-- <div class="col-2 align-self-center text-center">
+                            <div class="add-button">
+                                <p>+</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-------------->
             </div>
         </div>
         <!------------------------------------------>
@@ -92,23 +156,24 @@
 <!------ Ordering pop up  ----------->
 <div class="pop-up" *ngIf="this.openPopUp">
     <div class="pop-up-content">
-        <div (click)="closePopUp()" class="text-right mb-3">
+        <div (click)="closePopUp()" class="close-button-pos">
             <p>&#10005;</p>
         </div>
-        <div class="pb-1" *ngFor="let item of this.menuSelected.childMstItemTranslation">
+        <div class="pb-1 mb-1 text-center" *ngFor="let item of this.menuSelected.childMstItemTranslation" style="border-bottom: 0.5px solid black;">
             <div *ngIf="this.menuSelected.photoPath !== '' ">
-                <img class="img-width-max-100" src="http://emfood.yipintsoi.com/web_api{{this.menuSelected.photoPath}}">
+                <img class="food-img" src="http://emfood.yipintsoi.com/web_api{{this.menuSelected.photoPath}}">
             </div>
             <div *ngIf="this.menuSelected.photoPath == '' ">
                 <div class="text-center" style="border: 2px solid black;">
                     <p>No Image</p>
                 </div>
             </div>
-            <p class="pt-3">Menu: {{item.itemName}}</p>
-            <p class="desiption-text">{{item.description}}</p>
+            <div class="container text-left">
+                <p class="pt-3">Menu: {{item.itemName}}</p>
+                <p class="desiption-text">{{item.description}}</p>
+            </div>
         </div>
-        <hr>
-        <div class="pb-2">
+        <div class="container pb-2">
             <p>Comment</p>
             <textarea class="form-control" rows="5" #comment></textarea>
         </div>

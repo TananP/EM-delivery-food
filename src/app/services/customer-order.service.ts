@@ -11,9 +11,7 @@ export class CustomerOrderService {
   headers = new HttpHeaders().set('content-type', 'application/json');
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
   token = JSON.parse(localStorage.getItem('token'));
-  constructor(private http: HttpClient) {
-    console.log(this.token);
-  }
+  constructor(private http: HttpClient) {}
 
   addOrder(order){
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/InsertOrderItem', order , {
