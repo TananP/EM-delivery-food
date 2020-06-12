@@ -11,20 +11,31 @@
         <!------ Render shop from shop list in hame page ------->
         <div>
             <div class="text-center" *ngIf="this.loading">
-                <h5>Now loading...</h5>
+                <!-- <h5>Now loading...</h5> -->
+                <div class="pt-3 pb-3"><img src="./assets/dist/img/loading.gif"></div>
             </div>
             <div *ngIf="!this.loading" class="row pt-2 pb-2 text-center">
                 <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
-                    <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" >
-                        <!-- <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]"> -->
-                        <div class="restaurants-button" [routerLink]="['/delivery/restaurant-home/','delivery', restaurantsInfo.name]">
-                            <p>{{restaurantsInfo.name}}</p>
+                    <!-- Button -->
+                    <div class="restaurants-button">
+                        <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" [routerLink]="['/delivery/restaurant-home/','delivery', restaurantsInfo.name]">
+                            <div *ngIf="restaurants.logoPath !== '' ">
+                                <img class="logo-img-home" src="http://emfood.yipintsoi.com/web_api{{restaurants.logoPath}}">
+                            </div>
+                            <div *ngIf="restaurants.logoPath === '' ">
+                                <img class="logo-img-home" src="./assets/dist/img/no-picture-200.jpg">
+                            </div>
+                            <!-- <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]"> -->
+                            <div>
+                                <p class="over-flow-text">{{restaurantsInfo.name}}</p>
+                            </div>
                         </div>
-                    </div>    
+                    </div>
+                    <!------------>
                 </div>
             </div>
             <div *ngIf="this.loadingError">
-                <h5>Could not load restaurants</h5>
+                <h5>Could not load restaurants please try again</h5>
             </div>
         </div>
         <!------------------------------------------------------>

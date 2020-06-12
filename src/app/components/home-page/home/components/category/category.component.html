@@ -5,18 +5,20 @@
     <!-------------- Render category from list in home page --------------->
     <div class="text-center">
         <div *ngIf="this.loading">
-            <h5>Now loading...</h5>
+            <!-- <h5>Now loading...</h5> -->
+            <div class="pt-3 pb-3"><img src="./assets/dist/img/loading.gif"></div>
         </div>
         <div *ngIf="!this.loading">
             <div id="categoryArea" class="row category-list pt-3 pb-3">
                 <div class="col-3 pointer" *ngFor="let category of categoryList;">
                     <!-- <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryId]"> -->
-                    <div class="category-button text-center" (click)="categorySelect(category)" [class.selected-active]="category === activeCategory" >    
-                        <p>{{category.categoryName}}</p>
+                    <div class="category-button text-center" style="background-image: url('./assets/dist/img/no-picture-200.jpg');"
+                    (click)="categorySelect(category)" [class.selected-active]="category === activeCategory">
+                        <p class="over-flow-text">{{category.categoryName}}</p>
                     </div>
                 </div>
                 <div class="text-center" *ngIf="this.loadingError">
-                    <h5>Could not load category</h5>
+                    <h5>Could not load category please try again</h5>
                 </div>
             </div>
         </div>

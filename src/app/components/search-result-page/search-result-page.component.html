@@ -10,8 +10,9 @@
     <!---------------->
 
     <!-- Render shop search list -->
-    <div *ngIf="this.loading">
-        <h5>Now loading...</h5>
+    <div class="text-center" *ngIf="this.loading">
+        <!-- <h5>Now loading...</h5> -->
+        <div class="pt-3 pb-3"><img src="./assets/dist/img/loading.gif"></div>
     </div>
     <div *ngIf="!this.loading">
         <div  class="col-12 search-text" *ngFor="let shop of shopList.data">

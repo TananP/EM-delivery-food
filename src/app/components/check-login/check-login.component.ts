@@ -23,7 +23,9 @@ export class CheckLoginComponent implements OnInit {
     }, () => {
       // No errors and on completed
       localStorage.setItem('token', JSON.stringify(this.tokenObj));
-      this.router.navigate(['/delivery']);
+      // window.location.href = 'http://localhost:4200/#/delivery';
+      window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
+      // this.router.navigate(['/delivery']);
     });
   }
 

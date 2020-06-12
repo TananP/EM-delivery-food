@@ -19,6 +19,7 @@ export class DeliveryHomeComponent implements OnInit {
     this.authorizationAPI.checkAuthorization();
     this.restaurantsList = [];
     this.merchantService.getMerchantList().subscribe(x => {
+      // console.log(x);
       this.restaurantsList = x;
       this.loading = false;
     }, error => {
@@ -33,10 +34,13 @@ export class DeliveryHomeComponent implements OnInit {
   reRenderRestaurants(){
     this.loading = true;
     this.merchantService.searchByCategoryID(this.categorySelectedID).subscribe( x => {
+      // console.log(x);
       this.restaurantsList = x;
-      setTimeout( () => { this.loading = false; } , 100);
-      // this.loading = false;
+      // setTimeout( () => { this.loading = false; } , 100);
+      this.loading = false;
+      this.loadingError = false;
     }, error => {
+      console.log(error);
       this.loadingError = true;
     });
   }

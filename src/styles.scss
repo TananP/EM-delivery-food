@@ -8,6 +8,10 @@
     src: url(./assets/font/gt-walsheim/GT-Walsheim-Regular-Trial.otf);
 }
 body{
+    // background-color: red;
+    background-image: url('./assets/dist/img/em-food-dining_BG.jpg');
+    // background-repeat: no-repeat;
+    background-size: contain;
     font-family: prompt;
     color: #1a1a1a;
 }
@@ -38,13 +42,16 @@ a{
 .back-button{
     display: inline-block;
     background-color: white;
-    font-size: 1rem;
-    padding: 0.25rem 0.75rem;;
+    font-size: 0.9rem;
+    padding: 0.1rem 0.5rem;
     border-radius: 1.5rem;
     border: 1px solid black;
 }
 .row{
     margin: 0;
+}
+.text-115-rem{
+    font-size: 1.15rem;
 }
 .title-home-box{
     border-bottom: 1px solid #B39462;
@@ -54,9 +61,13 @@ a{
     font-family: gt-walsheim;
     display: inline-block;
     margin: 0;
+    font-size: 1.1rem;
     background: #B39462;
     border-top-right-radius: 1rem;
 }
+// .em-main-bg{
+//     background-image: url("./assets/dist/img/em-food-dining_BG.jpg");
+// }
 .error-pop-up{
     position: fixed;
     z-index: 1;
@@ -99,30 +110,40 @@ a{
     color: black;
     width: 95%;
 }
+.add-minus-button-img{
+    width: 100%;
+    max-width: 20px;
+    max-height: 20px;
+}
+.close-img{
+    width: 100%;
+    max-width: 20px;
+    max-height: 20px;
+}
+.logo-img-home{
+    width: 100%;
+    max-width: 100px;
+    max-height: 100px;
+}
 .logo-img{
     width: 100%;
     max-width: 200px;
+    max-height: 200px;
 }
 .food-img{
     width: 100%;
     max-width: 820px;
+    max-height: 312px;
 }
 .restaurant-page-banner{
     width: 100%;
     max-width: 1280px;
+    max-height: 720px;
 }
 .home-page-banner{
     width: 100%;
     max-width: 1280px;
-}
-.deliver-buttton{
-    position: absolute;
-    bottom: 5vh;
-    left: 0;
-    width: 100%;
-    padding: 1vh 0;
-    color: white;
-    background-color: #B39462;
+    max-height: 720px;
 }
 .address-box-default{
     border: 2px solid #B39462;
@@ -130,10 +151,11 @@ a{
     font-size: 0.75rem;
 }
 .selected-active{
-    background-color: #b3946273;
+    background-color: #b3946273 !important;
 }
 .gold-button{
-    background-color: #B39462;
+    background-image:  linear-gradient(#B39462, #987e54);
+    // background-color: #B39462;
     color: white;
     padding: 0.5rem;
 }
@@ -143,7 +165,8 @@ a{
     padding: 0.5rem 0;
     left:0;
     bottom: 0;
-    background-color: #B39462;
+    background-image:  linear-gradient(#B39462, #987e54);
+    // background-color: #B39462;
     color: white;
 }
 
@@ -160,3 +183,17 @@ a{
 .max-width{
     width: 100%;
 }
+.over-flow-text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.underline{
+    border-bottom: 0.5px solid black;
+}
+@media (min-width: 650px) {
+    .close-img{
+        max-width: 28px;
+        max-height: 28px;
+    }
+  }

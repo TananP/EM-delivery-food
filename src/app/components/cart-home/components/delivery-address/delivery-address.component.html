@@ -1,6 +1,6 @@
 <div class="pop-up-content text-center">
     <div class="gold">
-        <h3>Address</h3>
+        <h5 class="text-115-rem">Address</h5>
     </div>
     <!------------------->
     <!------ Default address ------>
@@ -27,7 +27,7 @@
     <!-------- All Adress ---------->
     <div class="row gold">
         <div class="col-6 text-left">
-            <h5> Other </h5>
+            <h5 class="text-115-rem"> Other </h5>
         </div>
         <div class="col-6" (click)="addAddressPopUp()">
             <div class="mt-2 add-address-button">
@@ -43,8 +43,8 @@
                     <p>Phone number : {{index.telephoneNumber}}</p>
                     <p>Address : <br>{{index.detail}}</p>
                 </div>
-                <div class="mb-2 gold text-left" (click)="deleteAddress(index)">
-                    <p> Delete </p>
+                <div class="mt-2 mb-2 gold text-left">
+                    <p (click)="deleteAddress(index)" style="display: inline;"> Delete </p>
                 </div>
             </div>
             <div class="col-3 pl-0 pr-0 gold">
@@ -165,8 +165,10 @@
         </div>
         <!----------------------->
         <!-- Deliver here button -->
-        <div class="text-center deliver-buttton" (click)="confirmSelectAddess()">
-            <p>Deliver here</p>
+        <div class="text-center deliver-buttton-pos normal-text" (click)="confirmSelectAddess()">
+            <div class="deliver-buttton">
+                <p>Deliver here</p>
+            </div>
         </div>
 </div>
 <!------ Error pop up  ----------->

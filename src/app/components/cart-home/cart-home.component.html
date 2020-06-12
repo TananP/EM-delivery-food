@@ -1,12 +1,12 @@
-<div class="pop-up-cart" *ngIf="this.cartPopUp">
+<div class="pop-up-cart normal-text" *ngIf="this.cartPopUp">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeCartPage()">&times;</div>
-        <div class="col-8 mb-0 text-center"><h5 class="p-2">Cart</h5></div>
+        <div class="col-8 mb-0 text-center"><h5 class="p-2 text-115-rem">Cart</h5></div>
     </div>
     <div class="container pop-up-content">
         <!--------------- Address area -------------------->
             <div *ngIf="this.showName">
-                <p>Addrees</p>
+                <h5 class="text-115-rem gold">Addrees</h5>
                 <div class="form-group">
                     <p>Name</p>
                     <!-- <p>{{this.selectedAddress[0].name}}</p> -->
@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <p>{{this.selectedAddress[0].name}}</p>
                     <p class="pb-2">{{this.selectedAddress[0].detail}}</p>
-                    <div *ngIf="this.selectedAddress[0].type === 'delivery' ">
+                    <div class="comment-area" *ngIf="this.selectedAddress[0].type === 'delivery' ">
                         <p>Comment for address :</p>
                         <p>{{this.selectedAddress[0].note}}</p>
                     </div>
@@ -87,7 +87,7 @@
             <hr class="underline">
             <div class="payment-box">
                 <div class="gold">
-                    <h5>Payment</h5>
+                    <h5 class="text-115-rem">Payment</h5>
                 </div>
                 <div class="row text-center custom-checkbox">
                     <div class="col-4">
@@ -153,7 +153,7 @@
 <div class="pop-up-cart" *ngIf="this.deliveryAddress">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress('delivery')"><p class="pt-2"> < </p></div>
-        <div class="col-8 text-center"><h5 class="p-2">Address delivery</h5></div>
+        <div class="col-8 text-center"><h5 class="p-2 text-115-rem">Address delivery</h5></div>
     </div>
     <div class="container">
         <app-delivery-address (selectedAddress)="addressSelected($event)"></app-delivery-address>
@@ -164,7 +164,7 @@
 <div class="pop-up-cart" *ngIf="this.pickUp">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress('pickUp')"><p class="pt-2"> < </p></div>
-        <div class="col-8 text-center"><h5 class="p-2">Pick up address</h5></div>
+        <div class="col-8 text-center"><h5 class="p-2 text-115-rem">Pick up address</h5></div>
     </div>
     <div class="container">
         <app-pick-up-address (selectedAddress)="addressSelected($event)"></app-pick-up-address>

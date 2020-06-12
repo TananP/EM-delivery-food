@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit {
     // this.categoryList = [ 'Desserts' , 'Drink' , 'Snack' , 'Seafood' , 'Thai'];
     // Call API get category
     this.categoryAPI.getMerchantCategory().subscribe( x => {
+      console.log(x);
       this.categoryList = x;
       this.loading = false;
     }, error => {

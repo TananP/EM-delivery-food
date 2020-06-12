@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit {
   }
   openToNewLink(){
     this.autoCorrect = false;
-    this.openLoadingPopUp = true;
+    // this.openLoadingPopUp = true;
     // console.log('8888');
     this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);
   }

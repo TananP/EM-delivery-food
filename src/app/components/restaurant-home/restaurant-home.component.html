@@ -3,14 +3,15 @@
         <a class="back-button text-left" [routerLink]="['/' + this.taskSelect]">&lt;</a>
     </div>
     <div class="text-center title-text">
-        <p>Now loading ...</p>
+        <!-- <p>Now loading ...</p> -->
+        <div class="pt-3 pb-3"><img src="./assets/dist/img/loading.gif"></div>
     </div>
 </div>
 <div class="normal-text" *ngIf="this.finnishLoad">
     <div>
         <div *ngFor="let item of this.restaurantInfo.data">
-            <div class="title-text text-center p-5 m-1" style="border: 2px solid black;" *ngIf="item.bannerPath == '' ">
-                <p>No Image</p>
+            <div class="text-center" *ngIf="item.bannerPath == '' ">
+                <img class="restaurant-page-banner" src='./assets/dist/img/no-picture-1280.jpg'>
             </div>
             <div class="text-center" *ngIf="item.bannerPath !== '' ">
                 <img class="restaurant-page-banner" src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>
@@ -18,7 +19,7 @@
         </div>
     </div>
     <div class="container pt-2">
-        <div class="row pb-3">
+        <div class="row">
             <!--------------- back button ---------------->
             <div class="col-2 mt-2 mb-2">
                 <!-- Back to home page -->

@@ -12,17 +12,19 @@
     overflow-y: scroll;
     height: 50vh;
 }
-.pop-up-content{
-    width: 95%;
-}
+
 .order-item-title{
     font-size: 1rem;
 }
+.pop-up-content{
+  width: 95%;
+}
 .item-amount{
+    display: inline-block;
     background: #B39462;
-    padding: 0.5rem 0;
+    padding: 0.25rem 0.5rem;
     color: white;
-    border-radius: 2rem;
+    border-radius: 1rem;
 }
 
 /* width */

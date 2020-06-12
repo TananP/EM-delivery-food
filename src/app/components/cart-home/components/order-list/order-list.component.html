@@ -1,6 +1,6 @@
 <div class="order-list-box">
     <div class="gold">
-        <h5>Summary</h5>
+        <h5 class="text-115-rem">Summary</h5>
     </div>
     <div class="order-area">
         <!--------- Have order in list -------------->
@@ -13,7 +13,7 @@
                     <!---------------- Order item ---------------->
                     <div *ngFor="let itemInfo of item.value">
                         <div class="row mb-2 mt-4" *ngIf="itemInfo.active === true">
-                            <div class="col-2 text-center">
+                            <div class="col-2 pl-0 pr-0 text-center">
                                 <div class="item-amount">
                                     <p>{{itemInfo.itemAmount}}x</p>
                                 </div>
@@ -73,9 +73,10 @@
         </div>
         <div class="row pb-3">
             <div class="col-4 text-right" (click)="changeDishNumber('minus')">
-                <div class="add-button">
+                <!-- <div class="add-button">
                     <p>-</p>
-                </div>
+                </div> -->
+                <img class="add-minus-button-img" src="./assets/dist/img/minus.png">
             </div>
             <div class="col-4 align-self-center text-center">
                 <div>
@@ -83,9 +84,10 @@
                 </div>
             </div>
             <div class="col-4" (click)="changeDishNumber('add')">
-                <div class="add-button">
+                <!-- <div class="add-button">
                     <p>+</p>
-                </div>
+                </div> -->
+                <img class="add-minus-button-img" src="./assets/dist/img/add.png">
             </div>
         </div>
         <div class="row gold-button text-center" (click)="updateMenu(note.value)">

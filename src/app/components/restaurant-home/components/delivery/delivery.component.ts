@@ -39,7 +39,7 @@ export class DeliveryComponent implements OnInit {
     private customerOrderService: CustomerOrderService, private headerComponent: HeaderComponent) {}
 
   ngOnInit(): void {
-    console.log('shop open === ' + this.shopOpen);
+    // console.log('shop open === ' + this.shopOpen);
     // this.shopOpen = false;
     this.initValue();
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
@@ -98,7 +98,7 @@ export class DeliveryComponent implements OnInit {
     }, error => {
       this.openLoadingPopUp = false;
       const result = this.customerOrderService.checkErrorCode(error.error.code);
-      console.log(result);
+      // console.log(result);
       this.openErrorPopUp = true;
       this.errorMessage = result;
       this.closePopUp();

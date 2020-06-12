@@ -1,22 +1,32 @@
-.not-active{
-    color: gray;
-}
 
+// .add-button{
+//     display: inline-block;
+//     border: 1px solid #B39462;
+//     color: #B39462;
+//     border-radius: 2rem;
+//     padding: 0.1rem 0.5rem;
+// }
 .close-button-pos{
     position: absolute;
-    right: 5%;
+    right: 0.5%;
+    // margin-top: 0.25rem;
+    // font-size: 0.75rem;
 }
 .pop-up{
-    padding-top: 12vh;
+    padding-top: 11vh;
 }
 .pop-up-content{
     padding: 0;
+    margin-top: 0.5rem;
 }
 .nav-pills .nav-link.active {
     color: black;
     background-color: white;
     border-bottom: 2px solid black;
     border-radius: 0rem;
+}
+.not-active{
+    color: gray;
 }
 .menu-button{
     border-bottom: 1px solid #1a1a1a;
@@ -27,14 +37,7 @@
     font-size: 0.9rem;
 }
 .tab-pane{
-    padding-bottom: 10vh;
-}
-.add-button{
-    display: inline-block;
-    border: 1px solid #B39462;
-    color: #B39462;
-    border-radius: 2rem;
-    padding: 0.1rem 0.6rem;
+    margin-bottom: 10vh;
 }
 .price{
     color: green;
