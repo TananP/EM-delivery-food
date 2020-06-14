@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
 // import { MerchantService } from 'src/app/services/merchant.service';
+
 @Component({
   selector: 'app-cart-home',
   templateUrl: './cart-home.component.html',
@@ -111,6 +112,7 @@ export class CartHomeComponent implements OnInit {
 
   getUserInfo(){
     const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+    // console.log('19199191991======== CartHome');
     // console.log(userProfile);
     if (userProfile === null) {
       // this.customerID = null;

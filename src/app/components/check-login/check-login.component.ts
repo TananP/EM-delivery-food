@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import {HeaderComponent} from 'src/app/layouts/header/header/header.component';
+// import {HeaderComponent} from 'src/app/layouts/header/header/header.component';
 
 @Component({
   selector: 'app-check-login',
@@ -13,8 +13,7 @@ export class CheckLoginComponent implements OnInit {
   public tokenObj: any;
   public openErrorPopUp = false;
   public errorMessage = '';
-  constructor(private route: ActivatedRoute, private authorizationAPI: AuthorizationService, private router: Router, 
-              private headerComponent: HeaderComponent) {
+  constructor(private route: ActivatedRoute, private authorizationAPI: AuthorizationService, private router: Router) {
     // console.log(this.loginCode);
     this.authorizationAPI.getToken(this.loginCode).subscribe(x => {
       // console.log(x);
@@ -47,17 +46,13 @@ export class CheckLoginComponent implements OnInit {
     // console.log(lineId);
     this.authorizationAPI.getLineIdInfo(lineId, token).subscribe(x => {
       const userProfile = x;
-      // console.log(userProfile);
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
-    // window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
     }, error => {
       this.errorMessage = 'Please re-login agian';
       this.openErrorPopUp = true;
     }, () => {
-      // const test = localStorage.getItem('userProfile');
-      this.headerComponent.updateCarts();
-      // console.log(test);
-      window.location.href = 'http://localhost:4200/#/delivery';
+      // window.location.href = 'http://localhost:4200/#/delivery';
+      window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
     });
   }
 

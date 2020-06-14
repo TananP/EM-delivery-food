@@ -22,7 +22,6 @@ public profileImg = '';
   }
   getUserInfo(){
     const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-    console.log(userProfile);
     if (userProfile === null) {
       this.profileImg = './assets/dist/img/no-picture-200.jpg';
       this.fullName = '-';
@@ -34,11 +33,12 @@ public profileImg = '';
       }else{
         this.fullName = userProfile.fullName;
       }
-
       if (userProfile.mobileNumber  == null){
-        this.mobileNumber = 'Your profile not mobile number';
+        this.mobileNumber = 'Your profile not have mobile number';
+        // document.getElementById('mobileNumber').innerHTML = this.mobileNumber;
       }else{
         this.mobileNumber = userProfile.mobileNumber;
+        // document.getElementById('mobileNumber').innerHTML = this.mobileNumber;
       }
     }
   }

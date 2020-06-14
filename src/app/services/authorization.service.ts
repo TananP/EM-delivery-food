@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NonNullAssert } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthorizationService {
         code
       }
     });
+
     // Develop
     // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
     //     code,
@@ -31,6 +33,7 @@ export class AuthorizationService {
 
   checkAuthorization(){
     const token = localStorage.getItem('token');
+    const profile = localStorage.getItem('userProfile');
     if (token) {
       const tokenJSON = JSON.parse(token);
       if (Date.now() > tokenJSON.expires) {
@@ -41,7 +44,7 @@ export class AuthorizationService {
         window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
       }
     }
-    if (token === null) {
+    if (token === null || profile === null) {
         // redirect localhost
         // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 

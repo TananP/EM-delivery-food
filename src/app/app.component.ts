@@ -30,6 +30,11 @@ export class AppComponent {
         } else if (event.url.includes('/reserve')){
           this.routerPath = 'reserve';
         }
+        if (event.url.includes('/home')){
+          this.showHead = false;
+        } else {
+          this.showHead = true;
+        }
       }
     });
     // this.authorizationService.checkAuthorization();

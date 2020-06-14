@@ -78,32 +78,32 @@ export class HeaderComponent implements OnInit {
     this.profilePopUp = false;
   }
   updateCarts(){
-  //   const token = JSON.parse(localStorage.getItem('token'));
-  //   console.log(token);
-  //   if (token !== null) {
-  //     this.orderAmount = 0;
-  //     this.customerOrderService.getCustomerOrderList().subscribe( x => {
-  //       this.orderList = x;
-  //       // console.log(x);
-  //       this.getSumNumberOrder();
-  //       document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-  //     }, error => {
-  //       console.log(error);
-  //       this.orderAmount = 0;
-  //       document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-  //     });
-  //   }
-  // }
-    this.orderAmount = 0;
-    this.customerOrderService.getCustomerOrderList().subscribe( x => {
-      this.orderList = x;
-      console.log(x);
-      this.getSumNumberOrder();
-      document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-    }, error => {
-      console.log(error);
+    const token = JSON.parse(localStorage.getItem('token'));
+    // console.log(token);
+    if (token !== null) {
       this.orderAmount = 0;
-      document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-    });
+      this.customerOrderService.getCustomerOrderList().subscribe( x => {
+        this.orderList = x;
+        // console.log(x);
+        this.getSumNumberOrder();
+        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+      }, error => {
+        console.log(error);
+        this.orderAmount = 0;
+        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+      });
+    }
   }
+    // this.orderAmount = 0;
+    // this.customerOrderService.getCustomerOrderList().subscribe( x => {
+    //   this.orderList = x;
+    //   console.log(x);
+    //   this.getSumNumberOrder();
+    //   document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+    // }, error => {
+    //   console.log(error);
+    //   this.orderAmount = 0;
+    //   document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+    // });
+  // }
 }

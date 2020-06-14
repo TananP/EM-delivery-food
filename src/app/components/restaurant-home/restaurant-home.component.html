@@ -43,8 +43,8 @@
                         <p class="desiption-text">{{info.detail}}</p>
                     </div>
                     <div>
-                        <p>Open: {{item.openTime}}</p>
-                        <p>Close: {{item.closeTime}}</p>
+                        <p>Open: {{item.openTime | slice:0:5}}</p>
+                        <p>Close: {{item.closeTime | slice:0:5}}</p>
                     </div>
                 </div>
             </div>
