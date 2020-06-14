@@ -10,14 +10,18 @@
             </div>
         </div>
         <div class="pointer" (click)="openMenu(false)">
-            <div class="col-12 pl-4 menu-button" [routerLink]="['/' + this.taskData]">
+            <!-- <div class="col-12 pl-4 menu-button" [routerLink]="['/' + this.taskData]"> -->
+            <div class="col-12 pl-4 menu-button" [routerLink]="['/delivery']">
                 <a>Home</a>
             </div>
             <div class="col-12 pl-4 menu-button" (click)="openPopUp('order',true)">
                 <a>Order</a>
             </div>
+            <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)">
+                <a>Profile</a>
+            </div>
             <!-- <div class="col-12 pl-4 menu-button" (click)="openPopUp('history',true)">
-                <a>History</a>
+                <a>History</a>profile
             </div> -->
         </div>
     </div>
@@ -58,7 +62,8 @@
             </div>
         </div>
         <div class="col-8 text-center pt-1 pb-1">
-            <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;">
+            <!-- <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;"> -->
+            <h5 [routerLink]="['/delivery']" style="cursor: pointer;">
                 <img class="width-title-img" src="./assets/dist/img/Logo_Em_dinning.png"/>
             </h5>
         </div>
@@ -82,6 +87,9 @@
     <!---------------------------------------------->
     <!-------------- Cart pop up ------------------->
     <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home>
+
+    <!-------------- Cart pop up ------------------->
+    <app-profile-home [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile-home>
     
     <!-------------- History pop up ----------------->
     <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">

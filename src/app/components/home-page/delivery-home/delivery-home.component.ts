@@ -13,10 +13,11 @@ export class DeliveryHomeComponent implements OnInit {
   public loading = true;
   public loadingError = false;
 
-  constructor(private authorizationAPI: AuthorizationService , private merchantService: MerchantService) {}
+  constructor(private authorizationAPI: AuthorizationService , private merchantService: MerchantService) {
+    this.authorizationAPI.checkAuthorization();
+  }
 
   ngOnInit(): void {
-    this.authorizationAPI.checkAuthorization();
     this.restaurantsList = [];
     this.merchantService.getMerchantList().subscribe(x => {
       // console.log(x);
@@ -33,6 +34,7 @@ export class DeliveryHomeComponent implements OnInit {
   }
   reRenderRestaurants(){
     this.loading = true;
+    this.restaurantsList = [];
     this.merchantService.searchByCategoryID(this.categorySelectedID).subscribe( x => {
       // console.log(x);
       this.restaurantsList = x;

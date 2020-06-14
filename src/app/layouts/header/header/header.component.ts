@@ -14,10 +14,11 @@ export class HeaderComponent implements OnInit {
   @Input() searchPage: boolean;
 
   public orderList: any;
-  public token = JSON.parse(localStorage.getItem('token'));
+  // public token = JSON.parse(localStorage.getItem('token'));
 
   public orderAmount = 0;
   public cartPopUp: boolean;
+  public profilePopUp: boolean;
   public historyPopUp: boolean;
   public orderPopUp: boolean;
 
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.cartPopUp = false;
     this.historyPopUp = false;
+    this.profilePopUp = false;
     this.orderPopUp = false;
     this.updateCarts();
   }
@@ -47,6 +49,9 @@ export class HeaderComponent implements OnInit {
           this.cartPopUp = true;
           break;
 
+        case 'profile':
+          this.profilePopUp = true;
+          break;
         // case 'history':
         //   if (trigger){
         //     this.historyPopUp = true;
@@ -69,19 +74,36 @@ export class HeaderComponent implements OnInit {
     document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
     this.cartPopUp = false;
   }
+  closePopUp(){
+    this.profilePopUp = false;
+  }
   updateCarts(){
-    if (this.token !== null) {
+  //   const token = JSON.parse(localStorage.getItem('token'));
+  //   console.log(token);
+  //   if (token !== null) {
+  //     this.orderAmount = 0;
+  //     this.customerOrderService.getCustomerOrderList().subscribe( x => {
+  //       this.orderList = x;
+  //       // console.log(x);
+  //       this.getSumNumberOrder();
+  //       document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+  //     }, error => {
+  //       console.log(error);
+  //       this.orderAmount = 0;
+  //       document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+  //     });
+  //   }
+  // }
+    this.orderAmount = 0;
+    this.customerOrderService.getCustomerOrderList().subscribe( x => {
+      this.orderList = x;
+      console.log(x);
+      this.getSumNumberOrder();
+      document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+    }, error => {
+      console.log(error);
       this.orderAmount = 0;
-      this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
-        this.orderList = x;
-        // console.log(x);
-        this.getSumNumberOrder();
-        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-      }, error => {
-        console.log(error);
-        this.orderAmount = 0;
-        document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
-      });
-    }
+      document.getElementById('orderTotal').innerHTML = this.orderAmount.toString();
+    });
   }
 }

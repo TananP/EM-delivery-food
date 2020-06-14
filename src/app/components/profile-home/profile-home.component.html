@@ -1,0 +1,11 @@
+<div class="pop-up-cart normal-text" *ngIf="this.profilePopUp">
+    <div class="row bg-solid-black">
+        <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeProfilePage()">&times;</div>
+        <div class="col-8 mb-0 text-center"><h5 class="p-2 text-115-rem">Profile</h5></div>
+    </div>
+    <div class="text-center">
+        <img class="logo-img-home" src="{{this.profileImg}}">
+        <p>Name : {{this.fullName}}</p>
+        <p>Mobile number : {{this.mobileNumber}}</p>
+    </div>
+</div>

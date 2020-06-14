@@ -9,7 +9,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public showHead = false;
+  public showHead = true;
   public searchPage = false;
   public routerPath = ' ';
   title = 'Delivery-Web';
@@ -19,11 +19,11 @@ export class AppComponent {
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
         // Checking URL is in task select page or not.
-        if (event.url === '/') {
-          this.showHead = false;
-        } else {
-          this.showHead = true;
-        }
+        // if (event.url === '/') {
+        //   this.showHead = false;
+        // } else {
+        //   this.showHead = true;
+        // }
         // Check URL which task that costomer select.
         if (event.url.includes('/delivery')){
           this.routerPath = 'delivery';

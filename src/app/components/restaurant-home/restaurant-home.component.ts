@@ -23,11 +23,12 @@ export class RestaurantHomeComponent implements OnInit {
   public shopOpen: boolean;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService ,
-              private authorizationAPI: AuthorizationService , private router: Router) {}
+              private authorizationAPI: AuthorizationService , private router: Router){
+                this.authorizationAPI.checkAuthorization();
+              }
 
   ngOnInit(): void {
     this.merchantID = 0.1;
-    this.authorizationAPI.checkAuthorization();
     this.restaurantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName).subscribe( x => {
       this.restaurantInfo = x;

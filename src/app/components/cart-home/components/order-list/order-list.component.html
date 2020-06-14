@@ -49,12 +49,39 @@
         </div>
         <!-------------------------------------->
         <!------- Not have order in list ------->
-        <div *ngIf="!this.haveItemOrder">
-            <div class="text-center"> There are no order. </div>
+        <div *ngIf="this.emptyItemOrder">
+            <div class="text-center">{{this.errorMessage}}</div>
+        </div>
+        <!-------------------------------------->
+        <!------- Not have order in list ------->
+        <div *ngIf="this.nowLoading">
+            <div class="pt-3 pb-3 text-center"><img class="loading-img" src="./assets/dist/img/loading.gif"></div>
         </div>
         <!-------------------------------------->
     </div>
 </div>
+    <!---------- Coupon  ------------>
+<div class="row text-center mt-2 mb-2">
+    <div class="col-3 pr-0 pl-0">
+        <p class="pt-2">Coupon</p>
+    </div>
+    <div class="col-6">
+        <input #couponCode class="form-control">
+    </div>
+    <div (click)="checkCouponCode(couponCode.value)" class="col-3 gold-button">
+        <p>Enter</p>
+    </div>
+</div>
+<div class="row" *ngFor="let item of this.couponUsedList">
+    <div class="col-6">
+        <p>{{item.couponCode}}</p>
+    </div>
+    <div class="col-6 text-right">
+        <p>{{item.discountAmount}}</p>
+    </div>
+    <div (click)="cancelCoupon(item)" >Cancel coupon</div>    
+</div>
+            <!----------------------------->
 
 <!------ Edit pop up  ----------->
 <div class="pop-up" *ngIf="this.openPopUp">

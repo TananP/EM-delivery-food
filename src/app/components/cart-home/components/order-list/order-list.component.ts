@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
+import { MerchantService } from 'src/app/services/merchant.service';
+
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.component.html',
@@ -8,7 +10,7 @@ import {CustomerOrderService} from 'src/app/services/customer-order.service';
 export class OrderListComponent implements OnInit {
   @Output() getSummary = new EventEmitter();
 
-  private token =  JSON.parse(localStorage.getItem('token'));
+  // private token =  JSON.parse(localStorage.getItem('token'));
 
   public orderList: any;
   public menuSelected: any;
@@ -24,25 +26,38 @@ export class OrderListComponent implements OnInit {
   public deleteConfirmPopUp: boolean;
   public openErrorPopUp: boolean;
   public haveItemOrder = false;
+  public emptyItemOrder = false;
+  public nowLoading = true;
 
   public errorMessage: string;
 
-  constructor(private customerOrderService: CustomerOrderService) {
+  constructor(private merchantService: MerchantService, private customerOrderService: CustomerOrderService) {
   }
 
   ngOnInit(): void {
     this.openErrorPopUp = false;
     this.errorMessage = '';
+    this.getOrderList();
+  }
+  getOrderList(){
     this.totalSum = 0;
     this.totalOrder = 0;
     this.totalDiscount = 0;
-    this.customerOrderService.getCustomerOrderList(this.token.id).subscribe( x => {
+    this.customerOrderService.getCustomerOrderList().subscribe( x => {
       this.orderList = x;
       this.haveItemOrder = true;
+      this.nowLoading = false;
+      this.emptyItemOrder = false;
       this.groupOrdering();
       // this.sumDiscount();
     }, err => {
       // console.log(err);
+      this.nowLoading = false;
+      this.emptyItemOrder = true;
+      const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
+      // console.log(result);
+      this.openErrorPopUp = true;
+      this.errorMessage = result;
       if (err.status === 404) {
         this.couponUsedList = [];
         this.groupOrderList = [];
@@ -144,5 +159,41 @@ export class OrderListComponent implements OnInit {
       this.deleteConfirmPopUp = false;
       this.menuDelete = {};
     }
+  }
+
+  checkCouponCode(code){
+    if (code !== '') {
+      // const token =  JSON.parse(localStorage.getItem('token'));
+      this.merchantService.updateUsedCoupon(code).subscribe(x => {
+        // console.log(x);
+        this.getOrderList();
+        // console.log(this.couponUsedList);
+
+      }, error => {
+        const result = this.merchantService.checkErrorCoupon(error.error.code);
+        // console.log(result);
+        this.errorMessage = result;
+        this.openErrorPopUp = true;
+      });
+    }else {
+      this.openErrorPopUp = true;
+      this.errorMessage = 'Emptry input.';
+    }
+  }
+
+  cancelCoupon(coupon){
+    // this.customerID;
+    // console.log(coupon.couponCode);
+    // const token =  JSON.parse(localStorage.getItem('token'));
+    this.merchantService.cancelCoupon(coupon.couponCode).subscribe(x => {
+      this.getOrderList();
+      // console.log(x);
+      // this.ngOnInit();
+    }, error => {
+      const result = this.merchantService.checkErrorCoupon(error.error.code);
+      // console.log(result);
+      this.errorMessage = result;
+      this.openErrorPopUp = true;
+    });
   }
 }

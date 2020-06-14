@@ -10,10 +10,15 @@ export class CustomerOrderService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
-  token = JSON.parse(localStorage.getItem('token'));
+  private token: any;
   constructor(private http: HttpClient) {}
 
+  getToken(){
+    this.token = JSON.parse(localStorage.getItem('token'));
+  }
+
   addOrder(order){
+    this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/InsertOrderItem', order , {
       headers: {
         'ApiKey' : this.apiKey,
@@ -22,6 +27,7 @@ export class CustomerOrderService {
     });
   }
   deleteOrder(order){
+    this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/DeleteOrderItem', order , {
       headers: {
         'ApiKey' : this.apiKey,
@@ -31,6 +37,7 @@ export class CustomerOrderService {
   }
 
   updateOrder(order){
+    this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/UpdateOrderItem', order , {
       headers: {
         'ApiKey' : this.apiKey,
@@ -39,9 +46,10 @@ export class CustomerOrderService {
     });
   }
 
-  getCustomerOrderList(customerID){
+  getCustomerOrderList(){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetAllOrderItem', { params: {
-        customerId: customerID
+        customerId: this.token.id
       },
       headers: {
         'ApiKey' : this.apiKey,
@@ -64,6 +72,9 @@ export class CustomerOrderService {
     }
     else if (code === 'MERCHANT_003') {
       return 'This resterant is close';
+    }
+    else if (code === 'LoadOrderFailed') {
+      return 'Could no get order list please try again';
     }
     else {
       return 'Unknown error.';

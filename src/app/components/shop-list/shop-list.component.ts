@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantService } from 'src/app/services/merchant.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -16,7 +17,10 @@ export class ShopListComponent implements OnInit {
   public loading = true;
   public loadingError = false;
 
-  constructor(private route: ActivatedRoute , private merchantService: MerchantService) {}
+  constructor(private route: ActivatedRoute , private merchantService: MerchantService ,
+              private authorizationService: AuthorizationService) {
+    this.authorizationService.checkAuthorization();
+  }
 
   ngOnInit(): void {
     this.shopList = [];

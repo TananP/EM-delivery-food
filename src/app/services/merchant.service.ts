@@ -10,12 +10,17 @@ export class MerchantService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
-  token = JSON.parse(localStorage.getItem('token'));
+  private token: any;
   timeOut = 10000;
 
   constructor(private http: HttpClient) {}
 
+  getToken(){
+    this.token = JSON.parse(localStorage.getItem('token'));
+  }
+
   getMerchantList() {
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList', { headers: {
       'ApiKey' : this.apiKey,
       'Authorization': 'Bearer ' + this.token.token
@@ -24,11 +29,9 @@ export class MerchantService {
   }
 
   getMerchantInfo(merchantName){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
-      name: merchantName,
-      // locationId: locationID,
-      // floorId: floorID,
-      // departmentId: departmentID
+      name: merchantName
     },
       headers: {
         'ApiKey' : this.apiKey,
@@ -38,6 +41,7 @@ export class MerchantService {
   }
 
   getFoodList(merchantID){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/MerchantItem/GetItemFoodtList' , { params: {
       merchantId: merchantID
     },
@@ -47,7 +51,9 @@ export class MerchantService {
       }
     });
   }
+
   searchByRestaurantName(searchName) {
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
       name: searchName
     },
@@ -57,7 +63,9 @@ export class MerchantService {
       }
     });
   }
+
   searchByCategoryID(categoryID) {
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList' , { params: {
       categoryId: categoryID
     },
@@ -67,25 +75,31 @@ export class MerchantService {
       }
     }).pipe(timeout(5000));
   }
+
   pickUp(){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup' , { headers: {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
-  getCoupon(customerID){
-    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetCouponByCustomerId' , { params: {
-      customerId: customerID
-    } , headers: {
-      'ApiKey' : this.apiKey,
-      'Authorization': 'Bearer ' + this.token.token
-    }
-    });
-  }
-  updateUsedCoupon(customerID , couponID){
+
+  // getCoupon(customerID){
+  //   this.getToken();
+  //   return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetCouponByCustomerId' , { params: {
+  //     customerId: customerID
+  //   } , headers: {
+  //     'ApiKey' : this.apiKey,
+  //     'Authorization': 'Bearer ' + this.token.token
+  //   }
+  //   });
+  // }
+
+  updateUsedCoupon(couponID){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/MerchantCoupon/UpdateCouponUsed' , { params: {
-      customerId: customerID,
+      customerId: this.token.id,
       couponCode: couponID
     } , headers: {
       'ApiKey' : this.apiKey,
@@ -93,6 +107,19 @@ export class MerchantService {
     }
     });
   }
+
+  cancelCoupon(couponID){
+    this.getToken();
+    return this.http.get(this.baseUrl + 'web_api/api/MerchantCoupon/DeleteCouponUsed' , { params: {
+      customerId: this.token.id,
+      couponCode: couponID
+    } , headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token.token
+    }
+    });
+  }
+
   checkErrorCoupon(code){
     if (code === 'COUPON_001') {
       return 'Coupon not found.';

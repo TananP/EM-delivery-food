@@ -9,7 +9,7 @@ export class CustomerAddressService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
-  token = JSON.parse(localStorage.getItem('token'));
+  private token: any;
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +21,12 @@ export class CustomerAddressService {
   //   }
   //   });
   // }
+  getToken(){
+    this.token = JSON.parse(localStorage.getItem('token'));
+  }
 
   customerAddressCheck(addressId){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressById', { params: {
         id: addressId,
         checkDistance: 'true',
@@ -35,9 +39,10 @@ export class CustomerAddressService {
     });
   }
 
-  getCustomerAddressList(customerId){
+  getCustomerAddressList(){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/GetCustomerAddressByCustomerId', { params: {
-        id: customerId
+        id: this.token.id
       },
       headers: {
         'ApiKey' : this.apiKey,
@@ -46,18 +51,20 @@ export class CustomerAddressService {
     });
   }
 
-  getCustomerByLineId(id){
-    return this.http.get(this.baseUrl + 'web_api/api/Customer/GetCustomerByLineId', { params: {
-      lineId: id
-      },
-      headers: {
-        'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token.token
-      }
-    });
-  }
+  // getCustomerByLineId(id){
+  //   this.getToken();
+  //   return this.http.get(this.baseUrl + 'web_api/api/Customer/GetCustomerByLineId', { params: {
+  //     lineId: id
+  //     },
+  //     headers: {
+  //       'ApiKey' : this.apiKey,
+  //       'Authorization': 'Bearer ' + this.token.token
+  //     }
+  //   });
+  // }
 
   insertAddress(addNewAddress){
+    this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerAddress/InsertCustomerAddress', addNewAddress, {
       headers: {
         'ApiKey' : this.apiKey,
@@ -67,6 +74,7 @@ export class CustomerAddressService {
   }
 
   deleteAddress(idAddress){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/DeleteCustomerAddress', {params: {
       AddressId: idAddress
       },
@@ -78,6 +86,7 @@ export class CustomerAddressService {
   }
 
   updateAddress(editAddress){
+    this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerAddress/UpdateCustomerAddress', editAddress, {
       headers: {
         'ApiKey' : this.apiKey,
@@ -87,6 +96,7 @@ export class CustomerAddressService {
   }
 
   setDefault(customerID, addressID){
+    this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/CustomerAddress/UpdateDefaultCustomerAddress', {params: {
       customerId: customerID,
       AddressIdDefault: addressID

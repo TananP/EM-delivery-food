@@ -20,17 +20,19 @@ export class DeliveryAddressComponent implements OnInit {
   // Test
   public activeIndex = null;
   //
+  // public verifyPhoneNumber: boolean;
+  // private phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
   public verifyName: boolean;
-  public verifyPhoneNumber: boolean;
+  public verifyLatLng: boolean;
   public verifyAddress: boolean;
+  public verifyAll: boolean;
   public setAddressDefault: boolean;
-  private phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
 
   public addressList: any;
   public editAddressList: any;
   public deleteAddressList: any;
 
-  private token =  JSON.parse(localStorage.getItem('token'));
+  // private token =  JSON.parse(localStorage.getItem('token'));
 
   constructor(private customerAddressAPI: CustomerAddressService) {
     this.getPosition();
@@ -38,7 +40,7 @@ export class DeliveryAddressComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getPosition();
-    this.customerAddressAPI.getCustomerAddressList(this.token.id).subscribe(x => {
+    this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
       this.addressList = x;
       console.log(this.addressList);
     });
@@ -72,38 +74,54 @@ export class DeliveryAddressComponent implements OnInit {
     this.lat = event.latLng.lat();
     this.lng = event.latLng.lng();
     // console.log('lat === ' + this.lat);
-    // console.log('lng === ' + this.lng);
+    console.log('lng === ' + this.lng);
   }
-  verify(name, phonNumber , address , comment , task: string){
+
+  verify(name, address , comment , task: string){
+      // if (phonNumber.match(this.phoneno)){
+      //   this.verifyPhoneNumber = true;
+      // } else {
+      //   this.verifyPhoneNumber = false;
+      // }
+      if ( this.lat >= 13.729230290372476 && this.lat <= 13.732993677771026){
+        this.verifyLatLng = false;
+      }else {
+        this.verifyLatLng = true;
+      }
+      if ( this.lng >= 100.56892861296625 && this.lng <= 100.57006533230138){
+        this.verifyLatLng = false;
+      } else {
+        this.verifyLatLng = true;
+      }
       if (name !== ''){
         this.verifyName = true;
       } else {
         this.verifyName = false;
-      }
-      if (phonNumber.match(this.phoneno)){
-        this.verifyPhoneNumber = true;
-      } else {
-        this.verifyPhoneNumber = false;
       }
       if (address !== ''){
         this.verifyAddress = true;
       } else {
         this.verifyAddress = false;
       }
+      if (!this.verifyName || !this.verifyLatLng || !this.verifyAddress) {
+        this.verifyAll = false;
+      } else {
+        this.verifyAll = true;
+      }
       switch (task) {
         case 'add': {
-          this.insertNewAddress(name, phonNumber , address , comment);
+          this.insertNewAddress(name , address , comment);
           break;
         }
         case 'edit': {
-          this.editAddressConfirm(name, phonNumber , address , comment);
+          this.editAddressConfirm(name , address , comment);
           break;
         }
       }
   }
   closePopUp(task){
     this.verifyName = null;
-    this.verifyPhoneNumber = null;
+    // this.verifyPhoneNumber = null;
     this.verifyAddress = null;
     switch (task) {
       case 'add': {
@@ -128,8 +146,7 @@ export class DeliveryAddressComponent implements OnInit {
       this.customerAddressAPI.customerAddressCheck(this.activeIndex.addressId).subscribe( x => {
         this.activeIndex = x;
         address.push({addressId: this.activeIndex.addressId , deliveryPrice: this.activeIndex.deliveryPrice ,
-          customerId: this.activeIndex.customerId , telephoneNumber: this.activeIndex.telephoneNumber,
-          name: this.activeIndex.name,
+          customerId: this.activeIndex.customerId, name: this.activeIndex.name,
           detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
         this.selectedAddress.emit(address);
       }, error => {
@@ -144,26 +161,33 @@ export class DeliveryAddressComponent implements OnInit {
     this.getPosition();
   }
 
-  insertNewAddress(nameAddress, phonNumber , address , comment){
-    if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
-      if (this.addressList.length === 0){
-        this.setAddressDefault = true;
-      }else{
-        this.setAddressDefault = false;
-      }
-      const addressInfoList = {customerId: this.token.id
-        , name: nameAddress, note: comment, detail: address, default: this.setAddressDefault , telephoneNumber: phonNumber
-        , mapLatitude: this.lat , mapLongitude: this.lng};
-
-      this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
-        this.addAddress = false;
-        this.ngOnInit();
-      }, error => {
-        const result = this.customerAddressAPI.checkErrorCode(error.error.code);
-        // console.log(result);
-        this.errorMessage = result;
+  insertNewAddress(nameAddress , address , comment){
+    if (this.verifyAll) {
+      // console.log(this.addressList);
+      const token =  JSON.parse(localStorage.getItem('token'));
+      if (this.addressList === undefined){
+        this.errorMessage = 'Could not add new addres please try again later';
         this.openErrorPopUp = true;
-      });
+      }else{
+        if (this.addressList.length === 0){
+          this.setAddressDefault = true;
+        }else{
+          this.setAddressDefault = false;
+        }
+        const addressInfoList = {customerId: token.id
+          , name: nameAddress, note: comment, detail: address, default: this.setAddressDefault
+          , mapLatitude: this.lat , mapLongitude: this.lng};
+
+        this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
+          this.addAddress = false;
+          this.ngOnInit();
+        }, error => {
+          const result = this.customerAddressAPI.checkErrorCode(error.error.code);
+          // console.log(result);
+          this.errorMessage = result;
+          this.openErrorPopUp = true;
+        });
+      }
     }
   }
   setDefaultAddress(address){
@@ -179,12 +203,11 @@ export class DeliveryAddressComponent implements OnInit {
     this.lng = address.mapLongitude;
   }
 
-  editAddressConfirm(nameAddress, phonNumber , address , comment){
-    if (this.verifyName && this.verifyPhoneNumber && this.verifyAddress) {
+  editAddressConfirm(nameAddress , address , comment){
+    if (this.verifyAll) {
       this.editAddressList.name = nameAddress;
       this.editAddressList.detail = address;
       this.editAddressList.note = comment;
-      this.editAddressList.telephoneNumber = phonNumber;
       this.editAddressList.mapLatitude = this.lat;
       this.editAddressList.mapLongitude = this.lng;
       this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {

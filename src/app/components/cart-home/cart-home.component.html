@@ -5,22 +5,25 @@
     </div>
     <div class="container pop-up-content">
         <!--------------- Address area -------------------->
-            <div *ngIf="this.showName">
+            <div>
                 <h5 class="text-115-rem gold">Addrees</h5>
                 <div class="form-group">
-                    <p>Name</p>
-                    <!-- <p>{{this.selectedAddress[0].name}}</p> -->
-                    <input class="form-control" placeholder="Name">
+                    <!-- <p>Name</p> -->
+                    <p>{{this.fullName}}</p>
+                    <!-- <input class="form-control" placeholder="Name"> -->
                 </div>
                 <div class="form-group">
-                    <p>Telephone number</p>
-                    <input class="form-control" placeholder="Phone number">
+                    <p>{{this.mobileNumber}}</p>
+                    <!-- <p>Telephone number</p>
+                    <input class="form-control" placeholder="Phone number"> -->
                 </div>
                 <hr>
+            </div>
+            <div *ngIf="this.showAdress">
                 <div class="form-group">
                     <p>{{this.selectedAddress[0].name}}</p>
                     <p class="pb-2">{{this.selectedAddress[0].detail}}</p>
-                    <div class="comment-area" *ngIf="this.selectedAddress[0].type === 'delivery' ">
+                    <div class="over-flow-text" *ngIf="this.selectedAddress[0].type === 'delivery' ">
                         <p>Comment for address :</p>
                         <p>{{this.selectedAddress[0].note}}</p>
                     </div>
@@ -63,29 +66,7 @@
                 <app-order-list (getSummary)="renderSummary($event)"></app-order-list>
             </div>
             <hr class="underline">
-            <!---------- Coupon  ------------>
-            <div class="row text-center mt-2 mb-2">
-                <div class="col-3 pr-0 pl-0">
-                    <p class="pt-2">Coupon</p>
-                </div>
-                <div class="col-6">
-                    <input #couponCode class="form-control">
-                </div>
-                <div (click)="checkCouponCode(couponCode.value)" class="col-3 gold-button">
-                    <p>Enter</p>
-                </div>
-            </div>
-            <div class="row" *ngFor="let item of this.couponUsedList">
-                <div class="col-6">
-                    <p>{{item.couponCode}}</p>
-                </div>
-                <div class="col-6 text-right">
-                    <p>{{item.discountAmount}}</p>
-                </div>              
-            </div>
-            <!----------------------------->
-            <hr class="underline">
-            <div class="payment-box">
+            <!-- <div class="payment-box">
                 <div class="gold">
                     <h5 class="text-115-rem">Payment</h5>
                 </div>
@@ -104,9 +85,9 @@
                     </div>
                 </div>
             </div>
-            <hr class="underline">
+            <hr class="underline"> -->
             <!--------- delivery price ------->
-            <div class="row gold pb-3" *ngIf="this.showName">
+            <div class="row gold pb-3" *ngIf="this.showAdress">
                 <div class="col-6 pl-0 text-left">
                     <p>Delivery price</p>
                 </div>

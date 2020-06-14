@@ -12,16 +12,16 @@ import { CheckLoginComponent } from './components/check-login/check-login.compon
 const routes: Routes = [
   {
     path: '',
-    component: TaskSelectComponent,
+    component: DeliveryHomeComponent,
   },
   {
     path: 'home/:loginID',
     component: CheckLoginComponent,
   },
-  {
-    path: '404',
-    component: ErrorNotFoundPageComponent,
-  },
+  // {
+  //   path: '404',
+  //   component: ErrorNotFoundPageComponent,
+  // },
   {
     path: 'delivery',
     component: DeliveryHomeComponent
@@ -62,6 +62,7 @@ const routes: Routes = [
   //   path: 'reserve/restaurant-home/:task/:routeID/:searchInput/:searchName/:merchantId/:locationId/:floorId/:departmentId',
   //   component: RestaurantHomeComponent
   // },
+  // { path: '', redirectTo: 'delivery' }
   // { path: '**', redirectTo: '' }
 ];
 
