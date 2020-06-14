@@ -28,6 +28,7 @@ export class OrderListComponent implements OnInit {
   public haveItemOrder = false;
   public emptyItemOrder = false;
   public nowLoading = true;
+  public openLoadingPopUp = false;
 
   public errorMessage: string;
 
@@ -164,14 +165,16 @@ export class OrderListComponent implements OnInit {
   checkCouponCode(code){
     if (code !== '') {
       // const token =  JSON.parse(localStorage.getItem('token'));
+      this.openLoadingPopUp = true;
       this.merchantService.updateUsedCoupon(code).subscribe(x => {
         // console.log(x);
         this.getOrderList();
+        this.openLoadingPopUp = false;
         // console.log(this.couponUsedList);
-
       }, error => {
         const result = this.merchantService.checkErrorCoupon(error.error.code);
         // console.log(result);
+        this.openLoadingPopUp = false;
         this.errorMessage = result;
         this.openErrorPopUp = true;
       });
@@ -185,13 +188,16 @@ export class OrderListComponent implements OnInit {
     // this.customerID;
     // console.log(coupon.couponCode);
     // const token =  JSON.parse(localStorage.getItem('token'));
+    this.openLoadingPopUp = true;
     this.merchantService.cancelCoupon(coupon.couponCode).subscribe(x => {
       this.getOrderList();
+      this.openLoadingPopUp = false;
       // console.log(x);
       // this.ngOnInit();
     }, error => {
       const result = this.merchantService.checkErrorCoupon(error.error.code);
       // console.log(result);
+      this.openLoadingPopUp = false;
       this.errorMessage = result;
       this.openErrorPopUp = true;
     });
