@@ -58,26 +58,26 @@ export class CustomerOrderService {
     });
   }
   checkErrorCode(code){
-    if (code === 'ITEM_001') {
-      return 'Could not find this menu.';
-    }
-    else if (code === 'ITEM_002') {
+    // if (code === 'ITEM_001') {
+    //   return 'Could not find this menu.';
+    // }
+    if (code === 'ITEM_002') {
       return 'This menu is out of order.';
     }
-    else if (code === 'MERCHANT_001') {
-      return 'Could not find this resterant.';
-    }
-    else if (code === 'MERCHANT_002') {
-      return 'This resterant is not active.';
-    }
+    // else if (code === 'MERCHANT_001') {
+    //   return 'Could not find this resterant.';
+    // }
+    // else if (code === 'MERCHANT_002') {
+    //   return 'This resterant is not active.';
+    // }
     else if (code === 'MERCHANT_003') {
       return 'This resterant is close';
     }
     else if (code === 'LoadOrderFailed') {
-      return 'Could no get order list please try again';
+      return 'Could no get orderlist please try again';
     }
     else {
-      return 'Unknown error.';
+      return 'Error please try again later.';
     }
   }
 }

@@ -133,14 +133,15 @@ export class MerchantService {
     else if (code === 'COUPON_004') {
       return 'Coupon Code was used.';
     }
-    else if (code === 'COUPON_005') {
-      return 'Invalid Customer Id.';
-    }
+    // else if (code === 'COUPON_005') {
+    //   // return 'Invalid Customer Id.';
+    //   return '';
+    // }
     else if (code === 'COUPON_006') {
       return 'Invalid Coupon Code.';
     }
     else {
-      return 'Unknown error.';
+      return 'Error please try again later.';
      }
   }
 }
