@@ -15,11 +15,16 @@
         <div class="pt-3 pb-3"><img class="loading-img" src="./assets/dist/img/loading.gif"></div>
     </div>
     <div *ngIf="!this.loading">
-        <div  class="col-12 search-text" *ngFor="let shop of shopList.data">
-            <div *ngFor="let shopInfo of shop.childMstMerchantTranslation">
+        <div  class="row search-text serach-item-box pb-2 mb-3" *ngFor="let shop of shopList.data">
+            <div class="col-4 text-center" *ngIf="shop.logoPath !== '' ">
+                <img class="logo-img-search" src="http://emfood.yipintsoi.com/web_api{{shop.logoPath}}">
+            </div>
+            <div class="col-4 text-center" *ngIf="shop.logoPath === '' ">
+                <img class="logo-img-search" src="./assets/dist/img/no-picture-200.jpg">
+            </div>
+            <div class="col-8 center-col" *ngFor="let shopInfo of shop.childMstMerchantTranslation">
                 <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed , shopInfo.name]">
-                    Restaurnts {{shopInfo.name}}
-                    <hr>
+                    <p class="over-flow-text">Restaurnts {{shopInfo.name}}</p>
                 </div>
             </div>
         </div>

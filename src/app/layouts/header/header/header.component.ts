@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
 
 import { Injectable } from '@angular/core';
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
   public historyPopUp: boolean;
   public orderPopUp: boolean;
 
-  constructor(private customerOrderService: CustomerOrderService) {}
+  constructor(private customerOrderService: CustomerOrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartPopUp = false;
@@ -43,6 +44,11 @@ export class HeaderComponent implements OnInit {
       document.getElementById('sideMenu').style.width = '0px';
     }
   }
+  // linkToCartPage(){
+  //   // console.log(this.router.url);
+  //   // localStorage.setItem('previousURL', this.router.url);
+  //   // this.router.navigate(['/delivery/cart-page']);
+  // }
   openPopUp(popName: string , trigger: boolean){
     switch (popName){
         case 'cart':

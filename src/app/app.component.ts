@@ -16,6 +16,7 @@ export class AppComponent {
 
   constructor(private router: Router , private http: HttpClient ) {
     // Check Url
+    // localStorage.setItem('previousURL', '');
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
         // Checking URL is in task select page or not.

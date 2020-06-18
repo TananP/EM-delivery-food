@@ -8,6 +8,7 @@ import { RestaurantHomeComponent  } from './components/restaurant-home/restauran
 import { SearchResultPageComponent } from './components/search-result-page/search-result-page.component';
 import { ErrorNotFoundPageComponent } from './components/error-not-found-page/error-not-found-page.component';
 import { CheckLoginComponent } from './components/check-login/check-login.component';
+import {CartHomeComponent} from './components/cart-home/cart-home.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
     path: 'delivery/restaurant-home/:task/:searchName',
     component: RestaurantHomeComponent
   },
+  {
+    path: 'delivery/cart-page',
+    component: CartHomeComponent
+  },
   // {
   //   path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',
   //   component: RestaurantHomeComponent
@@ -63,7 +68,7 @@ const routes: Routes = [
   //   component: RestaurantHomeComponent
   // },
   // { path: '', redirectTo: 'delivery' }
-  // { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

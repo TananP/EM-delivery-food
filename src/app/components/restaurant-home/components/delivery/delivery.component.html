@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-7 over-flow-text">
                             <p>{{menuInfo.itemName}}</p>
                             <p class="desiption-text">{{menuInfo.description}}</p>
                                 <div class="price">
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-7">
+                            <div class="col-7 over-flow-text">
                                 <p>{{menuInfo.itemName}}</p>
                                 <p class="desiption-text">{{menuInfo.description}}</p>
                                     <div class="price">
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-7 over-flow-text">
                             <p>{{menuInfo.itemName}}</p>
                             <p class="desiption-text">{{menuInfo.description}}</p>
                                 <div class="price">
@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-7 over-flow-text">
                             <p>{{menuInfo.itemName}}</p>
                             <p class="desiption-text">{{menuInfo.description}}</p>
                                 <div class="price">
@@ -171,7 +171,7 @@
                     <img class="food-img" src="./assets/dist/img/no-picture-820.jpg">
                 </div>
             </div>
-            <div class="container text-left">
+            <div class="container text-left over-flow-text">
                 <p class="pt-3">Menu: {{item.itemName}}</p>
                 <p class="desiption-text">{{item.description}}</p>
             </div>
@@ -212,7 +212,8 @@
 <!-------------------------------------------->
 
 <!----------------- Cart button --------------->
-<div class="row cart-button text-center pointer" (click)="openCart()">
+<!-- <div class="row cart-button text-center pointer" (click)="openCart()"> -->
+<div class="row cart-button text-center pointer" [routerLink]="['/delivery/cart-page']" >
     <div class="col-2">
         <!-- <p>0</p> -->
     </div>
@@ -225,8 +226,8 @@
 </div>
 <!--------------------------------------------->
 
-<!------------------- Cart pop up ------------->
-<app-cart-home [cartPopUp]="this.openCartPopUp"></app-cart-home>
+<!-- ----------------- Cart pop up -----------
+<app-cart-home [cartPopUp]="this.openCartPopUp"></app-cart-home> -->
 <!--------------------------------------------->
 
 <!------ Error pop up  ----------->

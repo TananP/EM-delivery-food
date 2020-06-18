@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
+// import { Router } from '@angular/router';
+// import { filter, pairwise } from 'rxjs/operators';
 // import { MerchantService } from 'src/app/services/merchant.service';
+import {CustomerOrderService} from 'src/app/services/customer-order.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-cart-home',
@@ -9,23 +13,30 @@ import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
 export class CartHomeComponent implements OnInit {
   @Input() cartPopUp: boolean;
   @Output() popUpStatus = new EventEmitter();
+
   public deliveryAddress = false;
   public pickUp = false;
+  public removeOrderPopUp = false;
+  public openLoadingPopUp = false;
+  public errorPopUp = false;
+
   public totalOrder = 0;
   public totalPrice = 0;
   public totalDiscount = 0;
+
   public couponUsedList: any;
+  public selectedAddress: any;
+  public checkOrderResult: any;
   public originalTotalPrice: number;
-  // public customerID: number;
-  public errorPopUp = false;
+  public showAdress: boolean;
+
   public errorCodeText = '';
   public fullName = '';
   public mobileNumber = '';
-  public selectedAddress: any;
-  public showAdress: boolean;
+
 
   // private token =  JSON.parse(localStorage.getItem('token'));
-  constructor() {}
+  constructor(private location: Location, private customerOrderService: CustomerOrderService) {}
 
   ngOnInit(): void {
     this.getUserInfo();
@@ -41,8 +52,11 @@ export class CartHomeComponent implements OnInit {
   }
 
   closeCartPage(){
-    this.cartPopUp = false;
-    this.popUpStatus.emit(this.totalOrder);
+    this.location.back();
+    // const previousURL = localStorage.getItem('previousURL');
+    // this.router.navigate([previousURL]);
+    // this.cartPopUp = false;
+    // this.popUpStatus.emit(this.totalOrder);
   }
 
   closeAddress(name){
@@ -58,21 +72,6 @@ export class CartHomeComponent implements OnInit {
     }
   }
 
-  // cancelCoupon(coupon){
-  //   // this.customerID;
-  //   // console.log(coupon.couponCode);
-  //   this.merchantService.cancelCoupon(this.token.id , coupon.couponCode).subscribe(x => {
-  //     // console.log(x);
-  //     // this.ngOnInit();
-  //     this.cartPopUp = false;
-  //     this.cartPopUp = true;
-  //   }, error => {
-  //     const result = this.merchantService.checkErrorCoupon(error.error.code);
-  //     // console.log(result);
-  //     this.errorCodeText = result;
-  //     this.errorPopUp = true;
-  //   });
-  // }
   renderSummary(event){
     // console.log(event);
     this.totalOrder = event[0];
@@ -84,36 +83,17 @@ export class CartHomeComponent implements OnInit {
   }
 
   addressSelected(event){
-    this.selectedAddress = event;
+    // console.log();
+    this.selectedAddress = event[0];
     this.showAdress = true;
     this.totalPrice = this.originalTotalPrice;
-    this.totalPrice = this.totalPrice + this.selectedAddress[0].deliveryPrice;
-    this.closeAddress(this.selectedAddress[0].type);
+    this.totalPrice = this.totalPrice + this.selectedAddress.deliveryPrice;
+    this.closeAddress(this.selectedAddress.type);
   }
 
-  // checkCouponCode(code){
-  //   if (code !== '') {
-  //     this.merchantService.updateUsedCoupon(this.token.id , code).subscribe(x => {
-  //       // console.log(x);
-  //       console.log(this.couponUsedList);
-  //       this.cartPopUp = false;
-  //       this.cartPopUp = true;
-  //     }, error => {
-  //       const result = this.merchantService.checkErrorCoupon(error.error.code);
-  //       // console.log(result);
-  //       this.errorCodeText = result;
-  //       this.errorPopUp = true;
-  //     });
-  //   }else {
-  //     this.errorPopUp = true;
-  //     this.errorCodeText = 'Emptry input.';
-  //   }
-  // }
 
   getUserInfo(){
     const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-    // console.log('19199191991======== CartHome');
-    // console.log(userProfile);
     if (userProfile === null) {
       // this.customerID = null;
       this.fullName = '-';
@@ -132,5 +112,68 @@ export class CartHomeComponent implements OnInit {
         this.mobileNumber = userProfile.mobileNumber;
       }
     }
+  }
+
+  confirmOrder(){
+    // console.log(this.selectedAddress);
+    // console.log('==================');
+    this.openLoadingPopUp = true;
+    if (this.selectedAddress === undefined) {
+      this.openLoadingPopUp = false;
+      this.errorPopUp = true;
+      this.errorCodeText = 'Please select address.';
+    }else {
+      const token = JSON.parse(localStorage.getItem('token'));
+      if (this.selectedAddress.type === 'delivery'){
+        const oderConfirmList = {customerId: token.id , deliveryType: 'D' ,
+          deliveryId: this.selectedAddress.addressId, deliveryPrice: this.selectedAddress.deliveryPrice};
+        // console.log(oderConfirmList);
+        this.checkWithAPI(oderConfirmList);
+      } else if (this.selectedAddress.type === 'pickUp') {
+        const oderConfirmList = {customerId: token.id, deliveryType: 'P' ,
+          deliveryId: this.selectedAddress.categoryId, deliveryPrice: 0};
+        console.log(oderConfirmList);
+        this.checkWithAPI(oderConfirmList);
+      }
+    }
+    // console.log(this.selectedAddress);
+  }
+
+  checkWithAPI(order){
+    this.customerOrderService.checkOrder(order).subscribe( x => {
+      this.checkOrderResult = x;
+      this.openLoadingPopUp = false;
+      if (this.checkOrderResult.result) {
+        this.paymentMethod(this.checkOrderResult);
+      } else {
+        this.removeOrderPopUp = true;
+      }
+    }, error => {
+      this.openLoadingPopUp = false;
+      console.log(error);
+      this.errorPopUp = true;
+      this.errorCodeText = error.error.error;
+    });
+  }
+
+  removeErrorOrder(){
+    this.customerOrderService.removeErrorOrder().subscribe( x => {
+      console.log(x);
+      this.removeOrderPopUp = false;
+    }, error => {
+      this.removeOrderPopUp = false;
+      console.log(error);
+      this.errorPopUp = true;
+      this.errorCodeText = error.error.error;
+    });
+  }
+
+  paymentMethod(order){
+    console.log(order);
+    this.customerOrderService.customerPayment(order).subscribe( x => {
+      console.log(x);
+    }, error => {
+      console.log(error);
+    });
   }
 }

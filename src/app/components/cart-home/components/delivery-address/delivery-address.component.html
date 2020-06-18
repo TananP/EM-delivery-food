@@ -1,4 +1,4 @@
-<div class="pop-up-content text-center">
+<div class="pop-up-content text-center pb-5 mb-1">
     <div class="gold">
         <h5 class="text-115-rem">Address</h5>
     </div>
@@ -62,9 +62,9 @@
     <div class="address-pop-up" *ngIf="this.addAddress">
         <div class="address-pop-up-container">
             <div>
-                <h5>Name</h5>
-                <input #customerName class="form-control" placeholder="Enter your name">
-                <p class="verlify-invalid" *ngIf="this.verifyName === false">Invalid name</p>
+                <h5>Location type</h5>
+                <input maxlength="15" #customerLoType class="form-control" placeholder="Home, Condo, Apartment">
+                <p class="verlify-invalid" *ngIf="this.verifyLoType === false">Invalid name</p>
             </div>
             <!-- <div>
                 <h5>Phone number</h5>
@@ -92,7 +92,7 @@
             <!--------------------->
             <div class="row mt-3">
                 <p class="verlify-invalid" *ngIf="this.verifyAll === false">Please inform all information</p>
-                <div class="col-6" (click)="verify(customerName.value, addNewAddress.value ,addressComments.value , 'add')"> 
+                <div class="col-6" (click)="verify(customerLoType.value, addNewAddress.value ,addressComments.value , 'add')"> 
                     <div class="address-pop-up-button"> Add </div>
                 </div>
                 <div class="col-6" (click)="closePopUp('add')"> 
@@ -103,77 +103,77 @@
     </div>
     <!----------------------->
 
-    <!-- Delete confirm pop-up -->
-    <div class="address-pop-up" *ngIf="deleteConfirmPopUp">
+
+    <!-- Edit adress pop-up -->
+    <div class="address-pop-up" *ngIf="this.editAddress">
         <div class="address-pop-up-container">
-            <div class="mb-4">
-                <p>Delete this address?</p>
+            <div>
+                <h5>Location type</h5>
+                <input maxlength="15" #editCustomerLoType class="form-control" value="{{this.editAddressList.name}}">
+                <p class="verlify-invalid" *ngIf="this.verifyLoType === false">Invalid name</p>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="address-pop-up-button" (click)="deleteConfirmation(true)">
-                        <p> Yes </p>
-                    </div>
+        <!-- <div>
+            <h5>Phone number</h5>
+            <input #editCustomerPhoneNumber type="number" class="form-control" value="{{this.editAddressList.telephoneNumber}}">
+                <p class="verlify-invalid" *ngIf="this.verifyPhoneNumber === false">Invalid phone number</p>
+            </div> -->
+            <div>
+                <h5>Address</h5>
+                <textarea row="2" #editAddNewAddress class="form-control" maxlength="225" value="{{this.editAddressList.detail}}"></textarea>
+                <p class="verlify-invalid" *ngIf="this.verifyAddress === false">Invalid address</p>
+            </div>
+            <div class="mb-3">
+                <h5>Comments</h5>
+                <textarea row="2" #editAddressComments class="form-control" maxlength="225" value="{{this.editAddressList.note}}"></textarea>
+            </div>
+             <!-- Test Google map -->
+            <div>
+                <h5>Please mark your location</h5>
+                <p class="verlify-invalid" *ngIf="this.verifyLatLng === false">Invalid mark location</p>
+                <google-map width="100%" height="400px" [center]="{ lat:this.lat , lng:this.lng}" 
+                (mapClick)="setMarker($event)" [options]="{zoom:17 , gestureHandling: 'greedy'}" >
+                    <map-marker [position]="{ lat:this.lat , lng:this.lng}"></map-marker>
+                </google-map>
+            </div>
+            <!--------------------->
+            <div class="row mt-3">
+                <p class="verlify-invalid" *ngIf="this.verifyAll === false">Please inform all information</p>
+                <div class="col-6" (click)="verify(editCustomerLoType.value, editAddNewAddress.value ,editAddressComments.value , 'edit')"> 
+                    <div class="address-pop-up-button"> Edit </div>
                 </div>
-                <div class="col-6">
-                    <div class="address-pop-up-button" (click)="deleteConfirmation(false)">
-                        <p> No </p>
-                    </div>
+                <div class="col-6" (click)="closePopUp('edit')"> 
+                    <div class="address-pop-up-button"> Cancel </div>
+                </div>
+            </div>    
+        </div>    
+    </div>
+    <!----------------------->
+    <!-- Deliver here button -->
+    <div class="text-center deliver-buttton-pos normal-text" (click)="confirmSelectAddess()">
+        <div class="deliver-buttton">
+            <p>Deliver here</p>
+        </div>
+    </div>
+</div>
+<!-- Delete confirm pop-up -->
+<div class="address-pop-up" *ngIf="deleteConfirmPopUp">
+    <div class="address-pop-up-container">
+        <div class="mb-4">
+            <p>Delete this address?</p>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="address-pop-up-button" (click)="deleteConfirmation(true)">
+                    <p> Yes </p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="address-pop-up-button" (click)="deleteConfirmation(false)">
+                    <p> No </p>
                 </div>
             </div>
         </div>
     </div>
-
-        <!-- Edit adress pop-up -->
-        <div class="address-pop-up" *ngIf="this.editAddress">
-            <div class="address-pop-up-container">
-                <div>
-                    <h5>Name</h5>
-                    <input #editCustomerName class="form-control" value="{{this.editAddressList.name}}">
-                    <p class="verlify-invalid" *ngIf="this.verifyName === false">Invalid name</p>
-                </div>
-                <!-- <div>
-                    <h5>Phone number</h5>
-                    <input #editCustomerPhoneNumber type="number" class="form-control" value="{{this.editAddressList.telephoneNumber}}">
-                    <p class="verlify-invalid" *ngIf="this.verifyPhoneNumber === false">Invalid phone number</p>
-                </div> -->
-                <div>
-                    <h5>Address</h5>
-                    <textarea row="2" #editAddNewAddress class="form-control" maxlength="225" value="{{this.editAddressList.detail}}"></textarea>
-                    <p class="verlify-invalid" *ngIf="this.verifyAddress === false">Invalid address</p>
-                </div>
-                <div class="mb-3">
-                    <h5>Comments</h5>
-                    <textarea row="2" #editAddressComments class="form-control" maxlength="225" value="{{this.editAddressList.note}}"></textarea>
-                </div>
-                 <!-- Test Google map -->
-                <div>
-                    <h5>Please mark your location</h5>
-                    <p class="verlify-invalid" *ngIf="this.verifyLatLng === false">Invalid mark location</p>
-                    <google-map width="100%" height="400px" [center]="{ lat:this.lat , lng:this.lng}" 
-                    (mapClick)="setMarker($event)" [options]="{zoom:17 , gestureHandling: 'greedy'}" >
-                        <map-marker [position]="{ lat:this.lat , lng:this.lng}"></map-marker>
-                    </google-map>
-                </div>
-                <!--------------------->
-                <div class="row mt-3">
-                    <p class="verlify-invalid" *ngIf="this.verifyAll === false">Please inform all information</p>
-                    <div class="col-6" (click)="verify(editCustomerName.value, editAddNewAddress.value ,editAddressComments.value , 'edit')"> 
-                        <div class="address-pop-up-button"> Edit </div>
-                    </div>
-                    <div class="col-6" (click)="closePopUp('edit')"> 
-                        <div class="address-pop-up-button"> Cancel </div>
-                    </div>
-                </div>    
-            </div>    
-        </div>
-        <!----------------------->
-        <!-- Deliver here button -->
-        <div class="text-center deliver-buttton-pos normal-text" (click)="confirmSelectAddess()">
-            <div class="deliver-buttton">
-                <p>Deliver here</p>
-            </div>
-        </div>
 </div>
 <!------ Error pop up  ----------->
 <div class="pop-up" *ngIf="this.openErrorPopUp">
@@ -189,4 +189,7 @@
         </div> -->
     </div>
 </div>
+<!-------------------------------------------->
+<!------------ Loading pop up  --------------->
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>
 <!-------------------------------------------->

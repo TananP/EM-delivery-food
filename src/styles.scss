@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
     font-family: prompt;
-    src: url(./assets/font/prompt/Prompt-Regular.ttf);
+    src: url(./assets/font/prompt/Prompt-Light.ttf);
   }
 @font-face {
     font-family: gt-walsheim;
-    src: url(./assets/font/gt-walsheim/GT-Walsheim-Regular-Trial.otf);
+    src: url(./assets/font/gt-walsheim/GT-Walsheim-Thin-Trial.otf);
 }
 body{
     // background-color: red;
@@ -27,11 +27,17 @@ a{
 .container{
     word-break: break-word;
 }
+.center-col{
+    align-self: center;
+}
 .desiption-text{
     color: #b3b3b3;
 }
 .pointer{
     cursor : pointer;
+}
+.black{
+    color: black;
 }
 .gold{
     color: #B39462;
@@ -125,8 +131,25 @@ a{
     max-width: 20px;
     max-height: 20px;
 }
+.deliver-buttton{
+    display: inline-block;
+    padding: 1vh 0;
+    color: white;
+    // background-color: #B39462;
+    background-image:  linear-gradient(#B39462, #987e54);
+    width: 100%;
+}
+.deliver-buttton-pos{
+    position: fixed;
+    background-color: white;
+    padding: 1rem;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
 .logo-img-home{
     width: 100%;
+    border: 1px solid black;
     max-width: 100px;
     max-height: 100px;
 }

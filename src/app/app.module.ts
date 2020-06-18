@@ -31,6 +31,7 @@ import { OrderListComponent } from './components/cart-home/components/order-list
 import { PickUpAddressComponent } from './components/cart-home/components/pick-up-address/pick-up-address.component';
 import { LoadingPopUpComponent } from './components/pop-up/loading-pop-up/loading-pop-up.component';
 import { ProfileHomeComponent } from './components/profile-home/profile-home.component';
+import { PaymentResultHomeComponent } from './components/payment-result-home/payment-result-home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { ProfileHomeComponent } from './components/profile-home/profile-home.com
     PickUpAddressComponent,
     LoadingPopUpComponent,
     ProfileHomeComponent,
+    PaymentResultHomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
+import { HeaderComponent } from 'src/app/layouts/header/header/header.component';
 import { MerchantService } from 'src/app/services/merchant.service';
 
 @Component({
@@ -32,7 +33,8 @@ export class OrderListComponent implements OnInit {
 
   public errorMessage: string;
 
-  constructor(private merchantService: MerchantService, private customerOrderService: CustomerOrderService) {
+  constructor(private merchantService: MerchantService, private customerOrderService: CustomerOrderService
+            , private headerComponent: HeaderComponent) {
   }
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class OrderListComponent implements OnInit {
     this.totalOrder = 0;
     this.totalDiscount = 0;
     this.customerOrderService.getCustomerOrderList().subscribe( x => {
+      console.log(x);
       this.orderList = x;
       this.haveItemOrder = true;
       this.nowLoading = false;
@@ -131,6 +134,7 @@ export class OrderListComponent implements OnInit {
     this.menuSelected.note = itemNote;
     this.customerOrderService.updateOrder(this.menuSelected).subscribe( x => {
       this.closePopUp();
+      this.headerComponent.updateCarts();
       this.ngOnInit();
     } , error => {
       const result = this.customerOrderService.checkErrorCode(error.error.code);
@@ -146,12 +150,13 @@ export class OrderListComponent implements OnInit {
       itemId: itemID, amount: itemAmount};
     this.deleteConfirmPopUp = true;
   }
-  deleteConfirmation(vlaue){
-    if (vlaue === true){
+  deleteConfirmation(value){
+    if (value === true){
       this.customerOrderService.deleteOrder(this.menuDelete).subscribe( x => {
         if (x === 'SUCCESS'){
           this.deleteConfirmPopUp = false;
           this.menuDelete = {};
+          this.headerComponent.updateCarts();
           // this.ngOnInit();
         }
         this.ngOnInit();
@@ -167,13 +172,13 @@ export class OrderListComponent implements OnInit {
       // const token =  JSON.parse(localStorage.getItem('token'));
       this.openLoadingPopUp = true;
       this.merchantService.updateUsedCoupon(code).subscribe(x => {
-        // console.log(x);
+        console.log(x);
         this.getOrderList();
         this.openLoadingPopUp = false;
         // console.log(this.couponUsedList);
       }, error => {
         const result = this.merchantService.checkErrorCoupon(error.error.code);
-        // console.log(result);
+        console.log(error.error.code);
         this.openLoadingPopUp = false;
         this.errorMessage = result;
         this.openErrorPopUp = true;

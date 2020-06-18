@@ -3,9 +3,30 @@
         <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeProfilePage()">&times;</div>
         <div class="col-8 mb-0 text-center"><h5 class="p-2 text-115-rem">Profile</h5></div>
     </div>
-    <div class="text-center">
+    <div class="text-center pt-3">
         <img class="logo-img-home" src="{{this.profileImg}}">
-        <p id="nameFull">Name : {{this.fullName}}</p>
-        <p id="mobileNumber">Mobile number : {{this.mobileNumber}}</p>
+        <div class="pt-3">
+            <div class="black" *ngIf="!this.editInfo">
+                <p id="nameFull">Name : {{this.fullName}}</p>
+                <p id="mobileNumber">Mobile number : {{this.mobileNumber}}</p>
+                <div class="gold" (click)="edit()" > Edit </div>
+            </div>
+            <div *ngIf="this.editInfo">
+                <div><input #fullName value="{{this.nameValue}}"></div>
+                <div><input #mobileNumber type="number" maxlength="10" value="{{this.mobileValue}}"></div>
+                <div class="row pt-3">
+                    <div class="col-6" (click)="comfiremEdit(fullName.value , mobileNumber.value)">
+                        <div class="gold-button">
+                            Done
+                        </div>
+                    </div>
+                    <div class="col-6" (click)="cancelEdit()">
+                        <div class="gold-button">
+                            Cancel
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

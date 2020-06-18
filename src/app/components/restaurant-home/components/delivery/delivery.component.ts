@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantService } from 'src/app/services/merchant.service';
 import { CustomerOrderService } from 'src/app/services/customer-order.service';
-import {HeaderComponent} from 'src/app/layouts/header/header/header.component';
+import { HeaderComponent } from 'src/app/layouts/header/header/header.component';
 
 @Component({
   selector: 'app-delivery',

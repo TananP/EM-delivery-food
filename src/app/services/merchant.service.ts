@@ -40,6 +40,15 @@ export class MerchantService {
     });
   }
 
+  getCategoryPickUp() {
+    this.getToken();
+    return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup', { headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
   getFoodList(merchantID){
     this.getToken();
     return this.http.get(this.baseUrl + 'web_api/api/MerchantItem/GetItemFoodtList' , { params: {
@@ -76,14 +85,14 @@ export class MerchantService {
     }).pipe(timeout(5000));
   }
 
-  pickUp(){
-    this.getToken();
-    return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup' , { headers: {
-        'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token.token
-      }
-    });
-  }
+  // pickUp(){
+  //   this.getToken();
+  //   return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryPickup' , { headers: {
+  //       'ApiKey' : this.apiKey,
+  //       'Authorization': 'Bearer ' + this.token.token
+  //     }
+  //   });
+  // }
 
   // getCoupon(customerID){
   //   this.getToken();

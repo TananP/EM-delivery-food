@@ -70,7 +70,8 @@
         <div class="col-2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <div class="nav-link text-center pointer" (click)="openPopUp('cart',true)">
+                    <!-- <div class="nav-link text-center pointer" (click)="openPopUp('cart',true)"> -->
+                    <div class="nav-link text-center pointer" [routerLink]="['/delivery/cart-page']">
                         <img class="width-cart-img" src="./assets/dist/img/Cart.png"/>
                         <div>
                             <!-- <span class="badge badge-danger navbar-badge" #orderTotal>{{this.orderAmount}}</span> -->
@@ -86,9 +87,9 @@
     </div>
     <!---------------------------------------------->
     <!-------------- Cart pop up ------------------->
-    <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home>
+    <!-- <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home> -->
 
-    <!-------------- Cart pop up ------------------->
+    <!-------------- Profile pop up ------------------->
     <app-profile-home [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile-home>
     
     <!-------------- History pop up ----------------->

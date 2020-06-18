@@ -11,12 +11,19 @@ export class AuthorizationService {
   headers = new HttpHeaders().set('content-type', 'application/json');
   // checkFirstTime = localStorage.getItem('firstTime');
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
-  // token = JSON.parse(localStorage.getItem('token'));
+  private token: any;
 
   constructor(private http: HttpClient) {}
-
+  getLocalToken(){
+    this.token = JSON.parse(localStorage.getItem('token'));
+  }
   getToken(code: string){
-    localStorage.removeItem('token');
+    // this.http.get('/path/to/resource').subscribe((res: Response) => {
+    //   console.log(res.headers);
+    //   // you can assign the value to any variable here
+    // });
+    // localStorage.removeItem('token');
+
     // Production
     return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
         code
@@ -27,16 +34,19 @@ export class AuthorizationService {
     // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
     //     code,
     //     callback: 'Y',
-    //   },
+    //   }
     // });
+
   }
 
   checkAuthorization(){
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
+    this.getLocalToken();
     const profile = localStorage.getItem('userProfile');
-    if (token) {
-      const tokenJSON = JSON.parse(token);
-      if (Date.now() > tokenJSON.expires) {
+
+    if (this.token) {
+      // const tokenJSON = JSON.parse(token);
+      if (Date.now() > this.token.expires) {
         // redirect localhost
         // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 
@@ -44,7 +54,7 @@ export class AuthorizationService {
         window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
       }
     }
-    if (token === null || profile === null) {
+    if (this.token === null || profile === null) {
         // redirect localhost
         // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 
@@ -53,13 +63,25 @@ export class AuthorizationService {
     }
   }
 
-  getLineIdInfo(lineID, token){
+  getLineIdInfo(customerId, token){
     localStorage.removeItem('userProfile');
-    return this.http.get(this.baseUrl + 'web_api/api/Customer/GetCustomerByLineId' , { params: {
-      lineId: lineID
+    return this.http.get(this.baseUrl + 'web_api/api/Customer/GetCustomerById' , { params: {
+      id: customerId
     }, headers: {
       'ApiKey' : this.apiKey,
       'Authorization': 'Bearer ' + token
+      }
+    });
+  }
+
+  updateLineIdInfo(customerName, phoneNumber){
+    // const token = JSON.parse(localStorage.getItem('token'));
+    this.getLocalToken();
+    const updateData = {customerId: this.token.id , lineId: this.token.userName , fullName: customerName , mobileNumber: phoneNumber};
+    return this.http.post(this.baseUrl + 'web_api/api/Customer/UpdateCustomer' , updateData , {
+      headers: {
+      'ApiKey' : this.apiKey,
+      'Authorization': 'Bearer ' + this.token.token
       }
     });
   }

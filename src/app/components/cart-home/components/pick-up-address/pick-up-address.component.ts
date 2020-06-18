@@ -14,8 +14,8 @@ export class PickUpAddressComponent implements OnInit {
   constructor(private merchantService: MerchantService) { }
 
   ngOnInit(): void {
-    this.merchantService.pickUp().subscribe(x => {
-      // console.log(x);
+    this.merchantService.getCategoryPickUp().subscribe(x => {
+      console.log(x);
       this.pickUpLoList = x;
     });
   }
@@ -26,7 +26,7 @@ export class PickUpAddressComponent implements OnInit {
   confirmSelectAddess() {
     if (this.activeItem !== null) {
       const address = [];
-      address.push({deliveryPrice: 0 , name: this.activeItem.categoryName , type: 'pickUp'});
+      address.push({categoryId: this.activeItem.categoryId, deliveryPrice: 0 , name: this.activeItem.categoryName , type: 'pickUp'});
       this.selectedAddress.emit(address);
     }
   }

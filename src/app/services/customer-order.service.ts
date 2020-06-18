@@ -57,19 +57,50 @@ export class CustomerOrderService {
       }
     });
   }
+
+  checkOrder(order){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/CheckOrder', order , { headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
+  removeErrorOrder(){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/CheckOrder', { params: {
+      customerId: this.token.id
+    },
+    headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
+  customerPayment(order){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
   checkErrorCode(code){
     // if (code === 'ITEM_001') {
     //   return 'Could not find this menu.';
     // }
-    if (code === 'ITEM_002') {
-      return 'This menu is out of order.';
-    }
     // else if (code === 'MERCHANT_001') {
     //   return 'Could not find this resterant.';
     // }
     // else if (code === 'MERCHANT_002') {
     //   return 'This resterant is not active.';
     // }
+    if (code === 'ITEM_002') {
+      return 'This menu is out of order.';
+    }
     else if (code === 'MERCHANT_003') {
       return 'This resterant is close';
     }

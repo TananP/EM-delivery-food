@@ -16,13 +16,14 @@ export class DeliveryAddressComponent implements OnInit {
   public deleteConfirmPopUp = false;
   public editAddress = false;
   public openErrorPopUp = false;
+  public openLoadingPopUp = false;
   public errorMessage = '';
   // Test
   public activeIndex = null;
   //
   // public verifyPhoneNumber: boolean;
   // private phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-  public verifyName: boolean;
+  public verifyLoType: boolean;
   public verifyLatLng: boolean;
   public verifyAddress: boolean;
   public verifyAll: boolean;
@@ -42,7 +43,7 @@ export class DeliveryAddressComponent implements OnInit {
     // this.getPosition();
     this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
       this.addressList = x;
-      console.log(this.addressList);
+      // console.log(this.addressList);
     });
   }
 
@@ -94,16 +95,16 @@ export class DeliveryAddressComponent implements OnInit {
         this.verifyLatLng = true;
       }
       if (name !== ''){
-        this.verifyName = true;
+        this.verifyLoType = true;
       } else {
-        this.verifyName = false;
+        this.verifyLoType = false;
       }
       if (address !== ''){
         this.verifyAddress = true;
       } else {
         this.verifyAddress = false;
       }
-      if (!this.verifyName || !this.verifyLatLng || !this.verifyAddress) {
+      if (!this.verifyLoType || !this.verifyLatLng || !this.verifyAddress) {
         this.verifyAll = false;
       } else {
         this.verifyAll = true;
@@ -120,7 +121,7 @@ export class DeliveryAddressComponent implements OnInit {
       }
   }
   closePopUp(task){
-    this.verifyName = null;
+    this.verifyLoType = null;
     // this.verifyPhoneNumber = null;
     this.verifyAddress = null;
     switch (task) {
@@ -142,14 +143,17 @@ export class DeliveryAddressComponent implements OnInit {
   }
   confirmSelectAddess(){
     if (this.activeIndex !== null) {
+      this.openLoadingPopUp = true;
       const address = [];
       this.customerAddressAPI.customerAddressCheck(this.activeIndex.addressId).subscribe( x => {
         this.activeIndex = x;
         address.push({addressId: this.activeIndex.addressId , deliveryPrice: this.activeIndex.deliveryPrice ,
           customerId: this.activeIndex.customerId, name: this.activeIndex.name,
           detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
+        this.openLoadingPopUp = false;
         this.selectedAddress.emit(address);
       }, error => {
+        this.openLoadingPopUp = false;
         const result = this.customerAddressAPI.checkErrorCode(error.error.code);
         this.errorMessage = result;
         this.openErrorPopUp = true;
@@ -163,11 +167,13 @@ export class DeliveryAddressComponent implements OnInit {
 
   insertNewAddress(nameAddress , address , comment){
     if (this.verifyAll) {
-      // console.log(this.addressList);
+      this.openLoadingPopUp = true;
       const token =  JSON.parse(localStorage.getItem('token'));
       if (this.addressList === undefined){
+        this.openLoadingPopUp = false;
         this.errorMessage = 'Could not add new addres please try again later';
         this.openErrorPopUp = true;
+        this.openLoadingPopUp = false;
       }else{
         if (this.addressList.length === 0){
           this.setAddressDefault = true;
@@ -179,9 +185,11 @@ export class DeliveryAddressComponent implements OnInit {
           , mapLatitude: this.lat , mapLongitude: this.lng};
 
         this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
+          this.openLoadingPopUp = false;
           this.addAddress = false;
           this.ngOnInit();
         }, error => {
+          this.openLoadingPopUp = false;
           const result = this.customerAddressAPI.checkErrorCode(error.error.code);
           // console.log(result);
           this.errorMessage = result;
@@ -191,8 +199,14 @@ export class DeliveryAddressComponent implements OnInit {
     }
   }
   setDefaultAddress(address){
+    this.openLoadingPopUp = true;
     this.customerAddressAPI.setDefault(address.customerId , address.addressId).subscribe( x => {
+      this.openLoadingPopUp = false;
       this.ngOnInit();
+    }, error => {
+      this.openLoadingPopUp = false;
+      this.errorMessage = 'Could not set default address please try again later.';
+      this.openErrorPopUp = true;
     });
   }
 
@@ -205,6 +219,7 @@ export class DeliveryAddressComponent implements OnInit {
 
   editAddressConfirm(nameAddress , address , comment){
     if (this.verifyAll) {
+      this.openLoadingPopUp = true;
       this.editAddressList.name = nameAddress;
       this.editAddressList.detail = address;
       this.editAddressList.note = comment;
@@ -212,10 +227,11 @@ export class DeliveryAddressComponent implements OnInit {
       this.editAddressList.mapLongitude = this.lng;
       this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {
         this.editAddress = false;
+        this.openLoadingPopUp = false;
         this.ngOnInit();
       }, error => {
+        this.openLoadingPopUp = false;
         const result = this.customerAddressAPI.checkErrorCode(error.error.code);
-        // console.log(result);
         this.errorMessage = result;
         this.openErrorPopUp = true;
       });
@@ -229,17 +245,20 @@ export class DeliveryAddressComponent implements OnInit {
 
   deleteConfirmation(confirm: boolean){
     if (confirm === true){
+      this.openLoadingPopUp = true;
       this.customerAddressAPI.deleteAddress(this.deleteAddressList.addressId).subscribe( x => {
+        this.openLoadingPopUp = false;
         this.deleteAddressList = {};
         this.deleteConfirmPopUp = false;
         this.ngOnInit();
       }, error => {
+        this.openLoadingPopUp = false;
         const result = this.customerAddressAPI.checkErrorCode(error.error.code);
-        // console.log(result);
         this.errorMessage = result;
         this.openErrorPopUp = true;
       });
     }else{
+      this.openLoadingPopUp = false;
       this.deleteAddressList = {};
       this.deleteConfirmPopUp = false;
     }

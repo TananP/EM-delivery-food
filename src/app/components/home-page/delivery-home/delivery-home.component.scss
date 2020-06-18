@@ -1,17 +1,12 @@
 .restaurants-button{
-    border: 1px solid #B39462;
+    font-family: gt-walsheim;
+    // border: 1px solid #B39462;
     padding: 0rem 0.25rem 0.5rem 0.25rem;
-    // height: 100px;
     background-color: white;
-    // height: 10vh;
     margin-bottom: 1rem;
     font-size: 0.75rem;
 }
-// .loading-img{
-//     width: 100%;
-//     max-width: 50px;
-//     max-height: 50px;
-// }
+
 @media only screen and (max-width: 340px) {
     .restaurants-button{
         font-size: 0.6rem;

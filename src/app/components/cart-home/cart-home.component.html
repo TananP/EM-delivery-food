@@ -1,9 +1,10 @@
-<div class="pop-up-cart normal-text" *ngIf="this.cartPopUp">
-    <div class="row bg-solid-black">
+<!-- <div class="pop-up-cart normal-text" *ngIf="this.cartPopUp"> -->
+<div class="pop-up-cart normal-text pb-5">
+    <div class="row bg-solid-black gold">
         <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeCartPage()">&times;</div>
         <div class="col-8 mb-0 text-center"><h5 class="p-2 text-115-rem">Cart</h5></div>
     </div>
-    <div class="container pop-up-content">
+    <div class="container p-3 pb-0">
         <!--------------- Address area -------------------->
             <div>
                 <h5 class="text-115-rem gold">Addrees</h5>
@@ -21,11 +22,11 @@
             </div>
             <div *ngIf="this.showAdress">
                 <div class="form-group">
-                    <p>{{this.selectedAddress[0].name}}</p>
-                    <p class="pb-2">{{this.selectedAddress[0].detail}}</p>
-                    <div class="over-flow-text" *ngIf="this.selectedAddress[0].type === 'delivery' ">
+                    <p>{{this.selectedAddress.name}}</p>
+                    <p class="pb-2">{{this.selectedAddress.detail}}</p>
+                    <div class="over-flow-text" *ngIf="this.selectedAddress.type === 'delivery' ">
                         <p>Comment for address :</p>
-                        <p>{{this.selectedAddress[0].note}}</p>
+                        <p>{{this.selectedAddress.note}}</p>
                     </div>
                 </div>
                 <hr>
@@ -87,16 +88,16 @@
             </div>
             <hr class="underline"> -->
             <!--------- delivery price ------->
-            <div class="row gold pb-3" *ngIf="this.showAdress">
+            <div class="row gold pb-1" *ngIf="this.showAdress">
                 <div class="col-6 pl-0 text-left">
                     <p>Delivery price</p>
                 </div>
                 <div class="col-6 pr-0 text-right">
-                    <p>{{this.selectedAddress[0].deliveryPrice}}</p>
+                    <p>{{this.selectedAddress.deliveryPrice}}</p>
                 </div>
             </div>
             <!---------------------------------->
-            <div class="row gold">
+            <div class="row gold pb-1">
                 <div class="col-6 pl-0 text-left">
                     <p>Discount</p>
                 </div>
@@ -114,12 +115,12 @@
                 </div>
             </div>
         <!---------------- Summary button -------------------->
-            <div class="row cart-button text-center">
+            <div class="row cart-button text-center" (click)="confirmOrder();">
                 <div class="col-2">
                     <p>{{this.totalOrder}}</p>
                 </div>
                 <div class="col-8">
-                    <p>Summary</p>
+                    <p>Confirm Order</p>
                 </div>
                 <div class="col-2">
                     <p>{{this.totalPrice}}</p>
@@ -163,3 +164,30 @@
         </div>
     </div>
 </div>
+
+<!--  Remove Order Pop Up -->
+<div class="pop-up" *ngIf="this.removeOrderPopUp">
+    <div class="pop-up-content text-center pb-3">
+        <div (click)="this.removeOrderPopUp = false" class="text-right">
+            <p>&#10005;</p>
+        </div>
+        <div class="text-center ml-3 mr-3 pb-3">
+            <p>There are some order that cannot order right now.</p>
+        </div>
+        <div class="row text-center ml-3 mr-3">
+            <div class="col-6">
+                <div class="gold-button" (click)="removeErrorOrder()">
+                    <p>Remove order</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="gold-button" (click)="this.removeOrderPopUp = false">
+                    <p>Cancel</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------ Loading pop up  --------------->
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>
+<!-------------------------------------------->

@@ -11,16 +11,19 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 export class CheckLoginComponent implements OnInit {
   public loginCode = this.route.snapshot.paramMap.get('loginID');
   public tokenObj: any;
+  public userProfile: any;
   public openErrorPopUp = false;
   public errorMessage = '';
+
   constructor(private route: ActivatedRoute, private authorizationAPI: AuthorizationService, private router: Router) {
     // console.log(this.loginCode);
     this.authorizationAPI.getToken(this.loginCode).subscribe(x => {
       // console.log(x);
       this.tokenObj = x;
       localStorage.setItem('token', JSON.stringify(this.tokenObj));
-      this.getLineInfo(this.tokenObj.userName, this.tokenObj.token);
+      this.getLineInfo(this.tokenObj.id, this.tokenObj.token);
     }, error => {
+      console.log(error);
       this.errorMessage = 'Please re-login agian';
       this.openErrorPopUp = true;
     });
@@ -42,12 +45,17 @@ export class CheckLoginComponent implements OnInit {
       // redirect to production
       window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
   }
-  getLineInfo(lineId, token){
+
+  getLineInfo(customerId, token){
     // console.log(lineId);
-    this.authorizationAPI.getLineIdInfo(lineId, token).subscribe(x => {
-      const userProfile = x;
-      localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    this.authorizationAPI.getLineIdInfo(customerId, token).subscribe(x => {
+      console.log(x);
+      this.userProfile = x;
+      const userInfoList = {picture: this.userProfile.picture, fullName: this.userProfile.fullName, 
+                            mobileNumber: this.userProfile.mobileNumber};
+      localStorage.setItem('userProfile', JSON.stringify(userInfoList));
     }, error => {
+      console.log(error);
       this.errorMessage = 'Please re-login agian';
       this.openErrorPopUp = true;
     }, () => {
@@ -55,5 +63,4 @@ export class CheckLoginComponent implements OnInit {
       window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
     });
   }
-
 }
