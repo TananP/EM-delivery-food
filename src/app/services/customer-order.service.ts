@@ -81,11 +81,16 @@ export class CustomerOrderService {
 
   customerPayment(order){
     this.getToken();
-    return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
-        'ApiKey' : this.apiKey,
-        'Authorization': 'Bearer ' + this.token.token
-      }
-    });
+    window.open(this.baseUrl + 'web_api/CustomerPayment?result=' + order.result + '&customerId=' + order.customerId +
+              '&deliveryType=' + order.deliveryType + '&deliveryId=' + order.deliveryId +
+              '&deliveryPrice=' + order.deliveryPrice + '&orderId=' + order.orderId +
+              '&orderNumber=' + order.orderNumber);
+    window.open(this.baseUrl + 'web_api/CustomerPayment' , order);
+    // return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
+    //     'ApiKey' : this.apiKey,
+    //     'Authorization': 'Bearer ' + this.token.token
+    //   }
+    // });
   }
 
   checkErrorCode(code){

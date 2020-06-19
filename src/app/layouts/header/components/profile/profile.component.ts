@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {AuthorizationService} from 'src/app/services/authorization.service';
 
 @Component({
-  selector: 'app-profile-home',
-  templateUrl: './profile-home.component.html',
-  styleUrls: ['./profile-home.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class ProfileHomeComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 @Input() profilePopUp: boolean;
 @Output() closePopUp = new EventEmitter();
 

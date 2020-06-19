@@ -172,7 +172,7 @@ export class OrderListComponent implements OnInit {
       // const token =  JSON.parse(localStorage.getItem('token'));
       this.openLoadingPopUp = true;
       this.merchantService.updateUsedCoupon(code).subscribe(x => {
-        console.log(x);
+        // console.log(x);
         this.getOrderList();
         this.openLoadingPopUp = false;
         // console.log(this.couponUsedList);

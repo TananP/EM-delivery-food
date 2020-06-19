@@ -8,21 +8,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TestService {
-  baseUrl = environment.apiSysUrl;
-  headers = new HttpHeaders().set('content-type', 'application/json');
-  constructor(private http: HttpClient) {}
-
-  // getWeather(date, temperatureC, temperatureF, summary) {
-  //   return this.http.get<Test[]>(this.baseUrl + 'web_api/weatherforecast', {
-  //       params: {
-  //           date,
-  //           temperatureC,
-  //           temperatureF,
-  //           summary
-  //       }
-  //   });
-  // }4
-  getCategory() {
-      return this.http.get(this.baseUrl + 'web_api/api/MerchantCategory/GetCategoryFood');
+  redirectWithPost(url, obj) {
+    const mapForm = document.createElement('form');
+    mapForm.target = '_blank';
+    mapForm.method = 'POST'; // or "post" if appropriate
+    mapForm.action = url;
+    Object.keys(obj).forEach(param => {
+      const mapInput = document.createElement('input');
+      mapInput.type = 'hidden';
+      mapInput.name = param;
+      mapInput.setAttribute('value', obj[param]);
+      mapForm.appendChild(mapInput);
+  });
+    document.body.appendChild(mapForm);
+    mapForm.submit();
   }
 }

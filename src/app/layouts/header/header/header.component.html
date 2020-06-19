@@ -20,9 +20,9 @@
             <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)">
                 <a>Profile</a>
             </div>
-            <!-- <div class="col-12 pl-4 menu-button" (click)="openPopUp('history',true)">
-                <a>History</a>profile
-            </div> -->
+            <div class="col-12 pl-4 menu-button" (click)="openPopUp('history',true)">
+                <a>History</a>
+            </div>
         </div>
     </div>
     <!--------------------------------------------------->
@@ -90,16 +90,16 @@
     <!-- <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home> -->
 
     <!-------------- Profile pop up ------------------->
-    <app-profile-home [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile-home>
+    <app-profile [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile>
     
     <!-------------- History pop up ----------------->
-    <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">
+    <div class="pop-up-cart" *ngIf="this.historyPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('history',false)">&times;</div>
             <div class="col-8 text-center"><h5>History</h5></div>
         </div>
         <app-history></app-history>
-    </div> -->
+    </div>
 
     <!-------------- Order pop up ------------------>
     <div class="pop-up-cart" *ngIf="this.orderPopUp">

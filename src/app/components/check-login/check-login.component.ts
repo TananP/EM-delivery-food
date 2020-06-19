@@ -9,6 +9,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./check-login.component.scss']
 })
 export class CheckLoginComponent implements OnInit {
+
   public loginCode = this.route.snapshot.paramMap.get('loginID');
   public tokenObj: any;
   public userProfile: any;
@@ -51,7 +52,7 @@ export class CheckLoginComponent implements OnInit {
     this.authorizationAPI.getLineIdInfo(customerId, token).subscribe(x => {
       console.log(x);
       this.userProfile = x;
-      const userInfoList = {picture: this.userProfile.picture, fullName: this.userProfile.fullName, 
+      const userInfoList = {picture: this.userProfile.picture, fullName: this.userProfile.fullName,
                             mobileNumber: this.userProfile.mobileNumber};
       localStorage.setItem('userProfile', JSON.stringify(userInfoList));
     }, error => {

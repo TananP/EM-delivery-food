@@ -58,13 +58,14 @@ export class HeaderComponent implements OnInit {
         case 'profile':
           this.profilePopUp = true;
           break;
-        // case 'history':
-        //   if (trigger){
-        //     this.historyPopUp = true;
-        //   }else{
-        //     this.historyPopUp = false;
-        //   }
-        //   break;
+
+        case 'history':
+          if (trigger){
+            this.historyPopUp = true;
+          }else{
+            this.historyPopUp = false;
+          }
+          break;
 
         case 'order':
           if (trigger){

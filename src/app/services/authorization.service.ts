@@ -25,17 +25,17 @@ export class AuthorizationService {
     // localStorage.removeItem('token');
 
     // Production
-    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
-        code
-      }
-    });
-
-    // Develop
-    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
-    //     code,
-    //     callback: 'Y',
+    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
+    //     code
     //   }
     // });
+
+    // Develop
+    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
+        code,
+        callback: 'Y',
+      }
+    });
 
   }
 

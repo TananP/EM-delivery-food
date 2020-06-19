@@ -4,6 +4,8 @@ import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
 // import { MerchantService } from 'src/app/services/merchant.service';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
 import {Location} from '@angular/common';
+// Test
+import {TestService} from 'src/app/services/test.service';
 
 @Component({
   selector: 'app-cart-home',
@@ -36,7 +38,7 @@ export class CartHomeComponent implements OnInit {
 
 
   // private token =  JSON.parse(localStorage.getItem('token'));
-  constructor(private location: Location, private customerOrderService: CustomerOrderService) {}
+  constructor(private location: Location, private customerOrderService: CustomerOrderService, private testService: TestService) {}
 
   ngOnInit(): void {
     this.getUserInfo();
@@ -142,6 +144,7 @@ export class CartHomeComponent implements OnInit {
   checkWithAPI(order){
     this.customerOrderService.checkOrder(order).subscribe( x => {
       this.checkOrderResult = x;
+      // console.log(this.checkOrderResult);
       this.openLoadingPopUp = false;
       if (this.checkOrderResult.result) {
         this.paymentMethod(this.checkOrderResult);
@@ -169,11 +172,18 @@ export class CartHomeComponent implements OnInit {
   }
 
   paymentMethod(order){
-    console.log(order);
-    this.customerOrderService.customerPayment(order).subscribe( x => {
-      console.log(x);
-    }, error => {
-      console.log(error);
-    });
+    const param = order;
+    console.log(param);
+    // window.open = 'http://emfood.yipintsoi.com/web_api/CustomerPayment';
+    this.testService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
+    // window.location.href = 'http://emfood.yipintsoi.com/web_api/CustomerPayment';
+
+    // console.log(order);
+    // this.customerOrderService.customerPayment(order);
+    // this.customerOrderService.customerPayment(order).subscribe( x => {
+    //   console.log(x);
+    // }, error => {
+    //   console.log(error);
+    // });
   }
 }
