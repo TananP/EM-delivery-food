@@ -48,10 +48,10 @@ export class AuthorizationService {
       // const tokenJSON = JSON.parse(token);
       if (Date.now() > this.token.expires) {
         // redirect localhost
-        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 
         // redirect to production
-        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
       }
     }
     if (this.token === null || profile === null) {

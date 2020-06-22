@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-order',
@@ -6,22 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  public orderInfo: boolean;
-  public orderID: number;
-  public orderList = [1, 2, 3, 4];
+@Input() orderPopUp: boolean;
+@Output() closePopUp = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
-    this.orderInfo = false;
   }
 
-  showOrderInfo(id: number){
-    if (id >= 0){
-      this.orderID =  id;
-      this.orderInfo = true;
-    }else{
-      this.orderInfo = false;
-    }
+  closeOrderPage(){
+    this.closePopUp.emit();
   }
-
 }

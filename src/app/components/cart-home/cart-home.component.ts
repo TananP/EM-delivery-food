@@ -141,10 +141,21 @@ export class CartHomeComponent implements OnInit {
     // console.log(this.selectedAddress);
   }
 
+  removeErrorOrder(){
+    this.customerOrderService.removeErrorOrder().subscribe( x => {
+      console.log(x);
+      this.removeOrderPopUp = false;
+    }, error => {
+      this.removeOrderPopUp = false;
+      console.log(error);
+      this.errorPopUp = true;
+      this.errorCodeText = error.error.error;
+    });
+  }
+
   checkWithAPI(order){
     this.customerOrderService.checkOrder(order).subscribe( x => {
       this.checkOrderResult = x;
-      // console.log(this.checkOrderResult);
       this.openLoadingPopUp = false;
       if (this.checkOrderResult.result) {
         this.paymentMethod(this.checkOrderResult);
@@ -159,31 +170,8 @@ export class CartHomeComponent implements OnInit {
     });
   }
 
-  removeErrorOrder(){
-    this.customerOrderService.removeErrorOrder().subscribe( x => {
-      console.log(x);
-      this.removeOrderPopUp = false;
-    }, error => {
-      this.removeOrderPopUp = false;
-      console.log(error);
-      this.errorPopUp = true;
-      this.errorCodeText = error.error.error;
-    });
-  }
-
   paymentMethod(order){
     const param = order;
-    console.log(param);
-    // window.open = 'http://emfood.yipintsoi.com/web_api/CustomerPayment';
     this.testService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
-    // window.location.href = 'http://emfood.yipintsoi.com/web_api/CustomerPayment';
-
-    // console.log(order);
-    // this.customerOrderService.customerPayment(order);
-    // this.customerOrderService.customerPayment(order).subscribe( x => {
-    //   console.log(x);
-    // }, error => {
-    //   console.log(error);
-    // });
   }
 }

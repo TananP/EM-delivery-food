@@ -1,15 +1,9 @@
-<div style="color: black;">
-    <div *ngIf="!this.orderInfo">
-        <div *ngFor="let order of this.orderList">
-            <div (click)="showOrderInfo(order)">
-                <h5>order works! {{order}}</h5>
-            </div>
-        </div>
+<div class="pop-up-cart normal-text" *ngIf="this.orderPopUp">
+    <div class="row bg-solid-black">
+        <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeOrderPage()">&times;</div>
+        <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">Order</h5></div>
     </div>
-    <div *ngIf="this.orderInfo">
-        <div (click)="showOrderInfo(-1)">
-            <h5>X</h5>
-        </div>
-        <app-order-information [orderID]="this.orderID"></app-order-information>
-    </div>    
+    <div>
+        <p>Order work</p>
+    </div>
 </div>

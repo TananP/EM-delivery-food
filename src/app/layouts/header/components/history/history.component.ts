@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-history',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-
+@Input() historyPopUp: boolean;
+@Output() closePopUp = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  closeHistoryPage(){
+    this.closePopUp.emit();
+  }
 }

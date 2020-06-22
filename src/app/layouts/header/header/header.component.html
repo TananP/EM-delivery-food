@@ -56,18 +56,18 @@
         </div>
     </div> -->
     <div class="row">
-        <div class="col-2 text-center">
+        <div class="col-2 text-center center-col">
             <div class="p-2" (click)="openMenu(true)">
                 <img class="width-side-menu-img" src="./assets/dist/img/Menu.png"/>
             </div>
         </div>
-        <div class="col-8 text-center pt-1 pb-1">
+        <div class="col-8 text-center pt-1 pb-1 center-col">
             <!-- <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;"> -->
             <h5 [routerLink]="['/delivery']" style="cursor: pointer;">
                 <img class="width-title-img" src="./assets/dist/img/Logo_Em_dinning.png"/>
             </h5>
         </div>
-        <div class="col-2">
+        <div class="col-2 center-col">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <!-- <div class="nav-link text-center pointer" (click)="openPopUp('cart',true)"> -->
@@ -93,21 +93,23 @@
     <app-profile [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile>
     
     <!-------------- History pop up ----------------->
-    <div class="pop-up-cart" *ngIf="this.historyPopUp">
+    <app-history [historyPopUp]="this.historyPopUp" (closePopUp)="closePopUp()"></app-history>
+    <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('history',false)">&times;</div>
             <div class="col-8 text-center"><h5>History</h5></div>
         </div>
         <app-history></app-history>
-    </div>
+    </div> -->
 
     <!-------------- Order pop up ------------------>
-    <div class="pop-up-cart" *ngIf="this.orderPopUp">
+    <app-order [orderPopUp]="this.orderPopUp" (closePopUp)="closePopUp()"></app-order>
+    <!-- <div class="pop-up-cart" *ngIf="this.orderPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('order',false)">&times;</div>
             <div class="col-8 text-center"><h5>Order</h5></div>
         </div>
         <app-order></app-order>
-    </div>
+    </div> -->
 
 </div>

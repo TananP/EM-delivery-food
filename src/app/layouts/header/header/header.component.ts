@@ -60,19 +60,11 @@ export class HeaderComponent implements OnInit {
           break;
 
         case 'history':
-          if (trigger){
-            this.historyPopUp = true;
-          }else{
-            this.historyPopUp = false;
-          }
+          this.historyPopUp = true;
           break;
 
         case 'order':
-          if (trigger){
-            this.orderPopUp = true;
-          }else{
-            this.orderPopUp = false;
-          }
+          this.orderPopUp = true;
           break;
     }
   }
@@ -83,6 +75,8 @@ export class HeaderComponent implements OnInit {
   }
   closePopUp(){
     this.profilePopUp = false;
+    this.orderPopUp = false;
+    this.historyPopUp = false;
   }
   updateCarts(){
     const token = JSON.parse(localStorage.getItem('token'));

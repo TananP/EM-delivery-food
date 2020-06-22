@@ -93,6 +93,18 @@ export class CustomerOrderService {
     // });
   }
 
+  getOrderHistory(){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderHistory', { params: {
+      customerId: this.token.id
+    },
+    headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
   checkErrorCode(code){
     // if (code === 'ITEM_001') {
     //   return 'Could not find this menu.';
