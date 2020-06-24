@@ -7,8 +7,13 @@
         <div *ngIf="this.haveItemOrder">
             <div *ngFor="let item of this.groupOrderList | keyvalue">
                 <div class="order-list-item">
-                    <div class="gold order-item-title">
-                        <p>{{item.key}}</p>
+                    <div class="gold row order-item-title">
+                        <div class="col-8">
+                            <p class="over-flow-text">{{item.key}}</p>
+                        </div>
+                        <div class="col-4 pl-0 text-center" [routerLink]="['/delivery/restaurant-home/delivery/', item.key]">
+                            <p class="add-menu-more-button">+ Add menu</p>
+                        </div>
                     </div>
                     <!---------------- Order item ---------------->
                     <div *ngFor="let itemInfo of item.value">

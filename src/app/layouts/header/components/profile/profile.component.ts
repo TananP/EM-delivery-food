@@ -12,11 +12,11 @@ export class ProfileComponent implements OnInit {
 
 public profileImg = '';
 public fullName = '';
-public mobileNumber = 0;
+public mobileNumber = '';
 
 
 public nameValue: string;
-public mobileValue: number;
+public mobileValue: string;
 
 public editInfo = false;
 private userProfile: any;
@@ -40,13 +40,13 @@ private userProfile: any;
       // this.mobileNumber = '-';
     } else {
       this.profileImg = this.userProfile.picture;
-      if (this.userProfile.fullName  == null){
+      if (this.userProfile.fullName  === null || this.userProfile.fullName === ''){
         this.fullName = 'Your profile not have full name';
       }else{
         this.fullName = this.userProfile.fullName;
       }
-      if (this.userProfile.mobileNumber  == null){
-        // this.mobileNumber = 'Your profile not have mobile number';
+      if (this.userProfile.mobileNumber  === null || this.userProfile.mobileNumber  === ''){
+        this.mobileNumber = 'Your profile not have mobile number';
         // document.getElementById('mobileNumber').innerHTML = this.mobileNumber;
       }else{
         this.mobileNumber = this.userProfile.mobileNumber;
@@ -60,31 +60,41 @@ private userProfile: any;
   // }
 
   edit(){
-    this.nameValue = this.fullName;
-    this.mobileValue = this.mobileNumber;
+    if (this.fullName === 'Your profile not have full name') {
+      this.nameValue = '';
+    }else {
+      this.nameValue = this.fullName;
+    }
+    if (this.mobileNumber === 'Your profile not have mobile number') {
+      this.mobileValue = '';
+    }else {
+      this.mobileValue = this.mobileNumber.toString();
+    }
     // this.fullName = this.fullName.toString();
     // console.log(this.fullName);
     this.editInfo = true;
   }
   comfiremEdit(fullName , mobileNumber){
-    this.authorizationService.updateLineIdInfo(fullName, mobileNumber).subscribe( x => {
-      // console.log(x);
-      this.userProfile.fullName = fullName;
-      this.userProfile.mobileNumber = mobileNumber;
-      this.fullName = fullName;
-      this.mobileNumber = mobileNumber;
-      localStorage.setItem('userProfile' , JSON.stringify(this.userProfile));
-      this.editInfo = false;
-      // this.getUserInfo();
-      // localStorage.removeItem('userProfile');
-      // this.getNewUserInfo();
-      // window.location.reload();
-    }, error => {
-      console.log(error);
-    });
+    if (fullName !== '' && mobileNumber !== '') {
+        this.authorizationService.updateLineIdInfo(fullName, mobileNumber).subscribe( x => {
+        // console.log(x);
+        this.userProfile.fullName = fullName;
+        this.userProfile.mobileNumber = mobileNumber;
+        this.fullName = fullName;
+        this.mobileNumber = mobileNumber;
+        localStorage.setItem('userProfile' , JSON.stringify(this.userProfile));
+        this.editInfo = false;
+        // this.getUserInfo();
+        // localStorage.removeItem('userProfile');
+        // this.getNewUserInfo();
+        // window.location.reload();
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
-  cancelEdit(){
-    this.editInfo = false;
-  }
+  // cancelEdit(){
+  //   this.editInfo = false;
+  // }
 }

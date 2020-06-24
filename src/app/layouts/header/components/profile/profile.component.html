@@ -4,26 +4,27 @@
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">Profile</h5></div>
     </div>
     <div class="text-center pt-3">
-        <img class="logo-img-home" src="{{this.profileImg}}">
+        <img class="logo-img-home" style="border-radius: 100%;" src="{{this.profileImg}}">
         <div class="pt-3">
             <div class="black" *ngIf="!this.editInfo">
-                <p id="nameFull">Name : {{this.fullName}}</p>
-                <p id="mobileNumber">Mobile number : {{this.mobileNumber}}</p>
-                <div class="gold" (click)="edit()" > Edit </div>
+                <p class="mt-2 mb-2" id="nameFull">{{this.fullName}}</p>
+                <p class="mt-2 mb-2" id="mobileNumber">{{this.mobileNumber}}</p>
+                <div class="mt-3" (click)="edit()"> 
+                    <p class="gold-button">Edit</p> 
+                </div>
             </div>
             <div *ngIf="this.editInfo">
-                <div><input #fullName value="{{this.nameValue}}"></div>
-                <div><input #mobileNumber type="number" maxlength="10" value="{{this.mobileValue}}"></div>
-                <div class="row pt-3">
-                    <div class="col-6" (click)="comfiremEdit(fullName.value , mobileNumber.value)">
-                        <div class="gold-button">
-                            Done
-                        </div>
-                    </div>
-                    <div class="col-6" (click)="cancelEdit()">
-                        <div class="gold-button">
-                            Cancel
-                        </div>
+                <div class="mt-2 mb-2">
+                    <input class="text-center" #fullName value="{{this.nameValue}}">
+                    <p *ngIf="fullName.value === '' ">Your name is empty.</p>
+                </div>
+                <div class="mt-2 mb-2">
+                    <input class="text-center" #mobileNumber type="number" maxlength="10" value="{{this.mobileValue}}">
+                    <p *ngIf="mobileNumber.value === '' ">Your mobile number is empty.</p>
+                </div>  
+                <div (click)="comfiremEdit(fullName.value, mobileNumber.value)">
+                    <div class="mt-3 gold-button">
+                        <p>Save</p>
                     </div>
                 </div>
             </div>

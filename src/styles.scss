@@ -7,6 +7,17 @@
     font-family: gt-walsheim;
     src: url(./assets/font/gt-walsheim/GT-Walsheim-Thin-Trial.otf);
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 body{
     // background-color: red;
     background-image: url('./assets/dist/img/em-food-dining_BG.jpg');

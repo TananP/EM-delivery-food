@@ -7,6 +7,7 @@ import { DeliveryHomeComponent } from './components/home-page/delivery-home/deli
 import { RestaurantHomeComponent  } from './components/restaurant-home/restaurant-home.component';
 import { SearchResultPageComponent } from './components/search-result-page/search-result-page.component';
 import { ErrorNotFoundPageComponent } from './components/error-not-found-page/error-not-found-page.component';
+import { PaymentResultHomeComponent } from './components/payment-result-home/payment-result-home.component';
 import { CheckLoginComponent } from './components/check-login/check-login.component';
 import {CartHomeComponent} from './components/cart-home/cart-home.component';
 
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path: 'delivery/cart-page',
     component: CartHomeComponent
+  },
+  {
+    path: 'delivery/payment-result',
+    component: PaymentResultHomeComponent
   },
   // {
   //   path: 'reserve/restaurant-home/:task/:routeID/:searchName/:merchantId/:locationId/:floorId/:departmentId',

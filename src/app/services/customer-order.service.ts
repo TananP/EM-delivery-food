@@ -58,6 +58,30 @@ export class CustomerOrderService {
     });
   }
 
+  getOrderHistory(){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderHistory', { params: {
+      customerId: this.token.id
+    },
+    headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
+  getCurrentOrder(){
+    this.getToken();
+    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderCurrent', { params: {
+      customerId: this.token.id
+    },
+    headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    });
+  }
+
   checkOrder(order){
     this.getToken();
     return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/CheckOrder', order , { headers: {
@@ -81,29 +105,14 @@ export class CustomerOrderService {
 
   customerPayment(order){
     this.getToken();
-    window.open(this.baseUrl + 'web_api/CustomerPayment?result=' + order.result + '&customerId=' + order.customerId +
-              '&deliveryType=' + order.deliveryType + '&deliveryId=' + order.deliveryId +
-              '&deliveryPrice=' + order.deliveryPrice + '&orderId=' + order.orderId +
-              '&orderNumber=' + order.orderNumber);
-    window.open(this.baseUrl + 'web_api/CustomerPayment' , order);
-    // return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
-    //     'ApiKey' : this.apiKey,
-    //     'Authorization': 'Bearer ' + this.token.token
-    //   }
-    // });
-  }
-
-  getOrderHistory(){
-    this.getToken();
-    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderHistory', { params: {
-      customerId: this.token.id
-    },
-    headers: {
+    console.log(order);
+    return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
     });
   }
+
 
   checkErrorCode(code){
     // if (code === 'ITEM_001') {

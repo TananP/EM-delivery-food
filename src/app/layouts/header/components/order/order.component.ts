@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { CustomerOrderService } from 'src/app/services/customer-order.service';
 
 @Component({
   selector: 'app-order',
@@ -8,9 +9,14 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 export class OrderComponent implements OnInit {
 @Input() orderPopUp: boolean;
 @Output() closePopUp = new EventEmitter();
-  constructor() { }
+  constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
+    this.customerOrderService.getCurrentOrder().subscribe( x => {
+      console.log(x);
+    }, error => {
+      console.log(error);
+    });
   }
 
   closeOrderPage(){

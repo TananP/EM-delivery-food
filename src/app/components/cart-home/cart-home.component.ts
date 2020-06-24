@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 // import { filter, pairwise } from 'rxjs/operators';
 // import { MerchantService } from 'src/app/services/merchant.service';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
+import {AuthorizationService} from 'src/app/services/authorization.service';
 import {Location} from '@angular/common';
 // Test
 import {TestService} from 'src/app/services/test.service';
@@ -17,6 +18,7 @@ export class CartHomeComponent implements OnInit {
   @Output() popUpStatus = new EventEmitter();
 
   public deliveryAddress = false;
+  public editProfile = false;
   public pickUp = false;
   public removeOrderPopUp = false;
   public openLoadingPopUp = false;
@@ -29,8 +31,11 @@ export class CartHomeComponent implements OnInit {
   public couponUsedList: any;
   public selectedAddress: any;
   public checkOrderResult: any;
+  private userProfile: any;
   public originalTotalPrice: number;
   public showAdress: boolean;
+  public nameValue: string;
+  public mobileValue: string;
 
   public errorCodeText = '';
   public fullName = '';
@@ -38,9 +43,11 @@ export class CartHomeComponent implements OnInit {
 
 
   // private token =  JSON.parse(localStorage.getItem('token'));
-  constructor(private location: Location, private customerOrderService: CustomerOrderService, private testService: TestService) {}
+  constructor(private location: Location, private customerOrderService: CustomerOrderService, private testService: TestService,
+              private router: Router, private authorizationService: AuthorizationService) {}
 
   ngOnInit(): void {
+    this.authorizationService.checkAuthorization();
     this.getUserInfo();
   }
 
@@ -54,9 +61,9 @@ export class CartHomeComponent implements OnInit {
   }
 
   closeCartPage(){
-    this.location.back();
+    // this.location.back();
     // const previousURL = localStorage.getItem('previousURL');
-    // this.router.navigate([previousURL]);
+    this.router.navigate(['/delivery']);
     // this.cartPopUp = false;
     // this.popUpStatus.emit(this.totalOrder);
   }
@@ -95,35 +102,66 @@ export class CartHomeComponent implements OnInit {
 
 
   getUserInfo(){
-    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-    if (userProfile === null) {
+    this.userProfile = JSON.parse(localStorage.getItem('userProfile'));
+    if (this.userProfile === null) {
       // this.customerID = null;
       this.fullName = '-';
       this.mobileNumber = '-';
     } else {
       // this.customerID = userProfile.customerId;
-      if (userProfile.fullName  == null){
+      if (this.userProfile.fullName  == null){
         this.fullName = 'Your profile not have full name';
       }else{
-        this.fullName = userProfile.fullName;
+        this.fullName = this.userProfile.fullName;
       }
 
-      if (userProfile.mobileNumber  == null){
+      if (this.userProfile.mobileNumber  == null){
         this.mobileNumber = 'Your profile not mobile number';
       }else{
-        this.mobileNumber = userProfile.mobileNumber;
+        this.mobileNumber = this.userProfile.mobileNumber;
       }
+    }
+  }
+  edit(){
+    if (this.fullName === 'Your profile not have full name') {
+      this.nameValue = '';
+    }else {
+      this.nameValue = this.fullName;
+    }
+    if (this.mobileNumber === 'Your profile not have mobile number') {
+      this.mobileValue = '';
+    }else {
+      this.mobileValue = this.mobileNumber.toString();
+    }
+    this.editProfile = true;
+  }
+
+  comfiremEdit(fullName , mobileNumber){
+    if (fullName !== '' && mobileNumber !== '') {
+        this.authorizationService.updateLineIdInfo(fullName, mobileNumber).subscribe( x => {
+        this.userProfile.fullName = fullName;
+        this.userProfile.mobileNumber = mobileNumber;
+        this.fullName = fullName;
+        this.mobileNumber = mobileNumber;
+        localStorage.setItem('userProfile' , JSON.stringify(this.userProfile));
+        this.editProfile = false;
+      }, error => {
+        console.log(error);
+      });
     }
   }
 
   confirmOrder(){
-    // console.log(this.selectedAddress);
-    // console.log('==================');
     this.openLoadingPopUp = true;
     if (this.selectedAddress === undefined) {
       this.openLoadingPopUp = false;
       this.errorPopUp = true;
       this.errorCodeText = 'Please select address.';
+    } else if (this.fullName === '' || this.fullName === 'Your profile not have full name'
+               || this.mobileNumber === '' || this.mobileNumber === 'Your profile not mobile number') {
+      this.openLoadingPopUp = false;
+      this.errorPopUp = true;
+      this.errorCodeText = 'Please informed your name and mobile number';
     }else {
       const token = JSON.parse(localStorage.getItem('token'));
       if (this.selectedAddress.type === 'delivery'){
@@ -171,7 +209,11 @@ export class CartHomeComponent implements OnInit {
   }
 
   paymentMethod(order){
-    const param = order;
+    // const param = order;
+    // console.log(order);
+    // this.customerOrderService.customerPayment(order).subscribe( x => {
+    //   console.log(x);
+    // });
     this.testService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
   }
 }
