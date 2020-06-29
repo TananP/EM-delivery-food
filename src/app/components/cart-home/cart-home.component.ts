@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 // import { filter, pairwise } from 'rxjs/operators';
 // import { MerchantService } from 'src/app/services/merchant.service';
 import {CustomerOrderService} from 'src/app/services/customer-order.service';
+import { CustomerAddressService } from 'src/app/services/customer-address.service';
 import {AuthorizationService} from 'src/app/services/authorization.service';
 import {Location} from '@angular/common';
+import {ProfileComponent} from 'src/app/layouts/header/components/profile/profile.component';
 // Test
 import {TestService} from 'src/app/services/test.service';
 
@@ -19,6 +21,7 @@ export class CartHomeComponent implements OnInit {
 
   public deliveryAddress = false;
   public editProfile = false;
+  public editAddress = false;
   public pickUp = false;
   public removeOrderPopUp = false;
   public openLoadingPopUp = false;
@@ -44,7 +47,8 @@ export class CartHomeComponent implements OnInit {
 
   // private token =  JSON.parse(localStorage.getItem('token'));
   constructor(private location: Location, private customerOrderService: CustomerOrderService, private testService: TestService,
-              private router: Router, private authorizationService: AuthorizationService) {}
+              private router: Router, private authorizationService: AuthorizationService, private profileComponent: ProfileComponent,
+              private customerAddressService: CustomerAddressService) {}
 
   ngOnInit(): void {
     this.authorizationService.checkAuthorization();
@@ -61,9 +65,9 @@ export class CartHomeComponent implements OnInit {
   }
 
   closeCartPage(){
+    this.router.navigate(['/delivery']);
     // this.location.back();
     // const previousURL = localStorage.getItem('previousURL');
-    this.router.navigate(['/delivery']);
     // this.cartPopUp = false;
     // this.popUpStatus.emit(this.totalOrder);
   }
@@ -92,7 +96,7 @@ export class CartHomeComponent implements OnInit {
   }
 
   addressSelected(event){
-    // console.log();
+    // console.log(event);
     this.selectedAddress = event[0];
     this.showAdress = true;
     this.totalPrice = this.originalTotalPrice;
@@ -122,7 +126,8 @@ export class CartHomeComponent implements OnInit {
       }
     }
   }
-  edit(){
+
+  editProfileFunc(){
     if (this.fullName === 'Your profile not have full name') {
       this.nameValue = '';
     }else {
@@ -136,7 +141,7 @@ export class CartHomeComponent implements OnInit {
     this.editProfile = true;
   }
 
-  comfiremEdit(fullName , mobileNumber){
+  confirmEditProfile(fullName , mobileNumber){
     if (fullName !== '' && mobileNumber !== '') {
         this.authorizationService.updateLineIdInfo(fullName, mobileNumber).subscribe( x => {
         this.userProfile.fullName = fullName;
@@ -144,11 +149,37 @@ export class CartHomeComponent implements OnInit {
         this.fullName = fullName;
         this.mobileNumber = mobileNumber;
         localStorage.setItem('userProfile' , JSON.stringify(this.userProfile));
+        // this.profileComponent.getUserInfo();
+        this.profileComponent.getUserInfo();
         this.editProfile = false;
       }, error => {
         console.log(error);
       });
     }
+  }
+
+  editAdressFunc(){
+    this.editAddress = true;
+  }
+
+  confirmEditaddress(type, detail, note){
+    // console.log(this.selectedAddress);
+    const editAddress = this.selectedAddress;
+    editAddress.name = type;
+    editAddress.detail = detail;
+    editAddress.note = note;
+    this.customerAddressService.updateAddress(editAddress).subscribe( x => {
+      this.editAddress = false;
+      this.openLoadingPopUp = false;
+      this.selectedAddress = editAddress;
+      this.editAddress = false;
+    }, error => {
+      this.openLoadingPopUp = false;
+      const result = this.customerAddressService.checkErrorCode(error.error.code);
+      this.errorPopUp = true;
+      this.errorCodeText = result;
+    });
+    console.log(editAddress);
   }
 
   confirmOrder(){
@@ -172,7 +203,7 @@ export class CartHomeComponent implements OnInit {
       } else if (this.selectedAddress.type === 'pickUp') {
         const oderConfirmList = {customerId: token.id, deliveryType: 'P' ,
           deliveryId: this.selectedAddress.categoryId, deliveryPrice: 0};
-        console.log(oderConfirmList);
+        // console.log(oderConfirmList);
         this.checkWithAPI(oderConfirmList);
       }
     }
@@ -181,7 +212,7 @@ export class CartHomeComponent implements OnInit {
 
   removeErrorOrder(){
     this.customerOrderService.removeErrorOrder().subscribe( x => {
-      console.log(x);
+      // console.log(x);
       this.removeOrderPopUp = false;
     }, error => {
       this.removeOrderPopUp = false;

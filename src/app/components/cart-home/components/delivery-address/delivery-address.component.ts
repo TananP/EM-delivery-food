@@ -43,7 +43,11 @@ export class DeliveryAddressComponent implements OnInit {
     // this.getPosition();
     this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
       this.addressList = x;
-      // console.log(this.addressList);
+      for (const index in this.addressList) {
+        if (this.addressList[index].default === true) {
+          this.selectAddess(this.addressList[index]);
+        }
+      }
     });
   }
 
@@ -75,7 +79,7 @@ export class DeliveryAddressComponent implements OnInit {
     this.lat = event.latLng.lat();
     this.lng = event.latLng.lng();
     // console.log('lat === ' + this.lat);
-    console.log('lng === ' + this.lng);
+    // console.log('lng === ' + this.lng);
   }
 
   verify(name, address , comment , task: string){
@@ -149,7 +153,8 @@ export class DeliveryAddressComponent implements OnInit {
         this.activeIndex = x;
         address.push({addressId: this.activeIndex.addressId , deliveryPrice: this.activeIndex.deliveryPrice ,
           customerId: this.activeIndex.customerId, name: this.activeIndex.name,
-          detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery'});
+          detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery' ,
+          mapLatitude: this.activeIndex.mapLatitude, mapLongitude: this.activeIndex.mapLongitude});
         this.openLoadingPopUp = false;
         this.selectedAddress.emit(address);
       }, error => {

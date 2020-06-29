@@ -7,19 +7,20 @@
     <div class="container p-3 pb-0">
         <!--------------- Address area -------------------->
             <div>
-                <h5 class="text-115-rem gold">Addrees</h5>
+                <h5 class="text-115-rem gold">Address</h5>
                 <div class="form-group" *ngIf="!this.editProfile">
-                    <!-- <p>Name</p> -->
-                    <div class="pl-2"><p class="pt-2 pb-2">{{this.fullName}}</p></div>
-                    <div class="row pt-2 pb-2">
-                        <div class="col-9 pl-2"><p>{{this.mobileNumber}}</p></div>
-                        <div class="col-3 text-center" (click)="edit()"><p>Edit</p></div>
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="pt-2 pb-2"><p>{{this.fullName}}</p></div>
+                            <div class="pt-2 pb-2"><p>{{this.mobileNumber}}</p></div>
+                        </div>
+                        <div class="col-3 text-center center-col" (click)="editProfileFunc()"><p>Edit</p></div>
                     </div>
                 </div>
                 <div *ngIf="this.editProfile">
-                    <input class="form-control form-group" #fullName placeholder="Name" value="{{this.nameValue}}">
-                    <input class="form-control form-group" #phoneNumber placeholder="Phone number" value="{{this.mobileValue}}">
-                    <div (click)="comfiremEdit(fullName.value, phoneNumber.value)">
+                    <input class="form-control form-group mb-1" #fullName placeholder="Name" value="{{this.nameValue}}">
+                    <input class="form-control form-group mb-1" #phoneNumber placeholder="Phone number" type="number" maxlength="10" value="{{this.mobileValue}}">
+                    <div (click)="confirmEditProfile(fullName.value, phoneNumber.value)">
                         <div class="mt-3 ml-5 mr-5 gold-button text-center">
                             <p>Save</p>
                         </div>
@@ -28,12 +29,32 @@
                 <hr>
             </div>
             <div *ngIf="this.showAdress">
-                <div class="form-group">
-                    <p>{{this.selectedAddress.name}}</p>
-                    <p class="pb-2">{{this.selectedAddress.detail}}</p>
-                    <div class="over-flow-text" *ngIf="this.selectedAddress.type === 'delivery' ">
+                <div *ngIf="!this.editAddress">
+                    <div class="row">
+                        <div class="form-group col-9 over-flow-text">
+                            <p class="pb-1">{{this.selectedAddress.name}}</p>
+                            <p>Address detail :</p>
+                            <p class="pb-2 over-flow-text">{{this.selectedAddress.detail}}</p>
+                            <div *ngIf="this.selectedAddress.type === 'delivery' ">
+                                <p>Comment for address :</p>
+                                <p class="over-flow-text">{{this.selectedAddress.note}}</p>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center center-col" (click)="editAdressFunc()"><p>Edit</p></div>
+                    </div>
+                </div>
+                <div *ngIf="this.editAddress">
+                    <div class="form-group">
+                        <input class="form-control form-group mb-1" #editAddressType value="{{this.selectedAddress.name}}">
+                        <p>Address detail :</p>
+                        <textarea row="2" #editAddressDetail class="form-control" maxlength="225" value="{{this.selectedAddress.detail}}"></textarea>
                         <p>Comment for address :</p>
-                        <p>{{this.selectedAddress.note}}</p>
+                        <textarea row="2" #editAddressNote class="form-control" maxlength="225" value="{{this.selectedAddress.note}}"></textarea>
+                    </div>
+                    <div (click)="confirmEditaddress(editAddressType.value, editAddressDetail.value, editAddressNote.value)">
+                        <div class="mt-3 ml-5 mr-5 gold-button text-center">
+                            <p>Save</p>
+                        </div>
                     </div>
                 </div>
                 <hr>

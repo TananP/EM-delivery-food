@@ -18,6 +18,7 @@ export class DeliveryHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('======= Hello !!!!!! =======');
     this.restaurantsList = [];
     this.merchantService.getMerchantList().subscribe(x => {
       // console.log(x);

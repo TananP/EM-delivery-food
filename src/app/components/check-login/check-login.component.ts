@@ -50,7 +50,7 @@ export class CheckLoginComponent implements OnInit {
   getLineInfo(customerId, token){
     // console.log(lineId);
     this.authorizationAPI.getLineIdInfo(customerId, token).subscribe(x => {
-      console.log(x);
+      // console.log(x);
       this.userProfile = x;
       const userInfoList = {picture: this.userProfile.picture, fullName: this.userProfile.fullName,
                             mobileNumber: this.userProfile.mobileNumber};
@@ -60,8 +60,8 @@ export class CheckLoginComponent implements OnInit {
       this.errorMessage = 'Please re-login agian';
       this.openErrorPopUp = true;
     }, () => {
-      window.location.href = 'http://localhost:4200/#/delivery';
-      // window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
+      // window.location.href = 'http://localhost:4200/#/delivery';
+      window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
     });
   }
 }

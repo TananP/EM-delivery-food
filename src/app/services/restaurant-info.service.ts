@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RestaurantInfoService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
+  timeOut = 10000;
 
   constructor(private http: HttpClient) {}
 
   getRestaurantInfo(pageNumber: number) {
     // console.log('name === ' + pageNumber);
-    return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList?name=starbuck&pageNumber=' + pageNumber + '&pageLength=10');
+    return this.http.get(this.baseUrl + 'web_api/api/Merchant/GetMerchantList?name=starbuck&pageNumber=' + pageNumber + '&pageLength=10')
+    .pipe(timeout(this.timeOut));
   }
 }

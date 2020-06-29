@@ -13,14 +13,14 @@ public historyIsNull = false;
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
-    this.customerOrderService.getOrderHistory().subscribe( x => {
-      console.log(x);
-    }, error => {
-      if (error.error === null){
-        this.historyIsNull = true;
-      }
-      console.log(error);
-    });
+    // this.customerOrderService.getOrderHistory().subscribe( x => {
+    //   console.log(x);
+    // }, error => {
+    //   if (error.error === null){
+    //     this.historyIsNull = true;
+    //   }
+    //   console.log(error);
+    // });
   }
 
   closeHistoryPage(){

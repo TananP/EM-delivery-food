@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { timeout } from 'rxjs/operators';
 
 
 @Injectable({
@@ -12,6 +13,7 @@ export class CustomerOrderService {
   apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
   private token: any;
   constructor(private http: HttpClient) {}
+  timeOut = 10000;
 
   getToken(){
     this.token = JSON.parse(localStorage.getItem('token'));
@@ -24,7 +26,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
   deleteOrder(order){
     this.getToken();
@@ -33,7 +35,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   updateOrder(order){
@@ -43,7 +45,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   getCustomerOrderList(){
@@ -55,7 +57,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   getOrderHistory(){
@@ -67,7 +69,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   getCurrentOrder(){
@@ -79,7 +81,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   checkOrder(order){
@@ -88,7 +90,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   removeErrorOrder(){
@@ -100,7 +102,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   customerPayment(order){
@@ -110,7 +112,7 @@ export class CustomerOrderService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
 

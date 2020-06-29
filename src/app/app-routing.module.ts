@@ -10,6 +10,7 @@ import { ErrorNotFoundPageComponent } from './components/error-not-found-page/er
 import { PaymentResultHomeComponent } from './components/payment-result-home/payment-result-home.component';
 import { CheckLoginComponent } from './components/check-login/check-login.component';
 import {CartHomeComponent} from './components/cart-home/cart-home.component';
+import {ProfileComponent} from './layouts/header/components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'delivery/restaurant-home/:task/:searchName',
     component: RestaurantHomeComponent
+  },
+  {
+    path: 'delivery/profile',
+    component: ProfileComponent
   },
   {
     path: 'delivery/cart-page',

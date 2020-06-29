@@ -93,7 +93,7 @@
             <div class="row mt-3">
                 <p class="verlify-invalid" *ngIf="this.verifyAll === false">Please inform all information</p>
                 <div class="col-6" (click)="verify(customerLoType.value, addNewAddress.value ,addressComments.value , 'add')"> 
-                    <div class="address-pop-up-button"> Add </div>
+                    <div class="address-pop-up-button"> OK </div>
                 </div>
                 <div class="col-6" (click)="closePopUp('add')"> 
                     <div class="address-pop-up-button"> Cancel </div>
@@ -139,7 +139,7 @@
             <div class="row mt-3">
                 <p class="verlify-invalid" *ngIf="this.verifyAll === false">Please inform all information</p>
                 <div class="col-6" (click)="verify(editCustomerLoType.value, editAddNewAddress.value ,editAddressComments.value , 'edit')"> 
-                    <div class="address-pop-up-button"> Edit </div>
+                    <div class="address-pop-up-button"> OK </div>
                 </div>
                 <div class="col-6" (click)="closePopUp('edit')"> 
                     <div class="address-pop-up-button"> Cancel </div>

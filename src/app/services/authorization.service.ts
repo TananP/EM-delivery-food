@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NonNullAssert } from '@angular/compiler';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class AuthorizationService {
     this.token = JSON.parse(localStorage.getItem('token'));
   }
   getToken(code: string){
+    this.getLocalToken();
     // this.http.get('/path/to/resource').subscribe((res: Response) => {
     //   console.log(res.headers);
     //   // you can assign the value to any variable here
@@ -25,41 +26,48 @@ export class AuthorizationService {
     // localStorage.removeItem('token');
 
     // Production
-    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin', { params: {
-    //     code
-    //   }
-    // });
+    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
+      code,
+    }, headers: {
+      'ApiKey' : this.apiKey
+    }
+    });
 
     // Develop
-    return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
-        code,
-        callback: 'Y',
-      }
-    });
+    // return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
+    //     code,
+    //     callback: 'Y',
+    //   }, headers: {
+    //     'ApiKey' : this.apiKey
+    //   }
+    // });
 
   }
 
   checkAuthorization(){
     // const token = localStorage.getItem('token');
-    this.getLocalToken();
+    // this.getLocalToken();
+    const token = localStorage.getItem('token');
     const profile = localStorage.getItem('userProfile');
-
-    if (this.token) {
+    if (token) {
       // const tokenJSON = JSON.parse(token);
-      if (Date.now() > this.token.expires) {
+      const decodeToken = jwt_decode(token);
+      // console.log('Date.now() === ' + Date.now());
+      // console.log('decodeToken.exp * 1000 === ' + decodeToken.exp * 1000);
+      if (Date.now() > decodeToken.exp * 1000) {
         // redirect localhost
-        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 
         // redirect to production
-        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
       }
     }
-    if (this.token === null || profile === null) {
+    if (token === null || profile === null) {
         // redirect localhost
-        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
+        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine?callback=Y';
 
         // redirect to production
-        // window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
+        window.location.href = 'http://emfood.yipintsoi.com/web_api/api/Authentication/SigninLine';
     }
   }
 

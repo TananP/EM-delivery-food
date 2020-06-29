@@ -17,7 +17,8 @@
             <div class="col-12 pl-4 menu-button" (click)="openPopUp('order',true)">
                 <a>Order</a>
             </div>
-            <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)">
+            <!-- <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)"> -->
+            <div class="col-12 pl-4 menu-button" [routerLink]="['/delivery/profile']">
                 <a>Profile</a>
             </div>
             <div class="col-12 pl-4 menu-button" (click)="openPopUp('history',true)">
@@ -90,7 +91,7 @@
     <!-- <app-cart-home [cartPopUp]="this.cartPopUp" (popUpStatus)="receviveStatus($event)"></app-cart-home> -->
 
     <!-------------- Profile pop up ------------------->
-    <app-profile [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile>
+    <!-- <app-profile [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile> -->
     
     <!-------------- History pop up ----------------->
     <app-history [historyPopUp]="this.historyPopUp" (closePopUp)="closePopUp()"></app-history>

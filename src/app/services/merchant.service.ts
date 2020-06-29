@@ -37,7 +37,7 @@ export class MerchantService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   getCategoryPickUp() {
@@ -46,7 +46,7 @@ export class MerchantService {
       'ApiKey' : this.apiKey,
       'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   getFoodList(merchantID){
@@ -58,7 +58,7 @@ export class MerchantService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   searchByRestaurantName(searchName) {
@@ -70,7 +70,7 @@ export class MerchantService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   searchByCategoryID(categoryID) {
@@ -82,7 +82,7 @@ export class MerchantService {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    }).pipe(timeout(5000));
+    }).pipe(timeout(this.timeOut));
   }
 
   // pickUp(){
@@ -114,7 +114,7 @@ export class MerchantService {
       'ApiKey' : this.apiKey,
       'Authorization': 'Bearer ' + this.token.token
     }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   cancelCoupon(couponID){
@@ -126,7 +126,7 @@ export class MerchantService {
       'ApiKey' : this.apiKey,
       'Authorization': 'Bearer ' + this.token.token
     }
-    });
+    }).pipe(timeout(this.timeOut));
   }
 
   checkErrorCoupon(code){
