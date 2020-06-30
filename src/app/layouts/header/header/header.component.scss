@@ -9,13 +9,16 @@
     top: 0;
     left: 0;
     background-color: #181818;
-    color: whitesmoke;
+    color: #998765;
     overflow-x: hidden;
     transition: 0.5s;
   }
 .menu-button {
-    font-size: 1rem;
-    border-bottom: 2px solid black;
+    font-size: 0.9rem;
+    border-bottom: 1px solid black;
+}
+.menu-head{
+    border-bottom: 2px solid #635543;
 }
 .navbar-badge{
     right: 15%;

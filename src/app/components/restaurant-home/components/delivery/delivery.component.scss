@@ -29,8 +29,9 @@
     color: gray;
 }
 .menu-button{
-    border-bottom: 1px solid #1a1a1a;
-    margin-bottom: 1rem;
+    border-bottom: 0.5px inset #999999;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     cursor: pointer;
 }
 .tab-text{

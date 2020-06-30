@@ -16,7 +16,7 @@
     <div class="tab-content" id="pills-tabContent">
         <!--------------- Recommend menu ---------->
         <div class="tab-pane fade show active" id="recommend-menu" role="tabpanel" aria-labelledby="pills-home-tab">
-            <h5 class="tab-text">Recommend menu</h5>
+            <h5 class="tab-text mb-0">Recommend menu</h5>
             <!-- Render menu from list -->
             <!-- <div class="col-12 row menu-button" (click)="popUp(recommend)" *ngFor="let recommend of menuList.data;"> -->
             <div *ngFor="let recommend of this.menuList.data;">  
@@ -88,7 +88,7 @@
 
         <!--------------- All menu ---------->
         <div class="tab-pane fade" id="all-menu" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <h5 class="tab-text">All menu</h5>
+            <h5 class="tab-text mb-0">All menu</h5>
             <div *ngFor="let allMenu of this.menuList.data;">
                 <!-- Active -->
                 <div *ngIf="allMenu.active == true && this.shopOpen == true">
