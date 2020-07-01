@@ -24,6 +24,15 @@ export class TestService {
     });
   }
 
+  test2c2p(order){
+    const token = JSON.parse(localStorage.getItem('token'));
+    return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order, { headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + token.token
+      }
+    });
+  }
+
   redirectWithPost(url, obj) {
     const mapForm = document.createElement('form');
     // mapForm.target = '_blank';

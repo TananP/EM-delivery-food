@@ -43,7 +43,7 @@ private userProfile: any;
     this.fullName = '';
     this.mobileNumber = '000000';
     if (this.userProfile === null) {
-      this.profileImg = './assets/dist/img/no-picture-200.jpg';
+      this.profileImg = './assets/dist/img/no-picture-200.png';
       this.fullName = '-';
       // this.mobileNumber = '-';
     } else {

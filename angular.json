@@ -24,7 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/EM_dining_Logo_EP_EQ.png",
+              "src/em_dining_logo_ep_eq_eqy_icon.ico",
               "src/assets"
             ],
             "styles": [
@@ -88,7 +88,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/EM_dining_Logo_EP_EQ.png",
+              "src/em_dining_logo_ep_eq_eqy_icon.ico",
               "src/assets"
             ],
             "styles": [

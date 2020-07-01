@@ -20,7 +20,7 @@
                 <img class="logo-img-search" src="http://emfood.yipintsoi.com/web_api{{shop.logoPath}}">
             </div>
             <div class="col-4 text-center" *ngIf="shop.logoPath === '' ">
-                <img class="logo-img-search" src="./assets/dist/img/no-picture-200.jpg">
+                <img class="logo-img-search" src="./assets/dist/img/no-picture-200.png">
             </div>
             <div class="col-8 center-col" *ngFor="let shopInfo of shop.childMstMerchantTranslation">
                 <div [routerLink]="['/' + this.taskChoosed + '/restaurant-home',this.taskChoosed , shopInfo.name]">

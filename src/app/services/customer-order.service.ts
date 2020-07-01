@@ -105,14 +105,36 @@ export class CustomerOrderService {
     }).pipe(timeout(this.timeOut));
   }
 
+
+  // test
+
+  // UploadFileLogo() {
+  //   let formData = new FormData();
+  //   formData.append(file.name, file);
+  //   return this.http.post<any>(this.baseUrl + 'api/Merchant/UploadFileLogo', formData);
+  // }
+
   customerPayment(order){
     this.getToken();
-    console.log(order);
-    return this.http.post(this.baseUrl + 'web_api/CustomerPayment', order , { headers: {
+    // console.log(order);
+    const textFormData = new FormData();
+    textFormData.append(order.result, 'result');
+    textFormData.append(order.customerId, 'customerId');
+    textFormData.append(order.deliveryType, 'customerId');
+    textFormData.append(order.deliveryId , 'deliveryId');
+    textFormData.append(order.deliveryPrice, 'deliveryPrice');
+    // textFormData.append('result' , order.result);
+    // textFormData.append('customerId', order.customerId);
+    // textFormData.append('customerId', order.deliveryType);
+    // textFormData.append('deliveryId', order.deliveryId);
+    // textFormData.append('deliveryPrice', order.deliveryPrice);
+
+    console.log(textFormData);
+    return this.http.post<any>(this.baseUrl + 'web_api/CustomerPayment', textFormData , { headers: {
         'ApiKey' : this.apiKey,
         'Authorization': 'Bearer ' + this.token.token
       }
-    }).pipe(timeout(this.timeOut));
+    });
   }
 
 

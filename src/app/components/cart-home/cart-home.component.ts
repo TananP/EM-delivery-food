@@ -242,9 +242,14 @@ export class CartHomeComponent implements OnInit {
   paymentMethod(order){
     // const param = order;
     // console.log(order);
-    // this.customerOrderService.customerPayment(order).subscribe( x => {
+    // this.customerOrderService.customerPayment(order).subscribe(
+    //   x => {
     //   console.log(x);
-    // });
+    // },
+    // err => {
+    //   console.log(err);
+    // }
+    // );
     this.testService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
   }
 }

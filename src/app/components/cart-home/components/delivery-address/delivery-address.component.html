@@ -63,7 +63,7 @@
         <div class="address-pop-up-container">
             <div>
                 <h5>Location type</h5>
-                <input maxlength="15" #customerLoType class="form-control" placeholder="Home, Condo, Apartment">
+                <input maxlength="75" #customerLoType class="form-control" placeholder="Home, Condo, Apartment">
                 <p class="verlify-invalid" *ngIf="this.verifyLoType === false">Invalid name</p>
             </div>
             <!-- <div>
@@ -109,7 +109,7 @@
         <div class="address-pop-up-container">
             <div>
                 <h5>Location type</h5>
-                <input maxlength="15" #editCustomerLoType class="form-control" value="{{this.editAddressList.name}}">
+                <input maxlength="75" #editCustomerLoType class="form-control" value="{{this.editAddressList.name}}">
                 <p class="verlify-invalid" *ngIf="this.verifyLoType === false">Invalid name</p>
             </div>
         <!-- <div>
