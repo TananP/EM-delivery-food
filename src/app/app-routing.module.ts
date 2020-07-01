@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TaskSelectComponent } from './components/task-select/task-select.component';
-import { DeliveryHomeComponent } from './components/home-page/delivery-home/delivery-home.component';
+// import { TaskSelectComponent } from './components/page-task-select/task-select.component';
+import { DeliveryHomeComponent } from './components/page-home/delivery-home/delivery-home.component';
 // import { ReserveHomeComponent } from './components/home-page/reserve-home/reserve-home.component';
 // import { ShopListComponent } from './components/shop-list/shop-list.component';
-import { RestaurantHomeComponent  } from './components/restaurant-home/restaurant-home.component';
-import { SearchResultPageComponent } from './components/search-result-page/search-result-page.component';
-import { ErrorNotFoundPageComponent } from './components/error-not-found-page/error-not-found-page.component';
-import { PaymentResultHomeComponent } from './components/payment-result-home/payment-result-home.component';
-import { CheckLoginComponent } from './components/check-login/check-login.component';
-import {CartHomeComponent} from './components/cart-home/cart-home.component';
+import { RestaurantHomeComponent  } from './components/page-restaurant/restaurant-home.component';
+import { SearchResultPageComponent } from './components/page-search-result/search-result-page.component';
+// import { ErrorNotFoundPageComponent } from './components/page-error-not-found/error-not-found-page.component';
+import { PaymentResultHomeComponent } from './components/page-payment-result/payment-result-home.component';
+import { CheckLoginComponent } from './components/page-check-login/check-login.component';
+import {CartHomeComponent} from './components/page-cart/cart-home.component';
 import {ProfileComponent} from './layouts/header/components/profile/profile.component';
 
 const routes: Routes = [

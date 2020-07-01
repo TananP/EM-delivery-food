@@ -21,11 +21,10 @@ export class CategoryComponent implements OnInit {
   constructor(private route: ActivatedRoute , private categoryAPI: CategoryMerchantService) {}
 
   ngOnInit(): void {
-    // this.categoryList = [ 'Desserts' , 'Drink' , 'Snack' , 'Seafood' , 'Thai'];
     // Call API get category
     this.categoryAPI.getMerchantCategory().subscribe( x => {
-      // console.log(x);
       this.categoryList = x;
+      this.categoryList.unshift({categoryId: 0, categoryName: 'All restaurants'});
       this.loading = false;
     }, error => {
       this.loading = false;

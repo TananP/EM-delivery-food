@@ -60,8 +60,8 @@ export class CheckLoginComponent implements OnInit {
       this.errorMessage = 'Please re-login agian';
       this.openErrorPopUp = true;
     }, () => {
-      window.location.href = 'http://localhost:4200/#/delivery';
-      // window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
+      // window.location.href = 'http://localhost:4200/#/delivery';
+      window.location.href = 'http://emfood.yipintsoi.com/customer/#/delivery';
     });
   }
 }

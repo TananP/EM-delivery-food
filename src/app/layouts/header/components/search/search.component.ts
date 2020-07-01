@@ -50,5 +50,6 @@ export class SearchComponent implements OnInit {
     // this.openLoadingPopUp = true;
     // console.log('8888');
     this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);
+    // console.log( this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]));
   }
 }

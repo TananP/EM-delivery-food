@@ -11,6 +11,7 @@ export class SearchResultPageComponent implements OnInit {
   public taskChoosed = this.route.snapshot.paramMap.get('task');
   public searchName = this.route.snapshot.paramMap.get('searchInput');
   public shopList: any;
+  public haveResult: boolean;
 
   public loading = true;
   public loadingError = false;
@@ -22,7 +23,12 @@ export class SearchResultPageComponent implements OnInit {
     this.shopList = [];
     this.merchantService.searchByRestaurantName(this.searchName).subscribe( x => {
       this.shopList = x;
-      console.log(this.shopList);
+      // console.log(this.shopList);
+      if (this.shopList.data[0] === undefined) {
+        this.haveResult = false;
+      }else {
+        this.haveResult = true;
+      }
       this.loading = false;
     }, error => {
       this.loadingError = true;

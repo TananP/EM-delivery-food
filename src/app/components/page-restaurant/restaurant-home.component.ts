@@ -32,9 +32,8 @@ export class RestaurantHomeComponent implements OnInit {
     this.restaurantInfo = [];
     this.merchantService.getMerchantInfo(this.searchName).subscribe( x => {
       this.restaurantInfo = x;
-      // console.log(this.restaurantInfo.data[0].openTime);
-      // console.log(x);
-      if (this.restaurantInfo.data.length > 1) {
+      // console.log(this.restaurantInfo.data);
+      if (this.restaurantInfo.data.length > 1 || this.restaurantInfo.data[0] === undefined) {
         this.router.navigate(['/' + this.taskSelect , 'search', this.taskSelect , this.searchName]);
       } else {
         // const currentTime = Date().toString().split(' ')[4];

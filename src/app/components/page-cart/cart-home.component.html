@@ -31,16 +31,21 @@
             <div *ngIf="this.showAdress">
                 <div *ngIf="!this.editAddress">
                     <div class="row">
+
                         <div class="form-group col-9 over-flow-text">
                             <p class="pb-1">{{this.selectedAddress.name}}</p>
-                            <p>Address detail :</p>
-                            <p class="pb-2 over-flow-text">{{this.selectedAddress.detail}}</p>
                             <div *ngIf="this.selectedAddress.type === 'delivery' ">
+                                <p>Address detail :</p>
+                                <p class="pb-2 over-flow-text">{{this.selectedAddress.detail}}</p>
                                 <p>Comment for address :</p>
                                 <p class="over-flow-text">{{this.selectedAddress.note}}</p>
                             </div>
                         </div>
-                        <div class="col-3 text-center center-col" (click)="editAdressFunc()"><p>Edit</p></div>
+                        <div class="col-3 text-center center-col" (click)="editAdressFunc()"
+                            *ngIf="this.selectedAddress.type === 'delivery' ">
+                            <p>Edit</p>
+                        </div>
+
                     </div>
                 </div>
                 <div *ngIf="this.editAddress">
