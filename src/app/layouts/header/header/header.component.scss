@@ -8,11 +8,17 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #181818;
+    // background-color: #181818;
+    background-color: hsla(360,100%,0%,0.3);
     color: #998765;
     overflow-x: hidden;
     transition: 0.5s;
-  }
+}
+.sidenav-size{
+    width: 12.5rem;
+    height: 100%;
+    background-color: #181818;
+}
 .menu-button {
     font-size: 0.9rem;
     border-bottom: 1px solid black;

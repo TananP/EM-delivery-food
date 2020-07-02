@@ -7,7 +7,7 @@
     <div class="container p-3 pb-0">
         <!--------------- Address area -------------------->
             <div>
-                <h5 class="text-115-rem gold">Address</h5>
+                <h5 class="text-115-rem gold">Customer Info</h5>
                 <div class="form-group" *ngIf="!this.editProfile">
                     <div class="row">
                         <div class="col-9">
@@ -29,9 +29,9 @@
                 <hr>
             </div>
             <div *ngIf="this.showAdress">
+                <h5 class="text-115-rem gold">Address</h5>
                 <div *ngIf="!this.editAddress">
                     <div class="row">
-
                         <div class="form-group col-9 over-flow-text">
                             <p class="pb-1">{{this.selectedAddress.name}}</p>
                             <div *ngIf="this.selectedAddress.type === 'delivery' ">

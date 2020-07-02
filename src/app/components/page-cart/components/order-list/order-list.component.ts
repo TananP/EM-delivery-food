@@ -58,7 +58,8 @@ export class OrderListComponent implements OnInit {
       // console.log(err);
       this.nowLoading = false;
       this.emptyItemOrder = true;
-      const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
+      const result = err.error.error;
+      // const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
       // console.log(result);
       this.openErrorPopUp = true;
       this.errorMessage = result;

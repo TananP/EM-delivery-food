@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
   openMenu(trigger: boolean){
     if (trigger) {
-      document.getElementById('sideMenu').style.width = '12.5rem';
+      document.getElementById('sideMenu').style.width = '100%';
     } else {
       document.getElementById('sideMenu').style.width = '0px';
     }

@@ -62,7 +62,7 @@ const routes: Routes = [
     component: CartHomeComponent
   },
   {
-    path: 'delivery/payment-result',
+    path: 'result',
     component: PaymentResultHomeComponent
   },
   // {

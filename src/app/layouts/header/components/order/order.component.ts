@@ -12,11 +12,11 @@ export class OrderComponent implements OnInit {
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
-    // this.customerOrderService.getCurrentOrder().subscribe( x => {
-    //   console.log(x);
-    // }, error => {
-    //   console.log(error);
-    // });
+    this.customerOrderService.getCurrentOrder().subscribe( x => {
+      console.log(x);
+    }, error => {
+      console.log(error);
+    });
   }
 
   closeOrderPage(){
