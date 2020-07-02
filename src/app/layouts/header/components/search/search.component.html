@@ -2,10 +2,10 @@
     <!-- SEARCH FORM --> 
     <form>
         <div class="row input-group input-group-sm">
-            <div class="col-2 text-right pr-0">
+            <div class="col-3 pr-0">
             </div>
-            <div class="row col-8 pl-0 bg-white search-box">
-                <div class="col-3 pr-0 text-center align-middle">
+            <div class="row col-6 pl-0 bg-white search-box">
+                <div class="col-2 pr-0 align-middle">
                     <div *ngIf="!this.searchInputEmpty">
                         <!-- <div [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white"> -->
                         <button (click)="openToNewLink()" class="">
@@ -18,8 +18,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-8 pl-0 pr-0">
-                    <input class="search-input-box" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
+                <div class="col-9 pl-0 pr-0">
+                    <input class="search-input-box text-center" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
                     value="{{this.searchInput}}" placeholder="Restaurants name">
 
                     <div class="auto-correct" *ngIf="this.autoCorrect">

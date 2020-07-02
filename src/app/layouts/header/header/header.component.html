@@ -3,9 +3,9 @@
     <div id="sideMenu" class="sidenav text-center pt-0">
         <div class="sidenav-size">
             <div class="col-12 text-left mb-2 pl-0 pr-0 row">
-                <div class="side-menu-close-button pointer pr-2" (click)="openMenu(false)">
+                <div class="side-menu-close-button pointer pr-2">
                     <!-- <a>&lt;</a> -->
-                    <img src="./assets/dist/img/Close2-01.png" width="12" height="12"/>
+                    <img (click)="openMenu(false)" src="./assets/dist/img/Close2-01.png" width="12" height="12"/>
                 </div>
                 <div class="col-12 pb-3 pt-3 menu-head text-center">
                     <img src="./assets/dist/img/Logo_Em_dinning.png" width="115" height="21">

@@ -233,9 +233,9 @@ export class CartHomeComponent implements OnInit {
       }
     }, error => {
       this.openLoadingPopUp = false;
-      console.log(error);
+      // console.log(error);
       this.errorPopUp = true;
-      this.errorCodeText = error.error.error;
+      this.errorCodeText = 'Sorry, food items are temporarily out of stock.';
     });
   }
 
