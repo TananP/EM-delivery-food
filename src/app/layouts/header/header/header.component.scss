@@ -19,6 +19,11 @@
     height: 100%;
     background-color: #181818;
 }
+.side-menu-close-button{
+    position: absolute;
+    right: 0;
+    display: inline;
+}
 .menu-button {
     font-size: 0.9rem;
     border-bottom: 1px solid black;
