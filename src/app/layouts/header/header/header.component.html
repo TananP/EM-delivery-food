@@ -1,6 +1,7 @@
 <div class="bg-black pb-3">
     <!-------------- Silde menu --------------------->
     <div id="sideMenu" class="sidenav text-center pt-0">
+<<<<<<< HEAD
         <div class="sidenav-size">
             <div class="col-12 text-left mb-2 pl-0 pr-0 row close-button">
                 <div class="col-2 pr-0 pointer" (click)="openMenu(false)">
@@ -11,6 +12,28 @@
                     <img src="./assets/dist/img/Logo_Em_dinning.png" width="120" height="22">
                     <!-- <h5 class="mb-0">Menu</h5> -->
                 </div>
+=======
+        <div class="col-12 text-right mb-2 pl-0 pr-0 row close-button">
+            <div class="col-12 pr-2 pointer" (click)="openMenu(false)">
+                <!-- <a>&lt;</a> -->
+                <img src="./assets/dist/img/Close2-01.png" width="15" height="15"/>
+            </div>
+            <div class="col-12 pb-3 menu-head text-center">
+                <img src="./assets/dist/img/Logo_Em_dinning.png" width="120" height="22">
+            </div>
+        </div>
+        <div class="pointer" (click)="openMenu(false)">
+            <!-- <div class="col-12 pl-4 menu-button" [routerLink]="['/' + this.taskData]"> -->
+            <div class="col-12 p-3 menu-button" [routerLink]="['/delivery']">
+                <a>HOME</a>
+            </div>
+            <div class="col-12 p-3 menu-button" (click)="openPopUp('order',true)">
+                <a>ORDER</a>
+            </div>
+            <!-- <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)"> -->
+            <div class="col-12 p-3 menu-button" [routerLink]="['/delivery/profile']">
+                <a>PROFILE</a>
+>>>>>>> 41fa53321392c691d9168787625a588c6c827a4b
             </div>
             <div class="pointer" (click)="openMenu(false)">
                 <!-- <div class="col-12 pl-4 menu-button" [routerLink]="['/' + this.taskData]"> -->
@@ -62,15 +85,15 @@
     </div> -->
     <div class="row">
         <div class="col-2 text-center center-col">
-            <div class="p-2" (click)="openMenu(true)">
+            <div (click)="openMenu(true)">
                 <img class="width-side-menu-img" src="./assets/dist/img/Menu.png" />
             </div>
         </div>
         <div class="col-8 text-center pt-1 pb-1 center-col">
             <!-- <h5 [routerLink]="['/' + this.taskData]" style="cursor: pointer;"> -->
-            <h5 [routerLink]="['/delivery']" style="cursor: pointer;">
+            <div [routerLink]="['/delivery']" style="cursor: pointer;">
                 <img class="width-title-img" src="./assets/dist/img/Logo_Em_dinning.png"/>
-            </h5>
+            </div>
         </div>
         <div class="col-2 center-col">
             <ul class="navbar-nav ml-auto">
