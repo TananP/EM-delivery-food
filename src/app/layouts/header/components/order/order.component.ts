@@ -9,11 +9,17 @@ import { CustomerOrderService } from 'src/app/services/customer-order.service';
 export class OrderComponent implements OnInit {
 @Input() orderPopUp: boolean;
 @Output() closePopUp = new EventEmitter();
+public showOrderInfo = false;
+public currentOrderList: any;
+public selectOrderId: number;
+
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
+    this.currentOrderList = [];
     this.customerOrderService.getCurrentOrder().subscribe( x => {
-      console.log(x);
+      this.currentOrderList = x;
+      // console.log(x);
     }, error => {
       console.log(error);
     });
@@ -21,5 +27,14 @@ export class OrderComponent implements OnInit {
 
   closeOrderPage(){
     this.closePopUp.emit();
+  }
+
+  selectOrder(orderInfo){
+    this.selectOrderId = orderInfo;
+    this.showOrderInfo = true;
+  }
+
+  backFromOrderInfo(){
+    this.showOrderInfo = false;
   }
 }

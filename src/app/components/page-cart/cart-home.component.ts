@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output , EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output , EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 // import { filter, pairwise } from 'rxjs/operators';
 // import { MerchantService } from 'src/app/services/merchant.service';
@@ -7,17 +7,22 @@ import { CustomerAddressService } from 'src/app/services/customer-address.servic
 import {AuthorizationService} from 'src/app/services/authorization.service';
 import {Location} from '@angular/common';
 import {ProfileComponent} from 'src/app/layouts/header/components/profile/profile.component';
+import { SubmitFormService } from 'src/app/services/submit-form.service';
 // Test
-import {TestService} from 'src/app/services/test.service';
+// import {TestService} from 'src/app/services/test.service';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { HeaderComponent } from 'src/app/layouts/header/header/header.component';
 
 @Component({
   selector: 'app-cart-home',
   templateUrl: './cart-home.component.html',
   styleUrls: ['./cart-home.component.scss']
 })
+
 export class CartHomeComponent implements OnInit {
   @Input() cartPopUp: boolean;
   @Output() popUpStatus = new EventEmitter();
+  @ViewChild(OrderListComponent) orderListComponent: OrderListComponent;
 
   public deliveryAddress = false;
   public editProfile = false;
@@ -46,9 +51,10 @@ export class CartHomeComponent implements OnInit {
 
 
   // private token =  JSON.parse(localStorage.getItem('token'));
-  constructor(private location: Location, private customerOrderService: CustomerOrderService, private testService: TestService,
+  constructor(private location: Location, private customerOrderService: CustomerOrderService, private submitFormService: SubmitFormService,
               private router: Router, private authorizationService: AuthorizationService, private profileComponent: ProfileComponent,
-              private customerAddressService: CustomerAddressService) {}
+              private customerAddressService: CustomerAddressService, private headerComponent: HeaderComponent) {
+              }
 
   ngOnInit(): void {
     this.authorizationService.checkAuthorization();
@@ -65,6 +71,7 @@ export class CartHomeComponent implements OnInit {
   }
 
   closeCartPage(){
+    this.headerComponent.updateCarts();
     this.router.navigate(['/delivery']);
     // this.location.back();
     // const previousURL = localStorage.getItem('previousURL');
@@ -214,9 +221,11 @@ export class CartHomeComponent implements OnInit {
     this.customerOrderService.removeErrorOrder().subscribe( x => {
       // console.log(x);
       this.removeOrderPopUp = false;
+      this.orderListComponent.getOrderList();
+      this.headerComponent.updateCarts();
     }, error => {
       this.removeOrderPopUp = false;
-      console.log(error);
+      // console.log(error);
       this.errorPopUp = true;
       this.errorCodeText = error.error.error;
     });
@@ -233,9 +242,14 @@ export class CartHomeComponent implements OnInit {
       }
     }, error => {
       this.openLoadingPopUp = false;
+      // this.removeOrderPopUp = true;
+      // console.log(order);
       // console.log(error);
+      // this.removeErrorOrder();
+      this.orderListComponent.getOrderList();
+      this.headerComponent.updateCarts();
       this.errorPopUp = true;
-      this.errorCodeText = 'Sorry, food items are temporarily out of stock.';
+      this.errorCodeText = error.error.error;
     });
   }
 
@@ -250,6 +264,6 @@ export class CartHomeComponent implements OnInit {
     //   console.log(err);
     // }
     // );
-    this.testService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
+    this.submitFormService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
   }
 }

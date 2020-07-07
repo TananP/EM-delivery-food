@@ -62,8 +62,9 @@ export class CustomerOrderService {
 
   getOrderHistory(){
     this.getToken();
-    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderHistory', { params: {
-      customerId: this.token.id
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderHistory', { params: {
+      customerId: this.token.id,
+      pageLength: '10'
     },
     headers: {
         'ApiKey' : this.apiKey,
@@ -74,8 +75,21 @@ export class CustomerOrderService {
 
   getCurrentOrder(){
     this.getToken();
-    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderCurrent', { params: {
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderCurrent', { params: {
       customerId: this.token.id
+    },
+    headers: {
+        'ApiKey' : this.apiKey,
+        'Authorization': 'Bearer ' + this.token.token
+      }
+    }).pipe(timeout(this.timeOut));
+  }
+
+  checkStatusByOrderNumber(orderID){
+    this.getToken();
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/CheckStatusByOrderNumber', { params: {
+      customerId: this.token.id,
+      orderNumber: orderID
     },
     headers: {
         'ApiKey' : this.apiKey,
@@ -95,7 +109,7 @@ export class CustomerOrderService {
 
   removeErrorOrder(){
     this.getToken();
-    return this.http.post(this.baseUrl + 'web_api/api/CustomerOrder/CheckOrder', { params: {
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/RemoveOrder', { params: {
       customerId: this.token.id
     },
     headers: {

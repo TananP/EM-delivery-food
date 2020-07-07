@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-payment-result-home',
@@ -11,8 +12,9 @@ export class PaymentResultHomeComponent implements OnInit {
   public code: any;
   public orderNumber: any;
   public resultMessage: string;
+  public countDown = 5;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -38,6 +40,15 @@ export class PaymentResultHomeComponent implements OnInit {
     }else {
       this.orderNumber = 'undifind order number';
     }
+    this.countDownFuc();
   }
-
+  countDownFuc(){
+    this.countDown -= 1;
+    console.log(this.countDown);
+    if (this.countDown === 0) {
+      this.router.navigate(['']);
+    }else {
+      setTimeout( () => { this.countDownFuc(); }, 1000);
+    }
+  }
 }

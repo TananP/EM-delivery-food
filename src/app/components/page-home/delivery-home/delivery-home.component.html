@@ -15,23 +15,43 @@
                 <div class="pt-3 pb-3"><img class="loading-img" src="./assets/dist/img/loading.gif"></div>
             </div>
             <div *ngIf="!this.loading" class="row pt-3 pb-2 text-center">
-                <div class="col-4 pointer" *ngFor="let restaurants of restaurantsList.data">
-                    <!-- Button -->
-                    <div class="restaurants-button">
-                        <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" [routerLink]="['/delivery/restaurant-home/','delivery', restaurantsInfo.name]">
-                            <div *ngIf="restaurants.logoPath !== '' ">
-                                <img class="logo-img-home" src="http://emfood.yipintsoi.com/web_api{{restaurants.logoPath}}">
-                            </div>
-                            <div *ngIf="restaurants.logoPath === '' ">
-                                <img class="logo-img-home" src="./assets/dist/img/no-picture-200.png">
-                            </div>
-                            <!-- <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]"> -->
-                            <div>
-                                <p class="over-flow-text">{{restaurantsInfo.name}}</p>
+                <div class="col-4" *ngFor="let restaurants of restaurantsList">
+                    <div class="pointer" *ngIf="this.currentTime >= restaurants.openTime && this.currentTime <= restaurants.closeTime">
+                        <!-- Button -->
+                        <div class="restaurants-button">
+                            <div *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" [routerLink]="['/delivery/restaurant-home/','delivery', restaurantsInfo.name]">
+                                <div *ngIf="restaurants.logoPath !== '' ">
+                                    <img class="logo-img-home" src="http://emfood.yipintsoi.com/web_api{{restaurants.logoPath}}">
+                                </div>
+                                <div *ngIf="restaurants.logoPath === '' ">
+                                    <img class="logo-img-home" src="./assets/dist/img/no-picture-200.png">
+                                </div>
+                                <!-- <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]"> -->
+                                <div>
+                                    <p class="over-flow-text">{{restaurantsInfo.name}}</p>
+                                </div>
                             </div>
                         </div>
+                        <!------------>
                     </div>
-                    <!------------>
+                    <div *ngIf="this.currentTime <= restaurants.openTime || this.currentTime >= restaurants.closeTime">
+                        <!-- Button -->
+                        <div class="restaurants-button">
+                            <div style="opacity: 0.25;" *ngFor="let restaurantsInfo of restaurants.childMstMerchantTranslation" [routerLink]="['/delivery/restaurant-home/','delivery', restaurantsInfo.name]">
+                                <div *ngIf="restaurants.logoPath !== '' ">
+                                    <img class="logo-img-home" src="http://emfood.yipintsoi.com/web_api{{restaurants.logoPath}}">
+                                </div>
+                                <div *ngIf="restaurants.logoPath === '' ">
+                                    <img class="logo-img-home" src="./assets/dist/img/no-picture-200.png">
+                                </div>
+                                <!-- <div class="restaurants-button" [routerLink]="['/'+ this.taskData ,'search',this.taskData , restaurantsInfo.name]"> -->
+                                <div>
+                                    <p class="over-flow-text">{{restaurantsInfo.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!------------>
+                    </div>
                 </div>
             </div>
             <div *ngIf="this.loadingError" style="font-family: gt-walsheim;">

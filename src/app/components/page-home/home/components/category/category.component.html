@@ -13,6 +13,12 @@
                 <div class="row category-list" *ngIf="!this.loadingError">
                     <div class="col-3 pointer" *ngFor="let category of categoryList;">
                         <!-- <div class="category-button text-center" [routerLink]="['/'+ this.taskData ,'shop-list',this.taskData, category.categoryId]"> -->
+                        <div *ngIf="category.imagePath !== '' ">
+                            <img class="logo-img-home" src="http://emfood.yipintsoi.com/web_api{{category.imagePath}}">
+                        </div>
+                        <div *ngIf="category.imagePath === '' ">
+                            <img class="logo-img-home" src="./assets/dist/img/no-picture-200.png">
+                        </div>
                         <div class="category-button text-center"
                         (click)="categorySelect(category)" [class.selected-active]="category === this.activeCategory">
                             <p class="over-flow-text">{{category.categoryName}}</p>

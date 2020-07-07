@@ -34,8 +34,7 @@ export class OrderListComponent implements OnInit {
   public errorMessage: string;
 
   constructor(private merchantService: MerchantService, private customerOrderService: CustomerOrderService
-            , private headerComponent: HeaderComponent) {
-  }
+            , private headerComponent: HeaderComponent) {}
 
   ngOnInit(): void {
     this.openErrorPopUp = false;
@@ -47,7 +46,7 @@ export class OrderListComponent implements OnInit {
     this.totalOrder = 0;
     this.totalDiscount = 0;
     this.customerOrderService.getCustomerOrderList().subscribe( x => {
-      console.log(x);
+      // console.log(x);
       this.orderList = x;
       this.haveItemOrder = true;
       this.nowLoading = false;
@@ -61,7 +60,7 @@ export class OrderListComponent implements OnInit {
       const result = err.error.error;
       // const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
       // console.log(result);
-      this.openErrorPopUp = true;
+      // this.openErrorPopUp = true;
       this.errorMessage = result;
       if (err.status === 404) {
         this.couponUsedList = [];

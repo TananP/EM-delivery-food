@@ -9,18 +9,21 @@ export class HistoryComponent implements OnInit {
 @Input() historyPopUp: boolean;
 @Output() closePopUp = new EventEmitter();
 
+public historyList: any;
 public historyIsNull = false;
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
-    // this.customerOrderService.getOrderHistory().subscribe( x => {
-    //   console.log(x);
-    // }, error => {
-    //   if (error.error === null){
-    //     this.historyIsNull = true;
-    //   }
-    //   console.log(error);
-    // });
+    this.historyList = [];
+    this.customerOrderService.getOrderHistory().subscribe( x => {
+      this.historyList = x;
+      // console.log(this.historyList);
+    }, error => {
+      if (error.error === null){
+        this.historyIsNull = true;
+      }
+      console.log(error);
+    });
   }
 
   closeHistoryPage(){

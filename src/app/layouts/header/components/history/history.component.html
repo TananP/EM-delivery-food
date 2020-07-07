@@ -4,7 +4,22 @@
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">History</h5></div>
     </div>
     <div *ngIf="!this.historyIsNull">
-        <p>History work</p>
+        <div class="container">
+            <div *ngFor="let order of this.historyList.data">
+                <div class="history-item-box row">
+                    <div class="col-10 row">
+                        <div class="col-6">
+                            <p class="gold date-title">{{order.createdDate | slice:0:10}}</p>
+                            <p>{{order.createdDate | slice:11:-3}}</p>
+                        </div>
+                        <div class="col-6 text-right center-col">
+                            <p>{{order.totalAmount + order.riderAmount}}</p>
+                        </div>
+                    </div>
+                    <div class="col-2 center-col text-center" style="font-size: 1.75rem;">&gt;</div>
+                </div>
+            </div>
+        </div>
     </div>
     <div *ngIf="this.historyIsNull">
         <p>Not have any history order.</p>

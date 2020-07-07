@@ -24,7 +24,8 @@ export class CategoryComponent implements OnInit {
     // Call API get category
     this.categoryAPI.getMerchantCategory().subscribe( x => {
       this.categoryList = x;
-      this.categoryList.unshift({categoryId: 0, categoryName: 'All restaurants'});
+      console.log(this.categoryList);
+      this.categoryList.unshift({categoryId: 0, categoryName: 'All restaurants' ,  imagePath: ''});
       this.loading = false;
     }, error => {
       this.loading = false;

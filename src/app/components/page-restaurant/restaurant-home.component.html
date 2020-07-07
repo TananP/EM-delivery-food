@@ -11,7 +11,7 @@
     <div>
         <div *ngFor="let item of this.restaurantInfo.data">
             <div class="text-center" *ngIf="item.bannerPath == '' ">
-                <img class="restaurant-page-banner" src='./assets/dist/img/no-picture-1280.jpg'>
+                <img class="restaurant-page-banner" src='./assets/dist/img/no-picture-1280.png'>
             </div>
             <div class="text-center" *ngIf="item.bannerPath !== '' ">
                 <img class="restaurant-page-banner" src='http://emfood.yipintsoi.com/web_api{{item.bannerPath}}'>

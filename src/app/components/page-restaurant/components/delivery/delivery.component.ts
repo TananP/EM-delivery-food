@@ -44,7 +44,7 @@ export class DeliveryComponent implements OnInit {
     this.initValue();
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.menuList = x;
-      // console.log(x);
+      console.log(x);
     });
   }
   initValue(){
