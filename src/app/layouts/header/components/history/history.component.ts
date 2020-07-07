@@ -10,7 +10,9 @@ export class HistoryComponent implements OnInit {
 @Output() closePopUp = new EventEmitter();
 
 public historyList: any;
+public selectHistoryList: any;
 public historyIsNull = false;
+public showHistoryInfo = false;
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
@@ -28,5 +30,12 @@ public historyIsNull = false;
 
   closeHistoryPage(){
     this.closePopUp.emit();
+  }
+  backFromHistoryInfo(){
+    this.showHistoryInfo = false;
+  }
+  selectHistory(history){
+    this.selectHistoryList = history;
+    this.showHistoryInfo = true;
   }
 }

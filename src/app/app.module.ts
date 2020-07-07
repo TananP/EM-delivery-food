@@ -32,6 +32,7 @@ import { PickUpAddressComponent } from './components/page-cart/components/pick-u
 import { LoadingPopUpComponent } from './components/pop-up/loading-pop-up/loading-pop-up.component';
 import { ProfileComponent } from './layouts/header/components/profile/profile.component';
 import { PaymentResultHomeComponent } from './components/page-payment-result/payment-result-home.component';
+import { HistoryInformationComponent } from './layouts/header/components/history/components/history-information/history-information.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { PaymentResultHomeComponent } from './components/page-payment-result/pay
     LoadingPopUpComponent,
     ProfileComponent,
     PaymentResultHomeComponent,
+    HistoryInformationComponent,
   ],
   imports: [
     BrowserModule,
