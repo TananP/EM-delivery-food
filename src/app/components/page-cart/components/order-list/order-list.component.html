@@ -9,7 +9,7 @@
                 <div class="order-list-item">
                     <div class="gold row order-item-title">
                         <div class="col-8">
-                            <p class="over-flow-text">{{item.key}}</p>
+                            <div class="style-itemkey">{{item.key}}</div>
                         </div>
                         <div class="col-4 pl-0 text-center" [routerLink]="['/delivery/restaurant-home/delivery/', item.key]">
                             <p class="add-menu-more-button">+ Add menu</p>
@@ -26,10 +26,10 @@
                             <div class="col-8">
                                 <div class="mb-3 over-flow-text">
                                     <div class="order-item-title">
-                                        <p>{{itemInfo.itemName}}</p>
+                                        <div class="style-itemname">{{itemInfo.itemName}}</div>
                                     </div>
                                     <div>
-                                        <p>{{itemInfo.itemNote}}</p>
+                                        <div class="style-itemnote">{{itemInfo.itemNote}}</div>
                                     </div>
                                 </div>
                                 <div class="gold" (click)="deleteOrder(itemInfo.customerID, itemInfo.merchantID, 
