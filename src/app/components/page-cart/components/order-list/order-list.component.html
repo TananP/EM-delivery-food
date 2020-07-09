@@ -55,7 +55,8 @@
         <!-------------------------------------->
         <!------- Not have order in list ------->
         <div *ngIf="this.emptyItemOrder">
-            <div class="text-center">{{this.errorMessage}}</div>
+            <!-- <div class="text-center">{{this.errorMessage}}</div> -->
+            <div class="text-center">No order in your cart / order in your cart will be removed after confirm order.</div>
         </div>
         <!-------------------------------------->
         <!------- Not have order in list ------->
@@ -166,6 +167,31 @@
     </div>
 </div>
 <!-------------------------------------------->
+<div class="pop-up" *ngIf="this.orderError" style="padding-top: 15vh;">
+    <div class="pop-up-content text-center">
+        <div class="text-right">
+            <p (click)="this.orderError = false" style="display: inline-block;">&#10005;</p>
+        </div>
+        <h5 class="pb-1 text-115-rem">There are some unavailable menu</h5>
+        <div class="error-menu-list">
+            <div class="pb-3" *ngFor="let item of this.errorList">
+                <div class="row">
+                    <div class="col-6">
+                        <p>Menu: {{item.orderName}}</p>
+                    </div>
+                    <div class="col-6">
+                        <p>{{item.error}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div (click)="removeErrorOrder()">
+            <div class="gold-button ml-3 mr-3">
+                <p>Remove unavailable menu</p>
+            </div>
+        </div>
+    </div>
+</div>
 <!------------ Loading pop up  --------------->
 <app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>
 <!-------------------------------------------->

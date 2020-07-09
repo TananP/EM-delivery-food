@@ -31,12 +31,14 @@ export class CartHomeComponent implements OnInit {
   public removeOrderPopUp = false;
   public openLoadingPopUp = false;
   public errorPopUp = false;
+  // public orderError = false;
 
   public totalOrder = 0;
   public totalPrice = 0;
   public totalDiscount = 0;
 
   public couponUsedList: any;
+  public errorList: any;
   public selectedAddress: any;
   public checkOrderResult: any;
   private userProfile: any;
@@ -98,6 +100,7 @@ export class CartHomeComponent implements OnInit {
     this.totalPrice = event[1];
     this.totalDiscount = event[2];
     this.couponUsedList = event[3];
+    this.errorList = event[4];
     this.totalPrice = this.totalPrice - this.totalDiscount;
     this.originalTotalPrice = this.totalPrice;
   }
@@ -186,7 +189,7 @@ export class CartHomeComponent implements OnInit {
       this.errorPopUp = true;
       this.errorCodeText = result;
     });
-    console.log(editAddress);
+    // console.log(editAddress);
   }
 
   confirmOrder(){
@@ -232,25 +235,31 @@ export class CartHomeComponent implements OnInit {
   }
 
   checkWithAPI(order){
-    this.customerOrderService.checkOrder(order).subscribe( x => {
-      this.checkOrderResult = x;
+    if (this.errorList === 0) {
+        this.customerOrderService.checkOrder(order).subscribe( x => {
+        this.checkOrderResult = x;
+        this.openLoadingPopUp = false;
+        if (this.checkOrderResult.result) {
+          this.paymentMethod(this.checkOrderResult);
+        } else {
+          this.removeOrderPopUp = true;
+        }
+      }, error => {
+        this.openLoadingPopUp = false;
+        // this.removeOrderPopUp = true;
+        // console.log(order);
+        // console.log(error);
+        // this.removeErrorOrder();
+        this.orderListComponent.getOrderList();
+        this.headerComponent.updateCarts();
+        this.errorPopUp = true;
+        this.errorCodeText = error.error.error;
+      });
+    }else {
       this.openLoadingPopUp = false;
-      if (this.checkOrderResult.result) {
-        this.paymentMethod(this.checkOrderResult);
-      } else {
-        this.removeOrderPopUp = true;
-      }
-    }, error => {
-      this.openLoadingPopUp = false;
-      // this.removeOrderPopUp = true;
-      // console.log(order);
-      // console.log(error);
-      // this.removeErrorOrder();
-      this.orderListComponent.getOrderList();
-      this.headerComponent.updateCarts();
-      this.errorPopUp = true;
-      this.errorCodeText = error.error.error;
-    });
+      this.orderListComponent.showOrderErrorBeforePayment();
+    }
+
   }
 
   paymentMethod(order){

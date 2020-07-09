@@ -5,21 +5,21 @@
             <div class="col-3 pr-0">
             </div>
             <div class="row col-6 pl-0 bg-white search-box">
-                <div class="col-2 pr-0 align-middle">
+                <div class="col-2 col-center pr-0 align-middle">
                     <div *ngIf="!this.searchInputEmpty">
                         <!-- <div [routerLink]="['/' + this.taskData,'search',this.taskData[0],this.searchInput]" class="btn btn-navbar bg-white"> -->
-                        <button (click)="openToNewLink()" class="">
-                            <i class="fas fa-search gold"></i>
-                        </button>
+                        <div (click)="openToNewLink()">
+                            <i class="fas fa-search gold pt-1"></i>
+                        </div>
                     </div>
                     <div *ngIf="this.searchInputEmpty">
-                        <button disabled>
-                            <i class="fas fa-search gold"></i>
-                        </button>
+                        <div>
+                            <i class="fas fa-search gold pt-1"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="col-9 pl-0 pr-0">
-                    <input class="search-input-box text-center" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()" 
+                    <input class="search-input-box text-center" #search (keyup)="onSubmit(search.value)" (keydown.enter)="openToNewLink()"
                     value="{{this.searchInput}}" placeholder="Restaurants name">
 
                     <div class="auto-correct" *ngIf="this.autoCorrect">

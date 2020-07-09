@@ -33,6 +33,7 @@
                 <div *ngIf="!this.editAddress">
                     <div class="row">
                         <div class="form-group col-9 over-flow-text">
+                            <p>Locaton : </p>
                             <p class="pb-1">{{this.selectedAddress.name}}</p>
                             <div *ngIf="this.selectedAddress.type === 'delivery' ">
                                 <p>Address detail :</p>
@@ -50,6 +51,7 @@
                 </div>
                 <div *ngIf="this.editAddress">
                     <div class="form-group">
+                        <p>Locaton : </p>
                         <input class="form-control form-group mb-1" #editAddressType value="{{this.selectedAddress.name}}">
                         <p>Address detail :</p>
                         <textarea row="2" #editAddressDetail class="form-control" maxlength="225" value="{{this.selectedAddress.detail}}"></textarea>
@@ -120,6 +122,15 @@
                 </div>
             </div>
             <hr class="underline"> -->
+            <!--------- sum price ------->
+            <div class="row gold pb-1">
+                <div class="col-6 pl-0 text-left">
+                    <p>Sum</p>
+                </div>
+                <div class="col-6 pr-0 text-right">
+                    <p>{{this.originalTotalPrice}}</p>
+                </div>
+            </div>
             <!--------- delivery price ------->
             <div class="row gold pb-1" *ngIf="this.showAdress">
                 <div class="col-6 pl-0 text-left">
@@ -139,7 +150,7 @@
                 </div>
             </div>
             <!---------------------------------->
-            <div class="row gold">
+            <div *ngIf="this.totalOrder !== 0" class="row gold">
                 <div class="col-6 pl-0 text-left">
                     <p>Total</p>
                 </div>
@@ -147,8 +158,16 @@
                     <p>{{this.totalPrice}}</p>
                 </div>
             </div>
+            <div *ngIf="this.totalOrder === 0" class="row gold">
+                <div class="col-6 pl-0 text-left">
+                    <p>Total</p>
+                </div>
+                <div class="col-6 pr-0 text-right">
+                    <p>0</p>
+                </div>
+            </div>
         <!---------------- Summary button -------------------->
-            <div class="row cart-button text-center" (click)="confirmOrder();">
+            <div *ngIf="this.totalOrder !== 0" class="row cart-button text-center" (click)="confirmOrder();">
                 <div class="col-2">
                     <p>{{this.totalOrder}}</p>
                 </div>
@@ -159,13 +178,24 @@
                     <p>{{this.totalPrice}}</p>
                 </div>
             </div>
+            <div *ngIf="this.totalOrder === 0" class="row cart-button disable-color text-center">
+                <div class="col-2">
+                    <!-- <p>{{this.totalOrder}}</p> -->
+                </div>
+                <div class="col-8">
+                    <p>Confirm Order</p>
+                </div>
+                <div class="col-2">
+                    <!-- <p>{{this.totalPrice}}</p> -->
+                </div>
+            </div>
         <!---------------------------------------------------->
     </div>
 </div>
 
 
 <!-- Delivery Pop Up -->
-<div class="pop-up-cart" *ngIf="this.deliveryAddress">
+<!-- <div class="pop-up-cart" *ngIf="this.deliveryAddress">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress('delivery')"><p class="pt-2"> < </p></div>
         <div class="col-8 text-center"><h5 class="p-2 text-115-rem">Address delivery</h5></div>
@@ -173,7 +203,8 @@
     <div class="container">
         <app-delivery-address (selectedAddress)="addressSelected($event)"></app-delivery-address>
     </div>
-</div>
+</div> -->
+<app-delivery-address [deliveryAddress]="this.deliveryAddress" (closeAddress)="closeAddress('delivery')" (selectedAddress)="addressSelected($event)"></app-delivery-address>
 
 <!-- Pick Up Pop Up -->
 <div class="pop-up-cart" *ngIf="this.pickUp">

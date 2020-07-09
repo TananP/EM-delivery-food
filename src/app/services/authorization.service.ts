@@ -19,11 +19,6 @@ export class AuthorizationService {
   }
   getToken(code: string){
     this.getLocalToken();
-    // this.http.get('/path/to/resource').subscribe((res: Response) => {
-    //   console.log(res.headers);
-    //   // you can assign the value to any variable here
-    // });
-
     // Production
     return this.http.get(this.baseUrl + 'web_api/api/Authentication/UserLogin' , { params: {
       code,

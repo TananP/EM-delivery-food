@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CustomerAddressService } from 'src/app/services/customer-address.service';
 
 @Component({
@@ -7,7 +7,10 @@ import { CustomerAddressService } from 'src/app/services/customer-address.servic
   styleUrls: ['./delivery-address.component.scss']
 })
 export class DeliveryAddressComponent implements OnInit {
+  @Input() deliveryAddress: boolean;
   @Output() selectedAddress = new EventEmitter();
+  @Output() closeAddress = new EventEmitter();
+
   public latCenter: number;
   public lngCenter: number;
   public lat: number;
@@ -20,6 +23,7 @@ export class DeliveryAddressComponent implements OnInit {
   public errorMessage = '';
   // Test
   public activeIndex = null;
+  public addressResult = null;
   //
   // public verifyPhoneNumber: boolean;
   // private phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
@@ -37,12 +41,33 @@ export class DeliveryAddressComponent implements OnInit {
 
   constructor(private customerAddressAPI: CustomerAddressService) {
     this.getPosition();
+    this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
+      this.addressList = x;
+      for (const index in this.addressList) {
+        if (this.addressList[index].default === true) {
+          this.selectAddess(this.addressList[index]);
+          this.confirmSelectAddess();
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
     // this.getPosition();
+    // this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
+    //   this.addressList = x;
+    //   for (const index in this.addressList) {
+    //     if (this.addressList[index].default === true) {
+    //       this.selectAddess(this.addressList[index]);
+    //     }
+    //   }
+    // });
+  }
+
+  getAllAddress(){
     this.customerAddressAPI.getCustomerAddressList().subscribe(x => {
       this.addressList = x;
+      console.log('1111');
       for (const index in this.addressList) {
         if (this.addressList[index].default === true) {
           this.selectAddess(this.addressList[index]);
@@ -139,7 +164,9 @@ export class DeliveryAddressComponent implements OnInit {
       }
     }
   }
-
+  closeAddressPopUp(){
+    this.closeAddress.emit();
+  }
   selectAddess(index){
     this.activeIndex = index;
     // console.log(this.activeIndex);
@@ -150,11 +177,11 @@ export class DeliveryAddressComponent implements OnInit {
       this.openLoadingPopUp = true;
       const address = [];
       this.customerAddressAPI.customerAddressCheck(this.activeIndex.addressId).subscribe( x => {
-        this.activeIndex = x;
-        address.push({addressId: this.activeIndex.addressId , deliveryPrice: this.activeIndex.deliveryPrice ,
-          customerId: this.activeIndex.customerId, name: this.activeIndex.name,
-          detail: this.activeIndex.detail, note: this.activeIndex.note , type: 'delivery' ,
-          mapLatitude: this.activeIndex.mapLatitude, mapLongitude: this.activeIndex.mapLongitude});
+        this.addressResult = x;
+        address.push({addressId: this.addressResult.addressId , deliveryPrice: this.addressResult.deliveryPrice ,
+          customerId: this.addressResult.customerId, name: this.addressResult.name,
+          detail: this.addressResult.detail, note: this.addressResult.note , type: 'delivery' ,
+          mapLatitude: this.addressResult.mapLatitude, mapLongitude: this.addressResult.mapLongitude});
         this.openLoadingPopUp = false;
         this.selectedAddress.emit(address);
       }, error => {
@@ -192,7 +219,7 @@ export class DeliveryAddressComponent implements OnInit {
         this.customerAddressAPI.insertAddress(addressInfoList).subscribe( x => {
           this.openLoadingPopUp = false;
           this.addAddress = false;
-          this.ngOnInit();
+          this.getAllAddress();
         }, error => {
           this.openLoadingPopUp = false;
           const result = this.customerAddressAPI.checkErrorCode(error.error.code);
@@ -207,7 +234,7 @@ export class DeliveryAddressComponent implements OnInit {
     this.openLoadingPopUp = true;
     this.customerAddressAPI.setDefault(address.customerId , address.addressId).subscribe( x => {
       this.openLoadingPopUp = false;
-      this.ngOnInit();
+      this.getAllAddress();
     }, error => {
       this.openLoadingPopUp = false;
       this.errorMessage = 'Could not set default address please try again later.';
@@ -233,7 +260,7 @@ export class DeliveryAddressComponent implements OnInit {
       this.customerAddressAPI.updateAddress(this.editAddressList).subscribe( x => {
         this.editAddress = false;
         this.openLoadingPopUp = false;
-        this.ngOnInit();
+        this.getAllAddress();
       }, error => {
         this.openLoadingPopUp = false;
         const result = this.customerAddressAPI.checkErrorCode(error.error.code);
@@ -255,7 +282,7 @@ export class DeliveryAddressComponent implements OnInit {
         this.openLoadingPopUp = false;
         this.deleteAddressList = {};
         this.deleteConfirmPopUp = false;
-        this.ngOnInit();
+        this.getAllAddress();
       }, error => {
         this.openLoadingPopUp = false;
         const result = this.customerAddressAPI.checkErrorCode(error.error.code);

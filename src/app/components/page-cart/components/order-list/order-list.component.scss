@@ -43,6 +43,10 @@
     color: white;
     border-radius: 1rem;
 }
+.error-menu-list {
+  overflow-y: scroll;
+  height: 35vh;
+}
 
 /* width */
 ::-webkit-scrollbar {

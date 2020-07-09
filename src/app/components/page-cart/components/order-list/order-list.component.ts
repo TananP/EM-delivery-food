@@ -13,11 +13,12 @@ export class OrderListComponent implements OnInit {
 
   // private token =  JSON.parse(localStorage.getItem('token'));
 
-  public orderList: any;
   public menuSelected: any;
   public menuDelete: any;
+  public orderList: any;
   public groupOrderList: any;
   public couponUsedList: any;
+  public errorList: any;
 
   public totalSum: number;
   public totalOrder: number;
@@ -26,6 +27,7 @@ export class OrderListComponent implements OnInit {
   public openPopUp: boolean;
   public deleteConfirmPopUp: boolean;
   public openErrorPopUp: boolean;
+  public orderError = false;
   public haveItemOrder = false;
   public emptyItemOrder = false;
   public nowLoading = true;
@@ -51,22 +53,25 @@ export class OrderListComponent implements OnInit {
       this.haveItemOrder = true;
       this.nowLoading = false;
       this.emptyItemOrder = false;
+      this.checkOrderActive();
       this.groupOrdering();
       // this.sumDiscount();
     }, err => {
       // console.log(err);
       this.nowLoading = false;
       this.emptyItemOrder = true;
-      const result = err.error.error;
+      // const result = err.error.error;
       // const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
       // console.log(result);
       // this.openErrorPopUp = true;
-      this.errorMessage = result;
+      // this.errorMessage = 'No order in your cart / order in your cart will be removed after confirm order.';
+      // this.errorMessage = result;
       if (err.status === 404) {
         this.couponUsedList = [];
         this.groupOrderList = [];
+        this.errorList = [];
         this.haveItemOrder = false;
-        this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.groupOrderList]);
+        this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.errorList.length]);
       }
     });
   }
@@ -91,8 +96,52 @@ export class OrderListComponent implements OnInit {
       this.totalDiscount = this.totalDiscount + a.coupon.discountAmount;
     });
     this.groupOrderList = groupByName;
-    // console.log(this.groupOrderList);
-    this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.groupOrderList]);
+    // console.log('================ + ===============');
+    // console.log(this.errorList);
+    // this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount,
+    //   this.couponUsedList, this.groupOrderList , this.errorList]);
+    this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList , this.errorList.length]);
+  }
+
+  checkOrderActive(){
+    this.errorList = [];
+    const currentTime = Date().split(' ')[4];
+    this.orderList.cusCartOrder.forEach( a => {
+      // console.log(a);
+      let openTime = a.merchant.openTime;
+      let closeTime = a.merchant.closeTime;
+      if (openTime === null) {
+        openTime = '10:00:00';
+      }
+      if (closeTime === null) {
+        closeTime = '22:00:00';
+      }
+      if (a.active === false || a.item.active === false) {
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Menu temporary unavailable'});
+      }
+      // if (a.item.active === false) {
+      //   this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Menu temporary unavailable'});
+      // }
+      if (a.merchant.active === false) {
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Restaurants temporary unavailable'});
+      }
+      if (currentTime <= openTime && currentTime >= closeTime) {
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Shop close'});
+      }
+      // console.log(this.errorList);
+      // if (this.errorList.length > 0) {
+      //   this.orderError = true;
+      // }
+    });
+  }
+
+  showOrderErrorBeforePayment(){
+    this.orderError = true;
+    // if (this.errorList.length > 0) {
+    //   this.orderError = true;
+    // }else {
+    //   this.orderError = false;
+    // }
   }
 
   // sumDiscount(){
@@ -205,6 +254,19 @@ export class OrderListComponent implements OnInit {
       this.openLoadingPopUp = false;
       this.errorMessage = result;
       this.openErrorPopUp = true;
+    });
+  }
+
+  removeErrorOrder(){
+    this.customerOrderService.removeErrorOrder().subscribe( x => {
+      // console.log(x);
+      this.headerComponent.updateCarts();
+      this.orderError = false;
+    }, error => {
+      // console.log(error);
+      this.openErrorPopUp = true;
+      this.errorMessage = error.error.error;
+      this.orderError = false;
     });
   }
 }

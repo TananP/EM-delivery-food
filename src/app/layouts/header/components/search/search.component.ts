@@ -48,8 +48,8 @@ export class SearchComponent implements OnInit {
   openToNewLink(){
     this.autoCorrect = false;
     // this.openLoadingPopUp = true;
-    // console.log('8888');
-    this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);
-    // console.log( this.router.navigate(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]));
+    // console.log(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);
+    this.router.navigate(['/delivery/restaurant-home/delivery' , this.searchInput]);
+    return false;
   }
 }

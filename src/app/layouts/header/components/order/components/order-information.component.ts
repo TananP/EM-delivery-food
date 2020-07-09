@@ -20,6 +20,9 @@ export class OrderInformationComponent implements OnInit {
     // this.customerOrderService.checkStatusByOrderNumber(this.orderID).subscribe( x => {
     //   // console.log(x);
     // });
+    this.customerOrderService.checkStatusByOrderNumber('2006240003').subscribe( x => {
+      console.log(x);
+    });
   }
 
   backToOrderList(){
