@@ -8,8 +8,9 @@ import { timeout } from 'rxjs/operators';
 })
 export class CustomerAddressService {
   baseUrl = environment.apiSysUrl;
+  apiKey = environment.apiKey;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  // apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
   private token: any;
   timeOut = 10000;
 

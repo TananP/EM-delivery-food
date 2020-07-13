@@ -49,7 +49,8 @@ export class SearchComponent implements OnInit {
     this.autoCorrect = false;
     // this.openLoadingPopUp = true;
     // console.log(['/' + this.taskData , 'restaurant-home', this.taskData[0] , this.searchInput]);
-    this.router.navigate(['/delivery/restaurant-home/delivery' , this.searchInput]);
+    // this.router.navigate(['/delivery/restaurant-home/delivery' , this.searchInput]);
+    this.router.navigate(['/delivery/searching/delivery' , this.searchInput]);
     return false;
   }
 }

@@ -9,8 +9,9 @@ import { timeout } from 'rxjs/operators';
 })
 export class CustomerOrderService {
   baseUrl = environment.apiSysUrl;
+  apiKey = environment.apiKey;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  // apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
   private token: any;
   constructor(private http: HttpClient) {}
   timeOut = 10000;
@@ -147,26 +148,31 @@ export class CustomerOrderService {
 
 
   checkErrorCode(code){
-    // if (code === 'ITEM_001') {
-    //   return 'Could not find this menu.';
-    // }
-    // else if (code === 'MERCHANT_001') {
-    //   return 'Could not find this resterant.';
-    // }
-    // else if (code === 'MERCHANT_002') {
-    //   return 'This resterant is not active.';
-    // }
-    if (code === 'ITEM_002') {
-      return 'This menu is out of order.';
-    }
-    else if (code === 'MERCHANT_003') {
-      return 'This resterant is close';
-    }
-    else if (code === 'LoadOrderFailed') {
-      return 'Could no get orderlist please try again';
-    }
-    else {
-      return 'Error please try again later.';
+    switch (code) {
+      case 'ORDER_001' : {
+        return 'Order not found.';
+      }
+      case 'ORDER_002' : {
+        return 'Some restaurants are temporary close';
+      }
+      case 'ORDER_003' : {
+        return 'Some restaurants are close';
+      }
+      case 'ORDER_004' : {
+        return 'Some menu are temporary out of order.';
+      }
+      case 'ORDER_015' : {
+        return 'Order Number not found.';
+      }
+      case 'ITEM_002' : {
+        return 'Some menu is out of order.';
+      }
+      case 'MERCHANT_003' : {
+        return 'Some resterant is close';
+      }
+      default : {
+        return 'unknown error please try again later.';
+      }
     }
   }
 }

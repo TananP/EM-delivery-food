@@ -17,12 +17,25 @@ public selectOrderId: number;
 
   ngOnInit(): void {
     this.currentOrderList = [];
+    this.getAllOrderStatus();
+  }
+
+  getAllOrderStatus(){
+    // console.log('get order status api');
     this.customerOrderService.getCurrentOrder().subscribe( x => {
       this.currentOrderList = x;
-      // console.log(x);
+      // console.log(this.currentOrderList.length);
+      if (this.currentOrderList.length > 0) {
+    // setTimeout(() => {
+    //   this.getAllOrderStatus();
+    // }, 10000);
+      }
     }, error => {
       console.log(error);
     });
+    // setTimeout(() => {
+    //   this.getAllOrderStatus();
+    // }, 10000);
   }
 
   closeOrderPage(){

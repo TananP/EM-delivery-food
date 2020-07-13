@@ -3,14 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 // import { TaskSelectComponent } from './components/page-task-select/task-select.component';
 import { DeliveryHomeComponent } from './components/page-home/delivery-home/delivery-home.component';
 // import { ReserveHomeComponent } from './components/home-page/reserve-home/reserve-home.component';
-// import { ShopListComponent } from './components/shop-list/shop-list.component';
+import { SearchingComponent } from './components/page-searching/searching.component';
 import { RestaurantHomeComponent  } from './components/page-restaurant/restaurant-home.component';
 import { SearchResultPageComponent } from './components/page-search-result/search-result-page.component';
 // import { ErrorNotFoundPageComponent } from './components/page-error-not-found/error-not-found-page.component';
 import { PaymentResultHomeComponent } from './components/page-payment-result/payment-result-home.component';
 import { CheckLoginComponent } from './components/page-check-login/check-login.component';
-import {CartHomeComponent} from './components/page-cart/cart-home.component';
-import {ProfileComponent} from './layouts/header/components/profile/profile.component';
+import { CartHomeComponent } from './components/page-cart/cart-home.component';
+import { ProfileComponent } from './layouts/header/components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -33,6 +33,10 @@ const routes: Routes = [
   //   path: 'reserve',
   //   component: ReserveHomeComponent
   // },
+  {
+    path: 'delivery/searching/:task/:searchInput',
+    component: SearchingComponent,
+  },
   {
     path: 'delivery/search/:task/:searchInput',
     component: SearchResultPageComponent,

@@ -50,8 +50,11 @@
                 </div>
             </div>
         </div>
-        <div class="normal-text" *ngIf="this.merchantID !== 0.1 ">
+        <div class="normal-text" *ngIf="this.merchantID !== 0.1 && this.restaurantInfo.data[0].active">
             <app-delivery [shopOpen]="this.shopOpen" [merchantId]="this.merchantID" *ngIf="this.taskSelect === 'delivery' "></app-delivery>
+        </div>
+        <div class="inactive-box text-center" *ngIf="!this.restaurantInfo.data[0].active">
+            <p>This restaurant is close</p>
         </div>
         <!---------------------------------------------->
         <!-- <app-delivery [merchantId]='' *ngIf="this.taskSelect === 'delivery' "></app-delivery> -->

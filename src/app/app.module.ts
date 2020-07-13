@@ -10,7 +10,7 @@ import { SearchComponent } from './layouts/header/components/search/search.compo
 import { LocationComponent } from './layouts/header/components/location/location.component';
 import { CategoryComponent } from './components/page-home/home/components/category/category.component';
 import { RestaurantsComponent } from './components/page-home/home/components/restaurants/restaurants.component';
-import { ShopListComponent } from './components/page-shop-list/shop-list.component';
+import { SearchingComponent } from './components/page-searching/searching.component';
 import { RestaurantHomeComponent } from './components/page-restaurant/restaurant-home.component';
 import { CartHomeComponent } from './components/page-cart/cart-home.component';
 import { TaskSelectComponent } from './components/page-task-select/task-select.component';
@@ -42,7 +42,7 @@ import { HistoryInformationComponent } from './layouts/header/components/history
     LocationComponent,
     CategoryComponent,
     RestaurantsComponent,
-    ShopListComponent,
+    SearchingComponent,
     RestaurantHomeComponent,
     CartHomeComponent,
     TaskSelectComponent,

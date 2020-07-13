@@ -28,9 +28,11 @@ export class CartHomeComponent implements OnInit {
   public editProfile = false;
   public editAddress = false;
   public pickUp = false;
-  public removeOrderPopUp = false;
+  // public removeOrderPopUp = false;
   public openLoadingPopUp = false;
   public errorPopUp = false;
+  public errorPopUpLoadindImg = false;
+  public orderRemoveNotification = false;
   // public orderError = false;
 
   public totalOrder = 0;
@@ -43,6 +45,7 @@ export class CartHomeComponent implements OnInit {
   public checkOrderResult: any;
   private userProfile: any;
   public originalTotalPrice: number;
+  public sumPrice: number;
   public showAdress: boolean;
   public nameValue: string;
   public mobileValue: string;
@@ -56,10 +59,10 @@ export class CartHomeComponent implements OnInit {
   constructor(private location: Location, private customerOrderService: CustomerOrderService, private submitFormService: SubmitFormService,
               private router: Router, private authorizationService: AuthorizationService, private profileComponent: ProfileComponent,
               private customerAddressService: CustomerAddressService, private headerComponent: HeaderComponent) {
+                this.authorizationService.checkAuthorization();
               }
 
   ngOnInit(): void {
-    this.authorizationService.checkAuthorization();
     this.getUserInfo();
   }
 
@@ -96,13 +99,20 @@ export class CartHomeComponent implements OnInit {
 
   renderSummary(event){
     // console.log(event);
+    // console.log(this.selectedAddress);
     this.totalOrder = event[0];
     this.totalPrice = event[1];
     this.totalDiscount = event[2];
     this.couponUsedList = event[3];
     this.errorList = event[4];
+    this.sumPrice = this.totalPrice;
     this.totalPrice = this.totalPrice - this.totalDiscount;
     this.originalTotalPrice = this.totalPrice;
+    if (this.selectedAddress === undefined) {
+      this.totalPrice = this.totalPrice + 0;
+    }else {
+      this.totalPrice = this.totalPrice + this.selectedAddress.deliveryPrice;
+    }
   }
 
   addressSelected(event){
@@ -220,19 +230,20 @@ export class CartHomeComponent implements OnInit {
     // console.log(this.selectedAddress);
   }
 
-  removeErrorOrder(){
-    this.customerOrderService.removeErrorOrder().subscribe( x => {
-      // console.log(x);
-      this.removeOrderPopUp = false;
-      this.orderListComponent.getOrderList();
-      this.headerComponent.updateCarts();
-    }, error => {
-      this.removeOrderPopUp = false;
-      // console.log(error);
-      this.errorPopUp = true;
-      this.errorCodeText = error.error.error;
-    });
-  }
+  // removeErrorOrder(){
+  //   // this.customerOrderService.removeErrorOrder().subscribe( x => {
+  //   //   // console.log(x);
+  //   //   this.removeOrderPopUp = false;
+  //   //   this.headerComponent.updateCarts();
+  //   //   // this.orderListComponent.getOrderList();
+  //   //   this.orderListComponent.ngOnInit();
+  //   // }, error => {
+  //   //   this.removeOrderPopUp = false;
+  //   //   // console.log(error);
+  //   //   this.errorPopUp = true;
+  //   //   this.errorCodeText = error.error.error;
+  //   // });
+  // }
 
   checkWithAPI(order){
     if (this.errorList === 0) {
@@ -242,18 +253,26 @@ export class CartHomeComponent implements OnInit {
         if (this.checkOrderResult.result) {
           this.paymentMethod(this.checkOrderResult);
         } else {
-          this.removeOrderPopUp = true;
+          // this.removeOrderPopUp = true;
+          this.orderListComponent.showOrderErrorBeforePayment();
         }
       }, error => {
         this.openLoadingPopUp = false;
         // this.removeOrderPopUp = true;
         // console.log(order);
         // console.log(error);
-        // this.removeErrorOrder();
-        this.orderListComponent.getOrderList();
+        // this.orderListComponent.getOrderList();
+        this.orderListComponent.ngOnInit();
         this.headerComponent.updateCarts();
         this.errorPopUp = true;
-        this.errorCodeText = error.error.error;
+        this.errorPopUpLoadindImg = true;
+        const result = this.customerOrderService.checkErrorCode(error.error.code);
+        this.errorCodeText = result;
+        setTimeout( () => {
+          this.orderListComponent.showOrderErrorBeforePayment();
+          this.errorPopUp = false;
+          this.errorPopUpLoadindImg = false;
+        }, 2000);
       });
     }else {
       this.openLoadingPopUp = false;
@@ -263,16 +282,9 @@ export class CartHomeComponent implements OnInit {
   }
 
   paymentMethod(order){
-    // const param = order;
-    // console.log(order);
-    // this.customerOrderService.customerPayment(order).subscribe(
-    //   x => {
-    //   console.log(x);
-    // },
-    // err => {
-    //   console.log(err);
-    // }
-    // );
-    this.submitFormService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
+    this.orderRemoveNotification = true;
+    setTimeout( () => {
+      this.submitFormService.redirectWithPost('http://emfood.yipintsoi.com/web_api/CustomerPayment', order);
+    }, 2000);
   }
 }

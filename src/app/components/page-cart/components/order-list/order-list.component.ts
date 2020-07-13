@@ -34,7 +34,6 @@ export class OrderListComponent implements OnInit {
   public openLoadingPopUp = false;
 
   public errorMessage: string;
-
   constructor(private merchantService: MerchantService, private customerOrderService: CustomerOrderService
             , private headerComponent: HeaderComponent) {}
 
@@ -57,27 +56,31 @@ export class OrderListComponent implements OnInit {
       this.groupOrdering();
       // this.sumDiscount();
     }, err => {
-      // console.log(err);
       this.nowLoading = false;
       this.emptyItemOrder = true;
       // const result = err.error.error;
-      // const result = this.customerOrderService.checkErrorCode('LoadOrderFailed');
-      // console.log(result);
       // this.openErrorPopUp = true;
       // this.errorMessage = 'No order in your cart / order in your cart will be removed after confirm order.';
       // this.errorMessage = result;
-      if (err.status === 404) {
-        this.couponUsedList = [];
-        this.groupOrderList = [];
-        this.errorList = [];
-        this.haveItemOrder = false;
-        this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.errorList.length]);
-      }
+      // if (err.status === 404) {
+      //   this.couponUsedList = [];
+      //   this.groupOrderList = [];
+      //   this.errorList = [];
+      //   this.haveItemOrder = false;
+      //   this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.errorList.length]);
+      // }
+      this.couponUsedList = [];
+      this.groupOrderList = [];
+      this.errorList = [];
+      this.haveItemOrder = false;
+      this.getSummary.emit([this.totalOrder, this.totalSum, this.totalDiscount, this.couponUsedList, this.errorList.length]);
+
     });
   }
   groupOrdering(){
     const groupByName = [];
     this.couponUsedList = [];
+    // console.log('Refresh!!!');
     // Order list
     this.orderList.cusCartOrder.forEach( a => {
       groupByName [a.merchant.childMstMerchantTranslation[0].name] = groupByName [a.merchant.childMstMerchantTranslation[0].name] || [];
@@ -117,16 +120,19 @@ export class OrderListComponent implements OnInit {
         closeTime = '22:00:00';
       }
       if (a.active === false || a.item.active === false) {
-        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Menu temporary unavailable'});
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName ,
+          merchantName: a.merchant.childMstMerchantTranslation[0].name  , error: 'Menu temporary unavailable'});
       }
       // if (a.item.active === false) {
       //   this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Menu temporary unavailable'});
       // }
       if (a.merchant.active === false) {
-        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Restaurants temporary unavailable'});
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName ,
+          merchantName: a.merchant.childMstMerchantTranslation[0].name , error: 'Restaurants temporary unavailable'});
       }
       if (currentTime <= openTime && currentTime >= closeTime) {
-        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName , error: 'Shop close'});
+        this.errorList.push({orderName: a.item.childMstItemTranslation[0].itemName,
+          merchantName: a.merchant.childMstMerchantTranslation[0].name , error: 'Shop close'});
       }
       // console.log(this.errorList);
       // if (this.errorList.length > 0) {
@@ -226,15 +232,20 @@ export class OrderListComponent implements OnInit {
         this.openLoadingPopUp = false;
         // console.log(this.couponUsedList);
       }, error => {
-        const result = this.merchantService.checkErrorCoupon(error.error.code);
-        console.log(error.error.code);
+        let result = '';
+        if ( error.error.code === 'COUPON_007') {
+          result = error.error.error;
+        }else {
+          result = this.merchantService.checkErrorCoupon(error.error.code);
+        }
+        console.log(error);
         this.openLoadingPopUp = false;
         this.errorMessage = result;
         this.openErrorPopUp = true;
       });
     }else {
       this.openErrorPopUp = true;
-      this.errorMessage = 'Emptry input.';
+      this.errorMessage = 'Emptry input .';
     }
   }
 
@@ -261,6 +272,8 @@ export class OrderListComponent implements OnInit {
     this.customerOrderService.removeErrorOrder().subscribe( x => {
       // console.log(x);
       this.headerComponent.updateCarts();
+      // this.groupOrdering();
+      this.ngOnInit();
       this.orderError = false;
     }, error => {
       // console.log(error);

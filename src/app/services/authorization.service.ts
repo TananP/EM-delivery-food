@@ -10,7 +10,9 @@ export class AuthorizationService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
   // checkFirstTime = localStorage.getItem('firstTime');
-  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  // apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  apiKey = environment.apiKey;
+
   private token: any;
 
   constructor(private http: HttpClient) {}

@@ -4,6 +4,9 @@ import { MerchantService } from 'src/app/services/merchant.service';
 import { CustomerOrderService } from 'src/app/services/customer-order.service';
 import { HeaderComponent } from 'src/app/layouts/header/header/header.component';
 
+// import { Injectable } from '@angular/core';
+// @Injectable({providedIn: 'root'})
+
 @Component({
   selector: 'app-delivery',
   templateUrl: './delivery.component.html',
@@ -44,7 +47,7 @@ export class DeliveryComponent implements OnInit {
     this.initValue();
     this.merchantService.getFoodList(this.merchantId).subscribe(x => {
       this.menuList = x;
-      console.log(x);
+      // console.log(x);
     });
   }
   initValue(){

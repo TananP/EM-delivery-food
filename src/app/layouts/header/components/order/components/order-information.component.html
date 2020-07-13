@@ -1,5 +1,5 @@
 <div>
-    <div class="row bg-solid-black">
+    <div class="row bg-solid-black pt-1">
         <div class="col-2 pl-4 close-button align-middle center-col" (click)="backToOrderList()" style="font-size: 1.5rem;">&lt;</div>
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">Order</h5></div>
     </div>
@@ -24,6 +24,24 @@
         </div>
         <hr class="underline">
         <div class="row">
+            <div class="col-6 text-left">
+                <p>Sum</p>
+            </div>
+            <div class="col-6 text-right">
+                <p>{{this.selectOrderInfo.subTotalAmount}}</p>
+            </div>
+            <div class="col-6 text-left">
+                <p>Delivery price</p>
+            </div>
+            <div class="col-6 text-right">
+                <p>{{this.selectOrderInfo.riderAmount}}</p>
+            </div>
+            <div class="col-6 text-left">
+                <p>Discount</p>
+            </div>
+            <div class="col-6 text-right">
+                <p>{{this.selectOrderInfo.discountAmount}}</p>
+            </div>
             <div class="col-6 text-left">
                 <p>Total</p>
             </div>

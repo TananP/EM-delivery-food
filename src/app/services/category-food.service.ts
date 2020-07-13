@@ -9,7 +9,8 @@ import { timeout } from 'rxjs/operators';
 export class CategoryFoodService {
   baseUrl = environment.apiSysUrl;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  // apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  apiKey = environment.apiKey;
   // token = JSON.parse(localStorage.getItem('token'));
   timeOut = 10000;
 

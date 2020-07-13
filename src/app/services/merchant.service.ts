@@ -8,8 +8,9 @@ import { timeout } from 'rxjs/operators';
 })
 export class MerchantService {
   baseUrl = environment.apiSysUrl;
+  apiKey = environment.apiKey;
   headers = new HttpHeaders().set('content-type', 'application/json');
-  apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
+  // apiKey = '24D4f704-3883-4E3c-95dd-F08cb822eb82';
   private token: any;
   timeOut = 10000;
 
@@ -130,27 +131,28 @@ export class MerchantService {
   }
 
   checkErrorCoupon(code){
-    if (code === 'COUPON_001') {
-      return 'Coupon not found.';
+    switch (code) {
+      case 'ORDER_001' : {
+        return 'Order not found.';
+      }
+      case 'COUPON_001' : {
+        return 'Coupon not found.';
+      }
+      case 'COUPON_002' : {
+        return 'Coupon is out of order.';
+      }
+      case 'COUPON_003' : {
+        return 'Coupon expired.';
+      }
+      case 'COUPON_004' : {
+        return 'Coupon Code was used.';
+      }
+      case 'COUPON_006' : {
+        return 'Invalid Coupon Code.';
+      }
+      default : {
+        return 'Error please try again later.';
+      }
     }
-    else if (code === 'COUPON_002') {
-      return 'Coupon is out of order.';
-    }
-    else if (code === 'COUPON_003') {
-      return 'Coupon expired.';
-    }
-    else if (code === 'COUPON_004') {
-      return 'Coupon Code was used.';
-    }
-    // else if (code === 'COUPON_005') {
-    //   // return 'Invalid Customer Id.';
-    //   return '';
-    // }
-    else if (code === 'COUPON_006') {
-      return 'Invalid Coupon Code.';
-    }
-    else {
-      return 'Error please try again later.';
-     }
   }
 }
