@@ -11,6 +11,7 @@ export class SearchComponent implements OnInit {
   @Input() taskData: string;
   public searchInput = '';
   public searchList: any;
+  // public searchListRender: any;
   public autoCorrect = false;
   public openLoadingPopUp = false;
   public searchInputEmpty = true;
@@ -18,7 +19,6 @@ export class SearchComponent implements OnInit {
   constructor(private merchantService: MerchantService , private router: Router) {}
 
   ngOnInit(): void {
-    this.searchList = [];
   }
 
   onSubmit(search) {
@@ -26,13 +26,25 @@ export class SearchComponent implements OnInit {
       this.autoCorrect = false;
       this.searchInputEmpty = true;
     }else {
+      this.searchList = [];
+      // this.searchListRender = [];
       this.searchInput = search;
       this.searchInputEmpty = false;
       this.autoCorrect = true;
       this.merchantService.searchByRestaurantName(this.searchInput).subscribe( x => {
         this.searchList = x;
+        // if (this.searchList.data.length > 5) {
+        //   for (let i = 0; i < 5 ; i ++) {
+        //     this.searchListRender.push(this.searchList.data[i]);
+        //   }
+        // } else {
+        //   this.searchList.data.forEach(element => {
+        //     this.searchListRender.push(element);
+        //   });
+        // }
       }, error => {
         this.searchList = [];
+        // this.searchListRender = [];
         // this.loadingError = true;
       });
     }

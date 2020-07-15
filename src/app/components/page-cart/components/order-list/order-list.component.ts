@@ -226,23 +226,29 @@ export class OrderListComponent implements OnInit {
     if (code !== '') {
       // const token =  JSON.parse(localStorage.getItem('token'));
       this.openLoadingPopUp = true;
-      this.merchantService.updateUsedCoupon(code).subscribe(x => {
-        // console.log(x);
-        this.getOrderList();
+      if (this.couponUsedList.length < 1) {
+        this.merchantService.updateUsedCoupon(code).subscribe(x => {
+          // console.log(x);
+          this.getOrderList();
+          this.openLoadingPopUp = false;
+          // console.log(this.couponUsedList);
+        }, error => {
+          let result = '';
+          if ( error.error.code === 'COUPON_007') {
+            result = error.error.error;
+          }else {
+            result = this.merchantService.checkErrorCoupon(error.error.code);
+          }
+          // console.log(error);
+          this.openLoadingPopUp = false;
+          this.errorMessage = result;
+          this.openErrorPopUp = true;
+        });
+      }else {
         this.openLoadingPopUp = false;
-        // console.log(this.couponUsedList);
-      }, error => {
-        let result = '';
-        if ( error.error.code === 'COUPON_007') {
-          result = error.error.error;
-        }else {
-          result = this.merchantService.checkErrorCoupon(error.error.code);
-        }
-        console.log(error);
-        this.openLoadingPopUp = false;
-        this.errorMessage = result;
+        this.errorMessage = 'Coupon uesd at limit.';
         this.openErrorPopUp = true;
-      });
+      }
     }else {
       this.openErrorPopUp = true;
       this.errorMessage = 'Emptry input .';

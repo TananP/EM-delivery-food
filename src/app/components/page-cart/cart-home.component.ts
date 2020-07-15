@@ -257,22 +257,43 @@ export class CartHomeComponent implements OnInit {
           this.orderListComponent.showOrderErrorBeforePayment();
         }
       }, error => {
-        this.openLoadingPopUp = false;
-        // this.removeOrderPopUp = true;
-        // console.log(order);
         // console.log(error);
-        // this.orderListComponent.getOrderList();
-        this.orderListComponent.ngOnInit();
-        this.headerComponent.updateCarts();
-        this.errorPopUp = true;
-        this.errorPopUpLoadindImg = true;
-        const result = this.customerOrderService.checkErrorCode(error.error.code);
-        this.errorCodeText = result;
-        setTimeout( () => {
-          this.orderListComponent.showOrderErrorBeforePayment();
-          this.errorPopUp = false;
-          this.errorPopUpLoadindImg = false;
-        }, 2000);
+        // console.log(this.couponUsedList);
+        this.openLoadingPopUp = false;
+        let errorCode = error.error.code;
+        errorCode = errorCode.slice(errorCode.length - 3);
+        const errorCodeNumber = Number(errorCode);
+        // Error Order
+        if (errorCodeNumber >= 1 && errorCodeNumber <= 6) {
+          this.orderListComponent.ngOnInit();
+          this.headerComponent.updateCarts();
+          this.errorPopUp = true;
+          this.errorPopUpLoadindImg = true;
+          const result = this.customerOrderService.checkErrorCode(error.error.code);
+          if (result === 'unknown error') {
+            this.errorCodeText = error.error.error;
+          }else {
+            this.errorCodeText = result;
+          }
+          setTimeout( () => {
+            this.orderListComponent.showOrderErrorBeforePayment();
+            this.errorPopUp = false;
+            this.errorPopUpLoadindImg = false;
+          }, 2000);
+        }
+        // Error Coupon
+        if (errorCodeNumber >= 11 && errorCodeNumber <= 16) {
+          this.errorPopUp = true;
+          // this.errorPopUpLoadindImg = true;
+          const result = this.customerOrderService.checkErrorCode(error.error.code);
+          if (result === 'unknown error') {
+            this.errorCodeText = error.error.error;
+          }else {
+            this.errorCodeText = result;
+          }
+          // console.log(this.couponUsedList[0].couponCode);
+          this.orderListComponent.cancelCoupon(this.couponUsedList[0]);
+        }
       });
     }else {
       this.openLoadingPopUp = false;

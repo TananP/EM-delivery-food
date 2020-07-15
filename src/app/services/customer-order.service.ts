@@ -171,7 +171,7 @@ export class CustomerOrderService {
         return 'Some resterant is close';
       }
       default : {
-        return 'unknown error please try again later.';
+        return 'unknown error';
       }
     }
   }
