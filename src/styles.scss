@@ -73,6 +73,20 @@ a{
 .text-075-rem{
     font-size: 0.75rem;
 }
+
+.style-itemkey{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight:bold;
+  }
+  .style-itemname{
+    color: #666666
+  }
+  .style-itemnote{
+    color: #999999;
+  }
+
 .title-home-box{
     border-bottom: 1px solid #B39462;
     color: white;
@@ -228,10 +242,26 @@ a{
 .max-width{
     width: 100%;
 }
+.item-amount{
+    display: inline-block;
+    background: #B39462;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    border-radius: 1rem;
+}
+.order-item-title{
+    font-size: 1rem;
+}
 .over-flow-text{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.order-list-item{
+    border-bottom:0.5px inset #ced4da;
+    padding: 0.25rem;
+    margin: 1vh 0;
+    font-size: 0.75rem;
 }
 .underline{
     border-bottom: 0.5px solid black;
@@ -240,5 +270,10 @@ a{
     .close-img{
         max-width: 28px;
         max-height: 28px;
+    }
+  }
+@media only screen and (max-width: 340px) {
+    .order-item-title{
+      font-size: 0.9rem;
     }
   }

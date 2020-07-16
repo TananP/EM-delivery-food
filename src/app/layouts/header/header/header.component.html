@@ -17,14 +17,14 @@
                 <div class="col-12 p-3 menu-button" [routerLink]="['/delivery']">
                     <a>HOME</a>
                 </div>
-                <div class="col-12 p-3 menu-button" (click)="openPopUp('order',true)">
+                <div class="col-12 p-3 menu-button" [routerLink]="['/delivery/customer/order']">
                     <a>ORDER</a>
                 </div>
                 <!-- <div class="col-12 pl-4 menu-button" (click)="openPopUp('profile',true)"> -->
-                <div class="col-12 p-3 menu-button" [routerLink]="['/delivery/profile']">
+                <div class="col-12 p-3 menu-button" [routerLink]="['/delivery/customer/profile']">
                     <a>PROFILE</a>
                 </div>
-                <div class="col-12 p-3 menu-button" (click)="openPopUp('history',true)">
+                <div class="col-12 p-3 menu-button" [routerLink]="['/delivery/customer/history']">
                     <a>HISTORY</a>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <!-- <div class="nav-link text-center pointer" (click)="openPopUp('cart',true)"> -->
-                    <div class="nav-link text-center pointer" [routerLink]="['/delivery/cart-page']">
+                    <div class="nav-link text-center pointer" [routerLink]="['/delivery/customer/cart-page']">
                         <img class="width-cart-img" src="./assets/dist/img/Cart.png"/>
                         <div>
                             <!-- <span class="badge badge-danger navbar-badge" #orderTotal>{{this.orderAmount}}</span> -->
@@ -98,7 +98,7 @@
     <!-- <app-profile [profilePopUp]="this.profilePopUp" (closePopUp)="closePopUp()"></app-profile> -->
     
     <!-------------- History pop up ----------------->
-    <app-history [historyPopUp]="this.historyPopUp" (closePopUp)="closePopUp()"></app-history>
+    <!-- <app-history [historyPopUp]="this.historyPopUp" (closePopUp)="closePopUp()"></app-history> -->
     <!-- <div class="pop-up-cart" *ngIf="this.historyPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('history',false)">&times;</div>
@@ -108,7 +108,7 @@
     </div> -->
 
     <!-------------- Order pop up ------------------>
-    <app-order [orderPopUp]="this.orderPopUp" (closePopUp)="closePopUp()"></app-order>
+    <!-- <app-order [orderPopUp]="this.orderPopUp" (closePopUp)="closePopUp()"></app-order> -->
     <!-- <div class="pop-up-cart" *ngIf="this.orderPopUp">
         <div class="row bg-dark">
             <div class="col-2 close-button pl-4" (click)="openPopUp('order',false)">&times;</div>

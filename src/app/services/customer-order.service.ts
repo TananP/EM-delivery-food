@@ -86,11 +86,11 @@ export class CustomerOrderService {
     }).pipe(timeout(this.timeOut));
   }
 
-  checkStatusByOrderNumber(orderID){
-    this.getToken();
-    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/CheckStatusByOrderNumber', { params: {
+  getOrderDetail(orderID) {
+
+    return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderDetail', { params: {
       customerId: this.token.id,
-      orderNumber: orderID
+      orderId: orderID
     },
     headers: {
         'ApiKey' : this.apiKey,
@@ -98,6 +98,22 @@ export class CustomerOrderService {
       }
     }).pipe(timeout(this.timeOut));
   }
+
+  // checkStatusByOrderNumber(ordernumber){
+  //   this.getToken();
+  //   console.log('orderID ==== ' + ordernumber);
+  //   console.log('this.token.id ==== ' + this.token.id);
+
+  //   return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/CheckStatusByOrderNumber', { params: {
+  //     customerId: this.token.id,
+  //     orderNumber: ordernumber
+  //   },
+  //   headers: {
+  //       'ApiKey' : this.apiKey,
+  //       'Authorization': 'Bearer ' + this.token.token
+  //     }
+  //   }).pipe(timeout(this.timeOut));
+  // }
 
   checkOrder(order){
     this.getToken();
