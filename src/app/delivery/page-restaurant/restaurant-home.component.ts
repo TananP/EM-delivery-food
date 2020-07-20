@@ -18,11 +18,11 @@ export class RestaurantHomeComponent implements OnInit {
   public shopOpen: boolean;
 
   constructor(private route: ActivatedRoute , private merchantService: MerchantService ,
-              private authorizationAPI: AuthorizationService , private router: Router){
-                this.authorizationAPI.checkAuthorization();
-              }
+              private authorizationAPI: AuthorizationService , private router: Router)
+              {}
 
   ngOnInit(): void {
+    this.authorizationAPI.checkAuthorization();
     // const queryParams = this.route.snapshot.queryParams;
     // const routeParams = this.route.snapshot.params;
     // console.log(queryParams);

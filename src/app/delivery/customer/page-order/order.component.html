@@ -27,5 +27,8 @@
     <div *ngIf="this.showOrderInfo">
         <app-order-information [orderNumber]="this.selectOrderId" (back)="backFromOrderInfo()"></app-order-information>
     </div>
-
 </div>
+<div class="text-center pt-3" *ngIf="!this.openLoadingPopUp && this.errorCallApi">
+    <p>Could not get order information.</p>
+</div>
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>

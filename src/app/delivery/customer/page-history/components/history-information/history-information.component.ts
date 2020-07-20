@@ -11,17 +11,24 @@ export class HistoryInformationComponent implements OnInit {
   @Output() back = new EventEmitter();
   public selectHistoryInfo: any;
   public orderList: any;
+  public openLoadingPopUp: boolean;
+  public errorCallApi = false;
 
-  constructor(private customerOrderService: CustomerOrderService) { }
+  constructor(private customerOrderService: CustomerOrderService) {}
 
   ngOnInit(): void {
     // this.selectHistoryInfo = this.historyInfo;
     this.selectHistoryInfo = [];
+    this.openLoadingPopUp = true;
     // console.log(this.orderNumber);
     this.customerOrderService.getOrderDetail(this.orderNumber).subscribe( x => {
       this.selectHistoryInfo = x;
-      console.log(x);
-      // this.groupOrder();
+      // console.log(x);
+      this.groupOrder();
+      this.openLoadingPopUp = false;
+    }, error => {
+      this.openLoadingPopUp = false;
+      this.errorCallApi = true;
     });
   }
 

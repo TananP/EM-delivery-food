@@ -58,11 +58,10 @@ export class CartHomeComponent implements OnInit {
   // private token =  JSON.parse(localStorage.getItem('token'));
   constructor(private location: Location, private customerOrderService: CustomerOrderService, private submitFormService: SubmitFormService,
               private router: Router, private authorizationService: AuthorizationService, private profileComponent: ProfileComponent,
-              private customerAddressService: CustomerAddressService, private headerComponent: HeaderComponent) {
-                this.authorizationService.checkAuthorization();
-              }
+              private customerAddressService: CustomerAddressService, private headerComponent: HeaderComponent) {}
 
   ngOnInit(): void {
+    this.authorizationService.checkAuthorization();
     this.getUserInfo();
   }
 

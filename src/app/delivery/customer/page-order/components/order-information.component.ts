@@ -12,14 +12,21 @@ export class OrderInformationComponent implements OnInit {
   @Output() back = new EventEmitter();
   public selectOrderInfo: any;
   public orderList: any;
+  public openLoadingPopUp: boolean;
+  public errorCallApi = false;
 
   constructor(private customerOrderService: CustomerOrderService) { }
 
   ngOnInit(): void {
     this.selectOrderInfo = [];
+    this.openLoadingPopUp = true;
     this.customerOrderService.getOrderDetail(this.orderNumber).subscribe( x => {
       this.selectOrderInfo = x;
+      // console.log(this.selectOrderInfo);
       this.groupOrder();
+    }, error => {
+      this.openLoadingPopUp = false;
+      this.errorCallApi = true;
     });
   }
 
@@ -40,6 +47,7 @@ export class OrderInformationComponent implements OnInit {
       }
     });
     this.orderList = groupByName;
+    this.openLoadingPopUp = false;
     // console.log(this.orderList);
   }
   backToOrderList(){

@@ -1,11 +1,11 @@
-<!-- <div>
+<div>
     <div class="row bg-solid-black pt-1">
         <div class="col-2 pl-4 close-button align-middle center-col" (click)="backToHistoryList()" style="font-size: 1.5rem;">&lt;</div>
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">History</h5></div>
     </div>
-    <div class="container">
-        <h5 class="text-115-rem gold">Address</h5>
-        <div class="form-group">
+    <div class="container pt-2" *ngIf="!this.openLoadingPopUp && !this.errorCallApi">
+        <h5 class="text-115-rem gold mb-0">Address</h5>
+        <div class="form-group pl-2">
             <p>Address name :</p>
             <p class="pb-1">{{this.selectHistoryInfo.addressName}}</p>
             <p>Address detail :</p>
@@ -14,14 +14,42 @@
             <p class="over-flow-text">{{this.selectHistoryInfo.addressNote}}</p>
         </div>
         <hr class="underline">
-        <div class="row">
+        <h5 class="text-115-rem mb-0">Summary</h5>
+        <div class="order-list-box">
+            <div class="order-list-item" *ngFor="let item of this.orderList | keyvalue">
+                <div class="gold row order-item-title">
+                    <div class="col-8">
+                        <div class="style-itemkey">{{item.key}}</div>
+                    </div>
+                </div>
+                <div class="row mb-2 mt-2 text-075-rem" *ngFor="let itemInfo of item.value">
+                    <div class="col-2 text-center ">
+                        <p class="item-amount">{{itemInfo.itemAmount}}x</p>
+                    </div>
+                    <div class="col-7 pr-0 ">
+                        <div class="mb-3 over-flow-text">
+                            <div class="order-item-title">
+                                <div class="style-itemname">{{itemInfo.itemName}}</div>
+                            </div>
+                            <div>
+                                <div class="style-itemnote">{{itemInfo.itemNote}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <p>{{itemInfo.price * itemInfo.itemAmount}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
             <div class="col-6 text-left">
                 <p>Status:</p>
             </div>
             <div class="col-6 text-right">
                 <p>{{this.selectHistoryInfo.statusName}}</p>
             </div>
-        </div>
+        </div> -->
         <hr class="underline">
         <div class="row">
             <div class="col-6 text-left">
@@ -50,4 +78,8 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
+<div class="text-center pt-3" *ngIf="!this.openLoadingPopUp && this.errorCallApi">
+    <p>Could not get order information.</p>
+</div>
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>

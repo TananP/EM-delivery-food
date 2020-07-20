@@ -7,11 +7,11 @@
         <div *ngIf="!this.historyIsNull">
             <div class="container">
                 <div *ngFor="let history of this.historyList.data">
-                    <div class="history-item-box row" (click)="selectHistory(history.orderNumber)">
+                    <div class="history-item-box row" (click)="selectHistory(history.orderId)">
                         <div class="col-10 row">
                             <div class="col-6">
-                                <p class="gold date-title">{{history.createdDate | slice:0:10}}</p>
-                                <p>{{history.createdDate | slice:11:-3}}</p>
+                                <p class="pb-1 gold date-title">{{history.createdDate | slice:0:10}}</p>
+                                <p class="pb-1">{{history.createdDate | slice:11:-3}}</p>
                             </div>
                             <div class="col-6 text-right center-col">
                                 <p>{{history.totalAmount + history.riderAmount}}</p>
@@ -30,3 +30,7 @@
         <app-history-information [orderNumber]="this.selectHistoryList" (back)="backFromHistoryInfo()"></app-history-information>
     </div>
 </div>
+<div class="text-center pt-3" *ngIf="!this.openLoadingPopUp && this.errorCallApi">
+    <p>Could not get history information.</p>
+</div>
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>

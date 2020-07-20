@@ -87,7 +87,7 @@ export class CustomerOrderService {
   }
 
   getOrderDetail(orderID) {
-
+    // console.log(orderID);
     return this.http.get(this.baseUrl + 'web_api/api/CustomerOrder/GetOrderDetail', { params: {
       customerId: this.token.id,
       orderId: orderID

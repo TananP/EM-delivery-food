@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { CustomerOrderService } from 'src/app/services/customer-order.service';
+import {AuthorizationService} from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-order',
@@ -12,8 +13,10 @@ export class OrderComponent implements OnInit {
 public showOrderInfo = false;
 public currentOrderList: any;
 public selectOrderId: number;
+public openLoadingPopUp: boolean;
+public errorCallApi = false;
 
-  constructor(private customerOrderService: CustomerOrderService) { }
+  constructor(private customerOrderService: CustomerOrderService, private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
     this.currentOrderList = [];
@@ -22,16 +25,21 @@ public selectOrderId: number;
 
   getAllOrderStatus(){
     // console.log('get order status api');
+    this.authorizationService.checkAuthorization();
+    this.openLoadingPopUp = true;
     this.customerOrderService.getCurrentOrder().subscribe( x => {
       this.currentOrderList = x;
+      this.openLoadingPopUp = false;
       // console.log(this.currentOrderList);
-      if (this.currentOrderList.length > 0) {
-    // setTimeout(() => {
-    //   this.getAllOrderStatus();
-    // }, 10000);
-      }
+      // if (this.currentOrderList.length > 0) {
+      //   setTimeout(() => {
+      //     this.getAllOrderStatus();
+      //   }, 10000);
+      // }
     }, error => {
       console.log(error);
+      this.openLoadingPopUp = false;
+      this.errorCallApi = true;
     });
     // setTimeout(() => {
     //   this.getAllOrderStatus();

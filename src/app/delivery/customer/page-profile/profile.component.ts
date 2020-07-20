@@ -27,6 +27,7 @@ private userProfile: any;
   constructor(private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
+    this.authorizationService.checkAuthorization();
     this.editInfo = false;
     this.nameRender = document.getElementById('nameFull');
     this.phoneRender = document.getElementById('mobileNumber');

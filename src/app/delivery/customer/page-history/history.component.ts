@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerOrderService } from 'src/app/services/customer-order.service';
+import {AuthorizationService} from 'src/app/services/authorization.service';
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -13,18 +15,26 @@ public historyList: any;
 public selectHistoryList: any;
 public historyIsNull = false;
 public showHistoryInfo = false;
-  constructor(private customerOrderService: CustomerOrderService) { }
+public openLoadingPopUp = false;
+public errorCallApi = false;
+
+  constructor(private customerOrderService: CustomerOrderService, private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
+    this.authorizationService.checkAuthorization();
     this.historyList = [];
+    this.openLoadingPopUp = true;
     this.customerOrderService.getOrderHistory().subscribe( x => {
       this.historyList = x;
-      console.log(this.historyList);
+      this.openLoadingPopUp = false;
+      // console.log(this.historyList);
     }, error => {
       if (error.error === null){
         this.historyIsNull = true;
       }
       console.log(error);
+      this.openLoadingPopUp = false;
+      this.errorCallApi = false;
     });
   }
 
@@ -36,7 +46,7 @@ public showHistoryInfo = false;
   }
   selectHistory(orderNumber){
     this.selectHistoryList = orderNumber;
-    console.log(this.selectHistoryList);
+    // console.log(this.selectHistoryList);
     this.showHistoryInfo = true;
   }
 }

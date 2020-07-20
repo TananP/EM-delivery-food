@@ -3,15 +3,28 @@
         <div class="col-2 pl-4 close-button align-middle center-col" (click)="backToOrderList()" style="font-size: 1.5rem;">&lt;</div>
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">Order</h5></div>
     </div>
-    <div class="container pt-2">
-        <h5 class="text-115-rem gold">Address</h5>
-        <div class="form-group">
-            <p>Address name :</p>
-            <p class="pb-1">{{this.selectOrderInfo.addressName}}</p>
-            <p>Address detail :</p>
-            <p class="pb-2 over-flow-text">{{this.selectOrderInfo.addressDetail}}</p>
-            <p>Comment for address :</p>
-            <p class="over-flow-text">{{this.selectOrderInfo.addressNote}}</p>
+    <div class="container pt-2" *ngIf="!this.openLoadingPopUp && !this.errorCallApi">
+        <h5 class="text-115-rem gold mb-0">Address</h5>
+        <div>
+            <div class="row border-buttom-gray">
+                <div class="pl-2 col-6">
+                    <p class="pb-1">{{this.selectOrderInfo.fullName}}</p>
+                    <p class="pb-3">{{this.selectOrderInfo.telephoneNumber}}</p>
+                </div>
+                <div class="col-6">
+                    <div class="text-center">
+                        <p>Status: {{this.selectOrderInfo.statusName}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group pt-2 pl-2">
+                <p>Address name :</p>
+                <p class="pb-1">{{this.selectOrderInfo.addressName}}</p>
+                <p>Address detail :</p>
+                <p class="pb-2 over-flow-text">{{this.selectOrderInfo.addressDetail}}</p>
+                <p>Comment for address :</p>
+                <p class="over-flow-text">{{this.selectOrderInfo.addressNote}}</p>
+            </div>
         </div>
         <hr class="underline">
         <h5 class="text-115-rem mb-0">Summary</h5>
@@ -43,7 +56,7 @@
             </div>
         </div>
         <hr class="underline">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-6 text-left">
                 <p>Status:</p>
             </div>
@@ -51,7 +64,7 @@
                 <p>{{this.selectOrderInfo.statusName}}</p>
             </div>
         </div>
-        <hr class="underline">
+        <hr class="underline"> -->
         <div class="row">
             <div class="col-6 text-left">
                 <p>Sum</p>
@@ -80,3 +93,8 @@
         </div>
     </div>
 </div>
+<div class="text-center pt-3" *ngIf="!this.openLoadingPopUp && this.errorCallApi">
+    <p>Could not get order information.</p>
+</div>
+<app-loading-pop-up [openLoadingPopUp]="this.openLoadingPopUp"></app-loading-pop-up>
+
