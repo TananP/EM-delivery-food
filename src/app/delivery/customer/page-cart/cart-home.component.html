@@ -4,10 +4,11 @@
         <div class="col-2 pl-4 close-button align-middle font-big" (click)="closeCartPage()">&times;</div>
         <div class="col-8 mb-0 text-center center-col"><h5 class="p-2 mb-0 text-115-rem">Cart</h5></div>
     </div>
-    <div class="container p-3 pb-0">
+    <div class="pt-2 pb-0">
+        <div class="container">
         <!--------------- Address area -------------------->
             <div>
-                <h5 class="text-115-rem gold">Customer Info</h5>
+                <h5 class="text-115-rem gold mb-0">Customer Info</h5>
                 <div class="form-group" *ngIf="!this.editProfile">
                     <div class="row">
                         <div class="col-9">
@@ -90,7 +91,9 @@
                     </div>
                 </div>
             </div>
-            <hr class="underline">
+        </div>
+        <hr class="underline">
+        <div class="container">
         <!---------------------------------------------------->
         <!--------------- Comment area ----------------------->
             <!-- <div>
@@ -101,7 +104,8 @@
             <div>
                 <app-order-list (getSummary)="renderSummary($event)"></app-order-list>
             </div>
-            <hr class="underline">
+        </div>
+        <hr class="underline">
             <!-- <div class="payment-box">
                 <div class="gold">
                     <h5 class="text-115-rem">Payment</h5>
@@ -122,6 +126,7 @@
                 </div>
             </div>
             <hr class="underline"> -->
+        <div class="container">
             <!--------- sum price ------->
             <div class="row gold pb-1">
                 <div class="col-6 pl-0 text-left">
@@ -190,6 +195,7 @@
                 </div>
             </div>
         <!---------------------------------------------------->
+        </div>
     </div>
 </div>
 
@@ -210,7 +216,7 @@
 <div class="pop-up-cart" *ngIf="this.pickUp">
     <div class="row bg-solid-black">
         <div class="col-2 pl-4 close-button align-middle" (click)="closeAddress('pickUp')"><p class="pt-2"> < </p></div>
-        <div class="col-8 text-center"><h5 class="p-2 text-115-rem">Pick up address</h5></div>
+        <div class="col-8 text-center pt-1 pb-1"><h5 class="p-2 text-115-rem mb-0">Pick up address</h5></div>
     </div>
     <div class="container">
         <app-pick-up-address (selectedAddress)="addressSelected($event)"></app-pick-up-address>
